@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <section class="hero is-primary is-medium">
+    <section class="hero is-primary is-fullheight">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">Buefy SpeedSouls</h1>

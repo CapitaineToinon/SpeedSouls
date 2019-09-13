@@ -10,8 +10,6 @@ export default class Player {
   }
 
   getName() {
-    return (this.rel === "guest")
-      ? this.name
-      : this.names.international;
+    return this.rel === "guest" ? this.name : this.names.international;
   }
 }

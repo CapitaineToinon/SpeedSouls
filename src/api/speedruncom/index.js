@@ -13,13 +13,14 @@ class SpeedSouls {
   }
 
   async get(path) {
-    await sleep(200);
     const response = await fetch(`${BASE_URL}${path}`);
     return await response.json();
   }
 
   async getGame(abbreviation) {
-    const json = await this.get(`/games/${abbreviation}?embed=categories`);
+    const json = await this.get(
+      `/games/${abbreviation}?embed=categories,variables`
+    );
     return new Game(json.data);
   }
 
@@ -30,9 +31,14 @@ class SpeedSouls {
   }
 
   async getLeaderboard(game, category, variables = {}) {
-    const json = await this.get(`/leaderboards/${game}/category/${category}?embed=players,variables`);
+    await sleep(200);
+    const json = await this.get(
+      `/leaderboards/${game}/category/${category}?embed=players,variables`
+    );
     const players = json.data.players.data.map(player => new Player(player));
-    const runs = json.data.runs.map((run, index) => new Run(run, [players[index]]));
+    const runs = json.data.runs.map(
+      (run, index) => new Run(run, [players[index]])
+    );
     return runs;
   }
 }
