@@ -19,7 +19,7 @@ export default class Game {
     this.names = names;
     this.name = this.names.international;
     this.assets = assets;
-    this.variables = variables || [];
+    this.variables = variables && variables.data ? variables.data : [];
     this.background = this.assets.background.uri;
     this.ruleset = ruleset;
 
@@ -28,9 +28,5 @@ export default class Game {
         .filter(category => category.type === "per-game")
         .map(category => new Category(category));
     }
-  }
-
-  getSubcategories() {
-    return this.variables.data.filter(variable => variable["is-subcategory"]);
   }
 }

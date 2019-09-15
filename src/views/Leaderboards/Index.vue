@@ -1,8 +1,18 @@
 <template>
   <div id="leaderboards">
-    <router-view />
+    <keep-alive :include="cachedRouted">
+      <router-view />
+    </keep-alive>
   </div>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    cachedRouted: ["games"]
+  })
+};
+</script>
 
 <style scoped>
 #leaderboards {

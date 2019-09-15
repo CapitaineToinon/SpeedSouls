@@ -1,8 +1,8 @@
 <template>
   <b-field>
     <b-radio-button
-      v-model="radioButton"
-      v-for="(v, i) in variable.values.values"
+      v-model="subcategory.value"
+      v-for="(v, i) in subcategory.values"
       :native-value="i"
       :key="i"
     >
@@ -14,13 +14,10 @@
 <script>
 export default {
   props: {
-    variable: {
+    subcategory: {
       type: Object,
       required: true
     }
-  },
-  data: () => ({
-    radioButton: ""
-  })
+  }
 };
 </script>

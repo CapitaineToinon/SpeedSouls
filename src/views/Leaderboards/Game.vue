@@ -26,15 +26,22 @@
             </nav>
           </header>
           <div class="seperator"></div>
-          <div class="sub-categories" v-if="subcategories.length">
+          <div
+            class="sub-categories"
+            v-if="variables.filter(v => v['is-subcategory']).length"
+          >
             <Subcategory
-              v-for="(subc, i) in subcategories"
+              v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
               :key="i"
-              :variable="subc"
+              :subcategory="v"
             />
           </div>
           <div class="content-main">
-            <Leaderboard :game="game" :category="category" />
+            <Leaderboard
+              :game="game"
+              :category="category"
+              :variables="variables"
+            />
           </div>
         </div>
       </div>
@@ -48,9 +55,11 @@ import Subcategory from "@/components/Subcategory.vue";
 import Leaderboard from "@/components/Leaderboard.vue";
 
 export default {
+  name: "game",
   data: () => ({
     game: null,
-    category: Object.apply(null)
+    category: Object.apply(null),
+    variables: []
   }),
   components: {
     Categories,
@@ -61,6 +70,7 @@ export default {
     onCategoryClick(category) {
       this.category = category;
       this.updateHash(category);
+      window.scrollTo({ top: 0 });
     },
     updateHash(category) {
       window.location.replace("#" + category.hash);
@@ -69,6 +79,23 @@ export default {
       return this.game.categories.find(category => {
         return window.location.hash === `#${category.hash}`;
       });
+    }
+  },
+  watch: {
+    category: {
+      handler() {
+        this.variables = this.game.variables
+          .filter(v => v.category === this.category.id)
+          .map(subc => {
+            return {
+              id: subc.id,
+              name: subc.name,
+              ["is-subcategory"]: subc["is-subcategory"],
+              value: subc.values.default,
+              values: subc.values.values
+            };
+          });
+      }
     }
   },
   computed: {
@@ -89,17 +116,11 @@ export default {
           active: true
         }
       ];
-    },
-    subcategories() {
-      return this.game
-        .getSubcategories()
-        .filter(v => v.category === this.category.id);
     }
   },
   async mounted() {
     this.game = await this.$speedsouls.getGame(this.$route.params.abbreviation);
     this.category = this.getCategoryFromHash() || this.game.categories[0];
-    console.log(this.game);
   }
 };
 </script>

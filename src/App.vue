@@ -2,7 +2,9 @@
   <div id="app">
     <Navbar />
     <main>
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </main>
     <Footer />
   </div>
@@ -13,6 +15,9 @@ import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
+  data: () => ({
+    cachedRoutes: [""]
+  }),
   components: {
     Navbar,
     Footer

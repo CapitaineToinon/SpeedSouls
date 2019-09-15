@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/views/Home.vue";
+import speedsouls from "@/api/speedsouls";
 
 Vue.use(Router);
 
@@ -37,6 +38,13 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "**",
+      name: "redirect",
+      beforeEnter(to) {
+        window.location.replace(`${speedsouls.WIKI_URL}${to.fullPath}`);
+      }
     }
   ]
 });

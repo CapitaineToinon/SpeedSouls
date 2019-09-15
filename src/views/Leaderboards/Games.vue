@@ -1,14 +1,5 @@
 <template>
   <div id="games">
-    <!-- <div class="columns is-multiline">
-      <div class="column is-4" v-for="game in games" :key="game.id">
-        <router-link to="/">
-          <figure class="image">
-            <img :src="game.background" alt="Placeholder image" />
-          </figure>
-        </router-link>
-      </div>
-    </div>-->
     <section class="section">
       <div class="container">
         <div class="columns is-centered">
@@ -22,6 +13,7 @@
                     icon="information-outline"
                     :label="game.name"
                     tag="router-link"
+                    :active.sync="active"
                     :to="{
                       name: 'game',
                       params: { abbreviation: game.abbreviation }
@@ -31,6 +23,7 @@
               </div>
             </div>
           </div>
+          <b-loading :active="isLoading"></b-loading>
         </div>
       </div>
     </section>
@@ -39,11 +32,19 @@
 
 <script>
 export default {
+  name: "games",
   data: () => ({
-    games: []
+    games: [],
+    active: null,
+    isLoading: false
   }),
+  activated() {
+    this.active = null; // prevents the active style
+  },
   async mounted() {
+    this.isLoading = true;
     this.games = await this.$speedsouls.getGames();
+    this.isLoading = false;
   }
 };
 </script>

@@ -1,25 +1,22 @@
-import moment from "moment";
-
-const formatTime = value => {
-  if (value === 0) return "";
-
-  const ms = value.toString().split(".").length > 1;
-  const time = moment.duration(value, "seconds");
-  const format = `${time.hours() > 0 ? "H:" : ""}mm:ss${ms ? ".SSS" : ""}`;
-  return moment.utc(value * 1000).format(format);
-};
+import TimingMethod from "./TimingMethod";
 
 export default class Run {
   constructor(json, players) {
     this.players = players;
 
     const { place, run } = json;
-    const { id, times, videos } = run;
+    const { id, times, videos, weblink, values } = run;
 
     this.place = place;
     this.id = id;
     this.times = times;
     this.videos = videos;
+    this.weblink = weblink;
+    this.values = values;
+  }
+
+  showicon() {
+    return this.videos !== null;
   }
 
   getPrimaryTime(ruleset) {
@@ -41,10 +38,13 @@ export default class Run {
      * See : https://github.com/speedruncomorg/api/issues/69
      */
     if (ruleset["default-time"] === "realtime_noloads") {
-      return formatTime(this.times["primary_t"]);
+      return new TimingMethod("realtime_noloads", this.times["primary_t"]);
     }
 
-    return formatTime(this.times[ruleset["default-time"] + "_t"]);
+    return new TimingMethod(
+      ruleset["default-time"],
+      this.times[ruleset["default-time"] + "_t"]
+    );
   }
 
   getOtherTimes(ruleset) {
@@ -71,11 +71,11 @@ export default class Run {
     ) {
       return ruleset["run-times"]
         .filter(t => t !== ruleset["default-time"])
-        .map(() => "");
+        .map(t => new TimingMethod(t, 0));
     }
 
     return ruleset["run-times"]
       .filter(t => t !== ruleset["default-time"])
-      .map(t => formatTime(this.times[t + "_t"]));
+      .map(t => new TimingMethod(t, this.times[t + "_t"]));
   }
 }

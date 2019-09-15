@@ -5,9 +5,12 @@ import store from "./store";
 import Buefy from "buefy";
 
 import "@/api";
+import "@fortawesome/fontawesome-free/css/all.css";
 import "buefy/dist/buefy.css";
 
-Vue.use(Buefy);
+Vue.use(Buefy, {
+  defaultIconPack: "fas"
+});
 
 Vue.config.productionTip = false;
 

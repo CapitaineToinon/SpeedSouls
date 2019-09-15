@@ -1,4 +1,4 @@
 import Vue from "vue";
-import speedruncom from "./speedruncom";
+import speedsouls from "./speedsouls";
 
-Vue.use(speedruncom);
+Vue.use(speedsouls);
