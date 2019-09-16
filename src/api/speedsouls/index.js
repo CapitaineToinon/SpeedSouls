@@ -1,12 +1,11 @@
 import { SnackbarProgrammatic as Snackbar } from "buefy";
-import { ToastProgrammatic as Toast } from "buefy";
 
 import Game from "./Game";
 import Run from "./Run";
 import Player from "./Player";
 
 const SERIE = "souls";
-const BASE_URL = "https://www.speedrun.com/api/v1";
+const BASE_URL = "http://localhost:3000/api/speedruncom";
 const WIKI_URL = "https://wiki.speedsouls.com";
 
 const showError = error => {
@@ -27,8 +26,6 @@ const handleErrors = response => {
   if (!response.ok) showError(new Error("Something broke"));
   return response;
 };
-
-const sleep = t => new Promise(r => setTimeout(r, t));
 
 class SpeedSouls {
   constructor() {

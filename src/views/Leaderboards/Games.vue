@@ -41,6 +41,9 @@ export default {
   activated() {
     this.active = null; // prevents the active style
   },
+  deactivated() {
+    this.active = null; // prevents the active style
+  },
   async mounted() {
     this.isLoading = true;
     this.games = await this.$speedsouls.getGames();

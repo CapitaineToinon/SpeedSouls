@@ -22,8 +22,6 @@
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
           >
-            <!-- <span v-if="player.weblink" @click.stop="onPlayerClick(player)">{{ player.getName() }}</span>
-            <span v-else>{{ player.getName() }}</span>-->
             {{ player.getName() }}
           </div>
         </b-table-column>
@@ -134,10 +132,6 @@ export default {
     onRowClick(run) {
       if (this.isLoading) return;
       window.open(run.weblink, "_blank");
-    },
-    onPlayerClick(player) {
-      // Todo
-      // window.open(player.weblink, "_blank");
     }
   }
 };
