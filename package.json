@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "node-cache": "^4.2.1",
+    "speedrundotcom": "^1.0.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"

@@ -22,23 +22,23 @@
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
           >
-            {{ player.getName() }}
+            {{ player.name }}
           </div>
         </b-table-column>
 
         <b-table-column
           centered
           field="primary_t"
-          :label="props.row.primary_t.getName()"
-          >{{ props.row.primary_t.getTime() }}</b-table-column
+          :label="props.row.primary_t.name"
+          >{{ props.row.primary_t.time }}</b-table-column
         >
 
         <b-table-column
           centered
           v-for="(time, i) in props.row.others_t"
           :key="i"
-          :label="time.getName()"
-          >{{ time.getTime() }}</b-table-column
+          :label="time.name"
+          >{{ time.time }}</b-table-column
         >
 
         <b-table-column
@@ -119,7 +119,7 @@ export default {
         return {
           id: run.id,
           place: run.place,
-          showicon: run.showicon(),
+          showicon: run.showicon,
           weblink: run.weblink,
           values: run.values,
           primary_t,

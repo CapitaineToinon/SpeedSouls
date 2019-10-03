@@ -1,25 +1,10 @@
-import TimingMethod from "./TimingMethod";
+import formatTimingMethod from "./TimingMethod";
 
-export default class Run {
-  constructor(json, players) {
-    this.players = players;
+export default function Run(json, players) {
+  const { place, run } = json;
+  const { id, times, videos, weblink, values } = run;
 
-    const { place, run } = json;
-    const { id, times, videos, weblink, values } = run;
-
-    this.place = place;
-    this.id = id;
-    this.times = times;
-    this.videos = videos;
-    this.weblink = weblink;
-    this.values = values;
-  }
-
-  showicon() {
-    return this.videos !== null;
-  }
-
-  getPrimaryTime(ruleset) {
+  function getPrimaryTime(ruleset) {
     /**
      * Primary timing method according to the game object
      * Needs to do manual times for categories using realtime_noloads
@@ -38,16 +23,16 @@ export default class Run {
      * See : https://github.com/speedruncomorg/api/issues/69
      */
     if (ruleset["default-time"] === "realtime_noloads") {
-      return new TimingMethod("realtime_noloads", this.times["primary_t"]);
+      return formatTimingMethod("realtime_noloads", this.times["primary_t"]);
     }
 
-    return new TimingMethod(
+    return formatTimingMethod(
       ruleset["default-time"],
       this.times[ruleset["default-time"] + "_t"]
     );
   }
 
-  getOtherTimes(ruleset) {
+  function getOtherTimes(ruleset) {
     /**
      * Primary timing method according to the game object
      * Needs to do manual times for categories using realtime_noloads
@@ -71,11 +56,24 @@ export default class Run {
     ) {
       return ruleset["run-times"]
         .filter(t => t !== ruleset["default-time"])
-        .map(t => new TimingMethod(t, 0));
+        .map(t => formatTimingMethod(t, 0));
     }
 
     return ruleset["run-times"]
       .filter(t => t !== ruleset["default-time"])
-      .map(t => new TimingMethod(t, this.times[t + "_t"]));
+      .map(t => formatTimingMethod(t, this.times[t + "_t"]));
   }
+
+  return {
+    players,
+    place,
+    id,
+    times,
+    videos,
+    weblink,
+    values,
+    getPrimaryTime,
+    getOtherTimes,
+    showicon: videos !== null
+  };
 }
