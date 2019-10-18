@@ -4,6 +4,6 @@ export default function Player(json) {
   return {
     id,
     name: id === undefined ? name : names.international,
-    weblink,
+    weblink
   };
 }

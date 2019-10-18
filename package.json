@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "yarn server:start",
     "serve": "run-p server:serve client:serve",
     "build": "yarn client:build",
     "lint": "vue-cli-service lint",
     "client:serve": "vue-cli-service serve",
     "client:build": "vue-cli-service build",
-    "server:start": "node ./src/server",
-    "server:serve": "nodemon ./src/server",
-    "server:debug": "DEBUG=backend:* yarn server:serve"
+    "server:serve": "NODE_ENV=development PORT_SERVER=3000 DEBUG=backend:* nodemon ./src/server",
+    "server:start": "NODE_ENV=production PORT_SERVER=3000 node ./src/server"
   },
   "dependencies": {
     "axios": "^0.19.0",

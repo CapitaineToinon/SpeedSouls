@@ -6,7 +6,7 @@ import formatPlayer from "./Player";
 
 const defaultOptions = {
   SERIE: "souls",
-  BASE_URL: "http://localhost:3000/api/speedruncom",
+  BASE_URL: "",
   errorHandler: e => {
     throw e;
   }
@@ -16,7 +16,7 @@ const defaultOptions = {
  * Custom HTTP client using fetch
  */
 function createClient(BASE_URL, errorHandler) {
-  function get(url, params = {}) {
+  async function get(url, params = {}) {
     const paramsUrl = Object.keys(params)
       .map(key => {
         return `${key}=${params[key]}`;
@@ -24,7 +24,13 @@ function createClient(BASE_URL, errorHandler) {
       .join("&");
 
     try {
-      return fetch(`${BASE_URL}${url}?${paramsUrl}`).then(resp => resp.json());
+      /**
+       * Parsing the JSON manually instead of using response.json();
+       * because the response could be html if the url is wrong
+       */
+      const response = await fetch(`${BASE_URL}${url}?${paramsUrl}`);
+      const text = await response.text();
+      return JSON.parse(text);
     } catch (e) {
       errorHandler(e);
     }

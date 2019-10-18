@@ -19,11 +19,14 @@
                       params: { abbreviation: game.abbreviation }
                     }"
                   ></b-menu-item>
+                  <b-loading
+                    :active="isLoading"
+                    :is-full-page="false"
+                  ></b-loading>
                 </b-menu-list>
               </div>
             </div>
           </div>
-          <b-loading :active="isLoading"></b-loading>
         </div>
       </div>
     </section>
