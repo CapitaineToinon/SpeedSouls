@@ -5,10 +5,9 @@ import store from "./store";
 import Buefy from "buefy";
 
 import "@/api";
-import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.use(Buefy, {
-  defaultIconPack: "fas"
+  defaultIconPack: "fa"
 });
 
 Vue.config.productionTip = false;

@@ -13,7 +13,6 @@
                     icon="information-outline"
                     :label="game.name"
                     tag="router-link"
-                    :active.sync="active"
                     :to="{
                       name: 'game',
                       params: { abbreviation: game.abbreviation }
@@ -56,5 +55,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+// Disable selection
+a.is-active {
+  background: inherit !important;
+  color: inherit !important;
+}
 </style>

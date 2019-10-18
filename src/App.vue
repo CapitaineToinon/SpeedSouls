@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Navbar />
     <main>
       <keep-alive>
         <router-view />
@@ -11,7 +10,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
@@ -19,7 +17,6 @@ export default {
     cachedRoutes: [""]
   }),
   components: {
-    Navbar,
     Footer
   }
 };

@@ -14,3 +14,10 @@
     </div>
   </footer>
 </template>
+
+<style scoped lang="scss">
+.footer {
+  background: $dark;
+  color: $white;
+}
+</style>

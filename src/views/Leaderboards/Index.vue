@@ -1,5 +1,6 @@
 <template>
   <div id="leaderboards">
+    <navbar />
     <keep-alive :include="cachedRouted">
       <router-view />
     </keep-alive>
@@ -7,7 +8,12 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+
 export default {
+  components: {
+    Navbar
+  },
   data: () => ({
     cachedRouted: ["games"]
   })
