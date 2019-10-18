@@ -8,6 +8,7 @@
               <div class="card-content">
                 <b-menu-list label="Games">
                   <b-menu-item
+                    class="game"
                     v-for="(game, i) in games"
                     :key="i"
                     icon="information-outline"
@@ -37,15 +38,8 @@ export default {
   name: "games",
   data: () => ({
     games: [],
-    active: null,
     isLoading: false
   }),
-  activated() {
-    this.active = null; // prevents the active style
-  },
-  deactivated() {
-    this.active = null; // prevents the active style
-  },
   async mounted() {
     this.isLoading = true;
     this.games = await this.$speedsouls.getGames();
@@ -55,9 +49,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// Disable selection
-a.is-active {
-  background: inherit !important;
-  color: inherit !important;
+.game {
+  ::v-deep .is-active {
+    background-color: inherit;
+    color: inherit;
+  }
 }
 </style>
