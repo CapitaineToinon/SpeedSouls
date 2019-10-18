@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <hero-nav class="is-dark is-medium">
+    <hero-nav class="hero-nav is-dark is-medium">
       <div class="container hero-content has-text-centered">
         <figure>
           <img src="@/assets/flame.png" alt="speedsouls-flame-logo" />
@@ -94,13 +94,8 @@ export default {
 
 <style scoped lang="scss">
 .home {
-  .welcome {
-    background-image: url("~@/assets/thumb-ds3.jpg");
-    object-fit: cover;
-    object-position: center center;
-    width: 100%;
-    height: 100%;
-    border-bottom: 2px $dark solid;
+  .hero-nav {
+    border-bottom: 1px solid $dark;
   }
 
   .about {
