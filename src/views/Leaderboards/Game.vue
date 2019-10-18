@@ -15,21 +15,14 @@
           <header class="content-header">
             <nav class="breadcrumb" aria-label="breadcrumbs">
               <ul>
-                <li
-                  v-for="(b, i) in breadcrumbs"
-                  :key="i"
-                  :class="b.active ? 'is-active' : ''"
-                >
+                <li v-for="(b, i) in breadcrumbs" :key="i" :class="b.active ? 'is-active' : ''">
                   <router-link :to="b.to">{{ b.text }}</router-link>
                 </li>
               </ul>
             </nav>
           </header>
           <div class="seperator"></div>
-          <div
-            class="sub-categories"
-            v-if="variables.filter(v => v['is-subcategory']).length"
-          >
+          <div class="sub-categories" v-if="variables.filter(v => v['is-subcategory']).length">
             <Subcategory
               v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
               :key="i"
@@ -37,11 +30,7 @@
             />
           </div>
           <div class="content-main">
-            <Leaderboard
-              :game="game"
-              :category="category"
-              :variables="variables"
-            />
+            <Leaderboard :game="game" :category="category" :variables="variables" />
           </div>
         </div>
       </div>
@@ -125,68 +114,71 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #game {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-}
-.game-horizontal-page {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-}
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 18rem;
-  padding: 2rem 1rem;
-  background: #f5f5f5;
-}
+  .sidebar-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 50%;
+    z-index: -1;
+    background: $beige-lighter;
+  }
 
-.sidebar-bg {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 50%;
-  z-index: -1;
-  background: #f5f5f5;
-}
+  .game-horizontal-page {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
 
-.sidebar .categories {
-  position: sticky;
-  top: 1rem;
-}
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 18rem;
+      padding: 2rem 1rem;
+      background: $beige-lighter;
 
-.content {
-  background: #fff;
-  padding: 0 2rem;
-}
+      .categories {
+        position: sticky;
+        top: 1rem;
+      }
+    }
 
-.content .content-header {
-  padding: 2rem 0;
-}
+    .content {
+      background: $white;
+      padding: 0 2rem;
 
-.content .content-header .breadcrumb > ul {
-  margin: 0;
-}
+      .content-header {
+        padding: 2rem 0;
 
-.content .content-header .breadcrumb > ul > li {
-  margin-top: 4px;
-}
+        .breadcrumb {
+          &> ul {
+            margin: 0;
 
-.content .seperator {
-  border-bottom: 1px solid #f5f5f5;
-}
+            &> li {
+              margin-top: 4px;
+            }
+          }
+        }
+      }
 
-.content .sub-categories {
-  margin-top: 2rem;
-}
+      .seperator {
+        border-bottom: 1px solid $beige-lighter;
+      }
 
-.content .content-main {
-  padding: 2rem 0;
+      .sub-categories {
+        margin-top: 2rem;
+      }
+
+      .content-main {
+        padding: 2rem 0;
+      }
+    }
+  }
 }
 </style>

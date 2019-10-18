@@ -6,7 +6,6 @@ import Buefy from "buefy";
 
 import "@/api";
 import "@fortawesome/fontawesome-free/css/all.css";
-import "buefy/dist/buefy.css";
 
 Vue.use(Buefy, {
   defaultIconPack: "fas"
