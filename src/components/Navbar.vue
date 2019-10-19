@@ -1,76 +1,108 @@
 <template>
-  <b-navbar class="is-primary is-transparent">
-    <template slot="brand">
-      <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        <img
-          src="@/assets/logo-white.png"
-          alt="Lightweight UI components for Vue.js based on Bulma"
-        />
-      </b-navbar-item>
-    </template>
-    <template slot="end">
-      <b-navbar-item class="text" tag="router-link" :to="{ name: 'home' }"
-        >Welcome</b-navbar-item
+  <nav
+    class="navbar is-primary is-transparent"
+    role="navigation"
+    aria-label="main navigation"
+  >
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link class="navbar-item" :to="{ name: 'home' }">
+          <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
+        </router-link>
+
+        <a
+          @click="toggle"
+          role="button"
+          class="navbar-burger burger"
+          :class="{ 'is-active': active }"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="speedsoulsNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div
+        id="speedsoulsNavbar"
+        class="navbar-menu"
+        :class="{ 'is-active': active }"
       >
-      <b-navbar-item
-        class="text"
-        tag="router-link"
-        :to="{ path: '/leaderboards' }"
-        >Leaderboards</b-navbar-item
-      >
-      <b-navbar-item
-        class="text"
-        tag="a"
-        target="_blank"
-        href="https://wiki.speedsouls.com/Main_Page"
-        >Wiki</b-navbar-item
-      >
-      <b-navbar-item
-        class="text"
-        tag="a"
-        target="_blank"
-        href="https://forums.speedsouls.com"
-        >Forums</b-navbar-item
-      >
-      <b-navbar-item
-        tag="a"
-        class="text"
-        target="_blank"
-        href="https://wiki.speedsouls.com/Run_submission"
-        >Submit a run</b-navbar-item
-      >
-      <span class="separator"></span>
-      <b-navbar-item
-        tag="a"
-        target="_blank"
-        href="https://discord.speedsouls.com"
-      >
-        <b-icon pack="fab" icon="fa-discord"></b-icon>
-      </b-navbar-item>
-      <b-navbar-item
-        tag="a"
-        target="_blank"
-        href="https://discord.speedsouls.com"
-      >
-        <b-icon pack="fab" icon="fa-patreon"></b-icon>
-      </b-navbar-item>
-      <b-navbar-item
-        tag="a"
-        target="_blank"
-        href="https://discord.speedsouls.com"
-      >
-        <b-icon pack="fab" icon="fa-twitter"></b-icon>
-      </b-navbar-item>
-      <b-navbar-item
-        tag="a"
-        target="_blank"
-        href="https://discord.speedsouls.com"
-      >
-        <b-icon pack="fab" icon="fa-github"></b-icon>
-      </b-navbar-item>
-    </template>
-  </b-navbar>
+        <div class="navbar-end">
+          <router-link class="text navbar-item" :to="{ name: 'home' }"
+            >Welcome</router-link
+          >
+          <router-link class="text navbar-item" :to="{ name: 'games' }"
+            >Leaderboards</router-link
+          >
+          <a
+            class="text navbar-item"
+            target="_blank"
+            href="https://wiki.speedsouls.com/Main_Page"
+            >Wiki</a
+          >
+          <a
+            class="text navbar-item"
+            target="_blank"
+            href="https://forums.speedsouls.com"
+            >Forums</a
+          >
+          <a
+            tag="a"
+            class="text navbar-item"
+            target="_blank"
+            href="https://wiki.speedsouls.com/Run_submission"
+            >Submit a run</a
+          >
+          <span class="separator"></span>
+          <a
+            class="navbar-item"
+            target="_blank"
+            href="https://discord.speedsouls.com"
+          >
+            <b-icon pack="fab" icon="fa-discord"></b-icon>
+          </a>
+          <a
+            class="navbar-item"
+            target="_blank"
+            href="https://discord.speedsouls.com"
+          >
+            <b-icon pack="fab" icon="fa-patreon"></b-icon>
+          </a>
+          <a
+            class="navbar-item"
+            target="_blank"
+            href="https://discord.speedsouls.com"
+          >
+            <b-icon pack="fab" icon="fa-twitter"></b-icon>
+          </a>
+          <a
+            class="navbar-item"
+            target="_blank"
+            href="https://discord.speedsouls.com"
+          >
+            <b-icon pack="fab" icon="fa-github"></b-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    active: false
+  }),
+  methods: {
+    toggle() {
+      this.active = !this.active;
+    }
+  }
+};
+</script>
 
 <style scoped lang="scss">
 nav {
