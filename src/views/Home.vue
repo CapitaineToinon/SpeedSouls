@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <hero-nav class="hero-nav is-dark is-medium">
+    <hero-nav class="hero-nav is-black is-medium" navbarClass="is-black">
       <div class="container hero-content has-text-centered">
         <figure>
           <img src="@/assets/flame.png" alt="speedsouls-flame-logo" />

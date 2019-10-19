@@ -1,6 +1,6 @@
 <template>
   <div id="leaderboards">
-    <navbar />
+    <navbar class="is-primary" />
     <keep-alive :include="cachedRouted">
       <router-view />
     </keep-alive>

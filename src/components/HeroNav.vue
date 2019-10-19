@@ -1,7 +1,7 @@
 <template>
   <section class="hero">
     <div class="hero-head">
-      <Navbar />
+      <navbar :class="navbarClass" />
     </div>
     <div class="hero-body">
       <slot />
@@ -12,6 +12,12 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 export default {
+  props: {
+    navbarClass: {
+      type: String,
+      default: ""
+    }
+  },
   components: {
     Navbar
   }
