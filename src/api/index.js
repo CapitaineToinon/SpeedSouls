@@ -2,9 +2,7 @@ import Vue from "vue";
 import speedsouls from "./speedsouls";
 import { SnackbarProgrammatic as Snackbar } from "buefy";
 
-const isProd = process.env.NODE_ENV === "production";
-const portServer = process.env.PORT_SERVER || 3000;
-const SERVER_URL = isProd ? "" : `http://localhost:${portServer}`;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const BASE_URL = `${SERVER_URL}/api/speedruncom`;
 
 function showError(error) {

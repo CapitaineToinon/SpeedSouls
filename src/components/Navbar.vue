@@ -106,7 +106,6 @@ export default {
       this.active = !this.active;
     },
     close() {
-      console.log("CLOSING");
       this.active = false;
     }
   }
