@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <hero-nav class="hero-nav is-black is-medium" navbarClass="is-black">
+    <hero-nav class="hero-nav is-black is-fullheight" navbarClass="is-black">
       <div class="container hero-content has-text-centered">
         <figure>
           <img src="@/assets/flame.png" alt="speedsouls-flame-logo" />
@@ -18,8 +18,7 @@
             tag="router-link"
             :to="{ name: 'games' }"
             type="is-link"
-            >Leaderboards</b-button
-          >
+          >Leaderboards</b-button>
           <b-button
             class="is-medium is-warning is-inverted"
             pack="fas"
@@ -27,14 +26,13 @@
             tag="a"
             href="https://wiki.speedsouls.com/Main_Page"
             type="is-info"
-            >Speedrunning Wiki</b-button
-          >
+          >Speedrunning Wiki</b-button>
         </div>
       </div>
     </hero-nav>
     <section class="about hero is-black is-small">
       <div class="hero-body">
-        <div class="container hero-content has-text-centered">
+        <div class="container hero-content has-text-centered" data-aos="fade-left">
           <div class="block">
             <b-icon icon="clock" size="is-large" type="is-primary"></b-icon>
           </div>
@@ -57,12 +55,11 @@
               tag="a"
               href="https://discord.speedsouls.com"
               type="is-primary"
-              >Join our discord</b-button
-            >
+            >Join our discord</b-button>
           </div>
         </div>
         <div class="separator"></div>
-        <div class="container hero-content has-text-centered">
+        <div class="container hero-content has-text-centered" data-aos="fade-left">
           <div class="block">
             <b-icon icon="question" size="is-large" type="is-success"></b-icon>
           </div>
@@ -78,6 +75,7 @@
         </div>
       </div>
     </section>
+    <ss-footer />
   </div>
 </template>
 
@@ -88,6 +86,10 @@ export default {
   name: "home",
   components: {
     HeroNav
+  },
+  async created() {
+    const Aos = await import("aos");
+    Aos.init();
   }
 };
 </script>

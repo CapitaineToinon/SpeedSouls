@@ -12,34 +12,32 @@
       @click="onRowClick"
     >
       <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">{{
+        <b-table-column centered field="place" label="Rank">
+          {{
           props.row.place
-        }}</b-table-column>
+          }}
+        </b-table-column>
 
         <b-table-column centered field="players" label="Players">
           <div
             class="player"
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
-          >
-            {{ player.name }}
-          </div>
+          >{{ player.name }}</div>
         </b-table-column>
 
         <b-table-column
           centered
           field="primary_t"
           :label="props.row.primary_t.name"
-          >{{ props.row.primary_t.time }}</b-table-column
-        >
+        >{{ props.row.primary_t.time }}</b-table-column>
 
         <b-table-column
           centered
           v-for="(time, i) in props.row.others_t"
           :key="i"
           :label="time.name"
-          >{{ time.time }}</b-table-column
-        >
+        >{{ time.time }}</b-table-column>
 
         <b-table-column
           centered
@@ -47,17 +45,13 @@
           :key="variable.id"
           :label="variable.name"
         >
-          <div v-if="props.row.values[variable.id]">
-            {{ variable.values[props.row.values[variable.id]].label }}
-          </div>
+          <div
+            v-if="props.row.values[variable.id]"
+          >{{ variable.values[props.row.values[variable.id]].label }}</div>
         </b-table-column>
 
-        <b-table-column centered>
-          <b-icon
-            v-if="props.row.showicon"
-            icon="video"
-            size="is-small"
-          ></b-icon>
+        <b-table-column centered class="is-hidden-touch">
+          <b-icon v-if="props.row.showicon" icon="video" size="is-small"></b-icon>
         </b-table-column>
       </template>
     </b-table>

@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #leaderboards {
   display: inherit;
   flex-direction: inherit;

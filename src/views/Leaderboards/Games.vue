@@ -1,6 +1,6 @@
 <template>
   <div id="games">
-    <section class="section">
+    <section class="section main">
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-half">
@@ -19,10 +19,7 @@
                       params: { abbreviation: game.abbreviation }
                     }"
                   ></b-menu-item>
-                  <b-loading
-                    :active="isLoading"
-                    :is-full-page="false"
-                  ></b-loading>
+                  <b-loading :active="isLoading" :is-full-page="false"></b-loading>
                 </b-menu-list>
               </div>
             </div>
@@ -30,6 +27,7 @@
         </div>
       </div>
     </section>
+    <ss-footer />
   </div>
 </template>
 
@@ -49,10 +47,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.game {
-  ::v-deep .is-active {
-    background-color: inherit;
-    color: inherit;
+#games {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .main {
+    flex-grow: 1;
+  }
+
+  .game {
+    ::v-deep .is-active {
+      background-color: inherit;
+      color: inherit;
+    }
   }
 }
 </style>

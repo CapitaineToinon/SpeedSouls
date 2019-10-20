@@ -5,7 +5,7 @@
         <router-view />
       </keep-alive>
     </main>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
@@ -29,6 +29,12 @@ body,
 
   display: flex;
   flex-direction: column;
+}
+
+body {
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 main {

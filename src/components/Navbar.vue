@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="container">
+    <!-- <div class=""> -->
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{ name: 'home' }">
           <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
@@ -65,7 +65,7 @@
           </a>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </nav>
 </template>
 

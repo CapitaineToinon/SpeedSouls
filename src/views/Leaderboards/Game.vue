@@ -1,8 +1,14 @@
 <template>
   <div id="game" v-if="game">
-    <div class="sidebar-bg"></div>
-    <div class="container game-horizontal-page">
-      <aside class="sidebar">
+    <div class="container is-fluid is-marginless game-horizontal-page">
+      <button
+        @click="toggle"
+        class="sidebar-button button is-large is-primary"
+        :class="{ '-open': openSidebar }"
+      >
+        <b-icon class="sidebar-button_icon" pack="fas" :icon="buttonIcon"></b-icon>
+      </button>
+      <aside class="sidebar" :class="{ '-open': openSidebar }">
         <Categories
           class="categories"
           :categories="game.categories"
@@ -10,40 +16,32 @@
           @CategoryClick="onCategoryClick"
         />
       </aside>
-      <div class="column content">
-        <div class="container">
-          <header class="content-header">
-            <nav class="breadcrumb" aria-label="breadcrumbs">
-              <ul>
-                <li
-                  v-for="(b, i) in breadcrumbs"
-                  :key="i"
-                  :class="b.active ? 'is-active' : ''"
-                >
-                  <router-link :to="b.to">{{ b.text }}</router-link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-          <div class="seperator"></div>
-          <div
-            class="sub-categories"
-            v-if="variables.filter(v => v['is-subcategory']).length"
-          >
-            <Subcategory
-              v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
-              :key="i"
-              :subcategory="v"
-            />
-          </div>
-          <div class="content-main">
-            <Leaderboard
-              :game="game"
-              :category="category"
-              :variables="variables"
-            />
+      <div class="main" :class="{ '-open': openSidebar }">
+        <div class="content">
+          <div class="container">
+            <header class="header">
+              <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                  <li v-for="(b, i) in breadcrumbs" :key="i" :class="b.active ? 'is-active' : ''">
+                    <router-link :to="b.to">{{ b.text }}</router-link>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            <div class="seperator"></div>
+            <div class="sub-categories" v-if="variables.filter(v => v['is-subcategory']).length">
+              <Subcategory
+                v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
+                :key="i"
+                :subcategory="v"
+              />
+            </div>
+            <div class="body">
+              <Leaderboard :game="game" :category="category" :variables="variables" />
+            </div>
           </div>
         </div>
+        <ss-footer />
       </div>
     </div>
   </div>
@@ -59,7 +57,8 @@ export default {
   data: () => ({
     game: null,
     category: Object.apply(null),
-    variables: []
+    variables: [],
+    openSidebar: false
   }),
   components: {
     Categories,
@@ -68,6 +67,7 @@ export default {
   },
   methods: {
     onCategoryClick(category) {
+      this.openSidebar = false;
       this.category = category;
       this.updateHash(category);
       window.scrollTo({ top: 0 });
@@ -79,6 +79,9 @@ export default {
       return this.game.categories.find(category => {
         return window.location.hash === `#${category.hash}`;
       });
+    },
+    toggle() {
+      this.openSidebar = !this.openSidebar;
     }
   },
   watch: {
@@ -99,6 +102,9 @@ export default {
     }
   },
   computed: {
+    buttonIcon() {
+      return this.openSidebar ? "times" : "list";
+    },
     breadcrumbs() {
       return [
         {
@@ -118,6 +124,9 @@ export default {
       ];
     }
   },
+  activated() {
+    this.openSidebar = false;
+  },
   async mounted() {
     this.game = await this.$speedsouls.getGame(this.$route.params.abbreviation);
     this.category = this.getCategoryFromHash() || this.game.categories[0];
@@ -126,20 +135,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$sidebar-width: 300px;
+
 #game {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-
-  .sidebar-bg {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 50%;
-    z-index: -1;
-    background: $beige-lighter;
-  }
 
   .game-horizontal-page {
     position: relative;
@@ -147,47 +148,106 @@ export default {
     flex-direction: row;
     flex: 1;
 
+    .sidebar-button {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      cursor: pointer;
+      z-index: $navbar-z - 1;
+      display: none;
+      box-shadow: 1px 1px 15px $dark;
+      transition: all $speed-slow;
+      transform: translateX(-200%);
+
+      &.-open {
+        box-shadow: none;
+      }
+
+      @include touch {
+        display: block;
+        transform: translateX(0);
+      }
+    }
+
     .sidebar {
+      position: relative;
       display: flex;
       flex-direction: column;
-      width: 18rem;
-      padding: 2rem 1rem;
+      width: 20rem;
+      padding: 0 1rem;
       background: $beige-lighter;
+      height: calc(100vh - #{$navbar-height});
+      overflow-y: scroll;
 
       .categories {
         position: sticky;
         top: 1rem;
       }
+
+      @include touch {
+        position: absolute;
+        z-index: $navbar-z - 2;
+        overflow-y: scroll;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        transition: all $speed-slower;
+        transform: translateY(100%);
+        // transform: translateY(100%);
+
+        .categories {
+          padding-bottom: 4rem;
+        }
+
+        &.-open {
+          transform: translateY(0);
+        }
+      }
     }
 
-    .content {
+    .main {
       background: $white;
-      padding: 0 2rem;
+      height: calc(100vh - #{$navbar-height});
+      width: 100%;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      transition: all $speed-slower;
 
-      .content-header {
-        padding: 2rem 0;
+      &.-open {
+        transform: scale(0.9);
+        opacity: 0;
+      }
 
-        .breadcrumb {
-          & > ul {
-            margin: 0;
+      .content {
+        padding: 0 1rem;
+        flex-grow: 1;
 
-            & > li {
-              margin-top: 4px;
+        .header {
+          padding: 2rem 0;
+
+          .breadcrumb {
+            & > ul {
+              margin: 0;
+
+              & > li {
+                margin-top: 4px;
+              }
             }
           }
         }
-      }
 
-      .seperator {
-        border-bottom: 1px solid $beige-lighter;
-      }
+        .seperator {
+          border-bottom: 1px solid $beige-lighter;
+        }
 
-      .sub-categories {
-        margin-top: 2rem;
-      }
+        .sub-categories {
+          margin-top: 2rem;
+        }
 
-      .content-main {
-        padding: 2rem 0;
+        .body {
+          margin-top: 2rem;
+        }
       }
     }
   }
