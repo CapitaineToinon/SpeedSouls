@@ -8,7 +8,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     env:
-      PATH: /tmp/speedsouls
+      TMP_PATH: /tmp/speedsouls
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
@@ -16,8 +16,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        envs: PATH
+        envs: TMP_PATH
         script: |
-          mkdir -p $PATH
-          cd $PATH
-          git clone https://github.com/CapitaineToinon/buefy-souls.git .
+          git clone https://github.com/CapitaineToinon/buefy-souls.git $TMP_PATH
