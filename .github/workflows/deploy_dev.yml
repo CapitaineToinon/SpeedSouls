@@ -13,13 +13,14 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       env:
-        path: /tmp/speedsouls/
+        PATH: "/tmp/speedsouls/"
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script_stop: true
+        envs: PATH
         script: |
-          git clone https://github.com/CapitaineToinon/buefy-souls.git $path
-          cd $path
+          git clone https://github.com/CapitaineToinon/buefy-souls.git $PATH
+          cd $PATH
           pwd
