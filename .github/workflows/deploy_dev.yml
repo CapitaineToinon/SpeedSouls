@@ -1,0 +1,25 @@
+name: deploy_dev
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      env:
+        path: /tmp/speedsouls/
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script_stop: true
+        script: |
+          git clone https://github.com/CapitaineToinon/buefy-souls.git $path
+          cd $path
+          pwd
