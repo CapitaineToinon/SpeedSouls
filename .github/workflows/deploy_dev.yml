@@ -20,4 +20,4 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script_stop: true
         envs: path
-        script: git clone https://github.com/CapitaineToinon/buefy-souls.git $path
+        script: echo "$path"
