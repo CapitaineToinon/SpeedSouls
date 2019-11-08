@@ -18,5 +18,6 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         envs: PATH
         script: |
-          git clone https://github.com/CapitaineToinon/buefy-souls.git "$PATH"
-          cd "$PATH"
+          mkdir -p $PATH
+          cd $PATH
+          git clone https://github.com/CapitaineToinon/buefy-souls.git .
