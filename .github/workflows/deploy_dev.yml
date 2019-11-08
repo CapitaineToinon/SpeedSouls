@@ -1,4 +1,6 @@
 name: deploy_dev
+env:
+  path: /tmp/speedsouls
 
 on:
   push:
@@ -12,8 +14,6 @@ jobs:
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
-      env:
-        path: /tmp/speedsouls
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
