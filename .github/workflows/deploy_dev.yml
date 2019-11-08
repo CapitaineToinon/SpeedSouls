@@ -17,4 +17,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         envs: GITHUB_REPOSITORY
-        script: echo "$GITHUB_REPOSITORY"
+        script: |
+          git clone https://github.com/$GITHUB_REPOSITORY.git /tmp/$GITHUB_REPOSITORY
+          cd /tmp/$GITHUB_REPOSITORY
+          yarn install
+          yarn build
