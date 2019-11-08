@@ -1,24 +1,30 @@
-name: deploy_dev
-on:
-  push:
-    branches: 
-      - master
+name: build and publish to dev
+on: push
 jobs:
-  build:
-    name: Deploy
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
-    env:
-      TMP_PATH: /tmp/speedsouls
     steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+    - uses: actions/checkout@master
+    
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        envs: GITHUB_REPOSITORY
-        script: |
-          git clone https://github.com/$GITHUB_REPOSITORY.git /tmp/$GITHUB_REPOSITORY
-          cd /tmp/$GITHUB_REPOSITORY
-          yarn install
-          yarn build
+        node-version: '10.x'
+        
+    - name: Build Project
+      run: |
+        yarn install
+        yarn build
+        
+    - name: List output files
+      run: ls
+      
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      env:
+        FTP_SERVER: ${{ secrets.HOST }}
+        FTP_USERNAME: ${{ secrets.USERNAME }}
+        FTP_PASSWORD: ${{ secrets.PASSWORD }}
+        LOCAL_DIR: build
+        METHOD: sftp
