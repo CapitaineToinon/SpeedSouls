@@ -165,7 +165,7 @@ $sidebar-width: 300px;
 
     .sidebar-button {
       position: absolute;
-      left: 1rem;
+      right: 1rem;
       bottom: 1rem;
       cursor: pointer;
       z-index: $navbar-z - 1;

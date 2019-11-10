@@ -25,5 +25,6 @@ export default {
   display: inherit;
   flex-direction: inherit;
   flex-grow: 1;
+  overflow: hidden;
 }
 </style>
