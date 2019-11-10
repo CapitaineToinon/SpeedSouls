@@ -28,4 +28,3 @@ jobs:
         FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
         METHOD: sftp
         LOCAL_DIR: dist
-        ARGS: --include=../scripts/deploy_dev.sh
