@@ -26,6 +26,6 @@ jobs:
         FTP_SERVER: ${{ secrets.DEV_HOST }}
         FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
         FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
-        REMOTE_DIR: dist
-        LOCAL_DIR: test
+        REMOTE_DIR: test
+        LOCAL_DIR: dist
         METHOD: sftp
