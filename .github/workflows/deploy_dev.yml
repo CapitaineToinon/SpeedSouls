@@ -27,4 +27,4 @@ jobs:
         FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
         FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
         METHOD: sftp
-        ARGS: --include=dist
+        LOCAL_DIR: dist
