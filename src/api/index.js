@@ -2,8 +2,8 @@ import Vue from "vue";
 import speedsouls from "./speedsouls";
 import { SnackbarProgrammatic as Snackbar } from "buefy";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const BASE_URL = `${SERVER_URL}/api/speedruncom`;
+const SERVER_URL = "https://www.speedrun.com"
+const BASE_URL = `${SERVER_URL}/api/v1`;
 
 function showError(error) {
   Snackbar.open({
