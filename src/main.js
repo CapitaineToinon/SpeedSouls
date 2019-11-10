@@ -8,7 +8,7 @@ import "@/api";
 
 // Global components
 import Footer from "@/components/Footer.vue";
-Vue.component('ss-footer', Footer);
+Vue.component("ss-footer", Footer);
 
 Vue.use(Buefy, {
   defaultIconPack: "fa"

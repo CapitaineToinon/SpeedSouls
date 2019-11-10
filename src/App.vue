@@ -5,22 +5,8 @@
         <router-view />
       </keep-alive>
     </main>
-    <!-- <Footer /> -->
   </div>
 </template>
-
-<script>
-import Footer from "@/components/Footer.vue";
-
-export default {
-  data: () => ({
-    cachedRoutes: [""]
-  }),
-  components: {
-    Footer
-  }
-};
-</script>
 
 <style lang="scss">
 body,

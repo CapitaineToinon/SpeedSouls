@@ -1,70 +1,64 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <!-- <div class=""> -->
-      <div class="navbar-brand">
-        <router-link class="navbar-item" :to="{ name: 'home' }">
-          <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
-        </router-link>
+    <div class="navbar-brand">
+      <router-link class="navbar-item" :to="{ name: 'home' }">
+        <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
+      </router-link>
 
-        <a
-          @click="toggle"
-          role="button"
-          class="navbar-burger burger"
-          :class="{ 'is-active': active }"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="speedsoulsNavbar"
+      <a
+        @click="toggle"
+        role="button"
+        class="navbar-burger burger"
+        :class="{ 'is-active': active }"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="speedsoulsNavbar"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div
+      id="speedsoulsNavbar"
+      class="navbar-menu has-text-centered"
+      :class="{ 'is-active': active }"
+    >
+      <div class="navbar-end">
+        <router-link
+          @click.native="close"
+          class="text navbar-item"
+          :to="{ name: 'home' }"
+          >Welcome</router-link
         >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+        <router-link
+          @click.native="close"
+          class="text navbar-item"
+          :to="{ name: 'games' }"
+          >Leaderboards</router-link
+        >
+        <a class="text navbar-item" target="_blank" :href="links.wiki">Wiki</a>
+        <a class="text navbar-item" target="_blank" :href="links.forums"
+          >Forums</a
+        >
+        <a tag="a" class="text navbar-item" target="_blank" :href="links.submit"
+          >Submit a run</a
+        >
+        <span class="separator"></span>
+        <a
+          v-for="(s, key) in socials"
+          :key="key"
+          class="navbar-item"
+          target="_blank"
+          :href="s.url"
+        >
+          <b-icon pack="fab" :icon="s.icon"></b-icon>
+          <span class="is-hidden-desktop">{{ s.title }}</span>
         </a>
       </div>
-
-      <div
-        id="speedsoulsNavbar"
-        class="navbar-menu has-text-centered"
-        :class="{ 'is-active': active }"
-      >
-        <div class="navbar-end">
-          <router-link
-            @click.native="close"
-            class="text navbar-item"
-            :to="{ name: 'home' }"
-            >Welcome</router-link
-          >
-          <router-link
-            @click.native="close"
-            class="text navbar-item"
-            :to="{ name: 'games' }"
-            >Leaderboards</router-link
-          >
-          <a class="text navbar-item" target="_blank" :href="links.wiki"
-            >Wiki</a
-          >
-          <a class="text navbar-item" target="_blank" :href="links.forums"
-            >Forums</a
-          >
-          <a
-            tag="a"
-            class="text navbar-item"
-            target="_blank"
-            :href="links.submit"
-            >Submit a run</a
-          >
-          <span class="separator"></span>
-          <a
-            v-for="(s, key) in socials"
-            :key="key"
-            class="navbar-item"
-            target="_blank"
-            :href="s.url"
-          >
-            <b-icon pack="fab" :icon="s.icon"></b-icon>
-            <span class="is-hidden-desktop">{{ s.title }}</span>
-          </a>
-        </div>
-      </div>
+    </div>
     <!-- </div> -->
   </nav>
 </template>

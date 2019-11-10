@@ -2,7 +2,7 @@ import Vue from "vue";
 import speedsouls from "./speedsouls";
 import { SnackbarProgrammatic as Snackbar } from "buefy";
 
-const SERVER_URL = "https://www.speedrun.com"
+const SERVER_URL = "https://www.speedrun.com";
 const BASE_URL = `${SERVER_URL}/api/v1`;
 
 function showError(error) {
