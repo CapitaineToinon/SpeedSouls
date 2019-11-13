@@ -33,7 +33,7 @@
       </div>
     </hero-nav>
     <section class="about hero is-black is-small">
-      <div class="hero-body">
+      <div class="hero-body is-clipped">
         <div
           class="container hero-content has-text-centered"
           data-aos="fade-left"
