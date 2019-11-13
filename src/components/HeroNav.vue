@@ -1,5 +1,5 @@
 <template>
-  <section class="hero">
+  <section class="hero" :style="style">
     <div class="hero-head">
       <navbar :class="navbarClass" />
     </div>
@@ -12,6 +12,10 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 export default {
+  data: () => ({
+    // todo other backgrounds
+    assets: ["bloodborne.png", "darksouls3.jpg"]
+  }),
   props: {
     navbarClass: {
       type: String,
@@ -20,16 +24,37 @@ export default {
   },
   components: {
     Navbar
-  }
+  },
+  computed: {
+    style() {
+      const image = this.assets[Math.floor(Math.random() * this.assets.length)];
+      const url = require(`@/assets/backgrounds/${image}`);
+
+      return {
+        '--bg-url': `url(${url})`,
+      };
+    }
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .hero {
-  background-image: url("~@/assets/thumb-ds3.jpg");
-  object-fit: cover;
-  object-position: center center;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: "";
+    filter: blur(2px);
+    background-image: var(--bg-url);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -10;
+  }
 }
 </style>
