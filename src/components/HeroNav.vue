@@ -31,10 +31,10 @@ export default {
       const url = require(`@/assets/backgrounds/${image}`);
 
       return {
-        '--bg-url': `url(${url})`,
+        "--bg-url": `url(${url})`
       };
     }
-  },
+  }
 };
 </script>
 
@@ -42,10 +42,12 @@ export default {
 .hero {
   position: relative;
   z-index: 1;
+  overflow: hidden;
 
   &::after {
     content: "";
     filter: blur(2px);
+    transform: scale(1.1);
     background-image: var(--bg-url);
     background-repeat: no-repeat;
     background-size: cover;

@@ -2,45 +2,44 @@
   <div id="games">
     <section class="section main">
       <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <div class="card">
-              <div class="card-content">
-                <b-menu-list label="Games">
-                  <b-menu-item
-                    class="game"
-                    v-for="(game, i) in games"
-                    :key="i"
-                    icon="information-outline"
-                    :label="game.name"
-                    tag="router-link"
-                    :to="{
-                      name: 'game',
-                      params: { abbreviation: game.abbreviation }
-                    }"
-                  ></b-menu-item>
-                  <b-loading
-                    :active="isLoading"
-                    :is-full-page="false"
-                  ></b-loading>
-                </b-menu-list>
-              </div>
-            </div>
+        <div class="columns is-mobile is-multiline">
+          <div
+            v-for="game in games"
+            :key="game.id"
+            class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-fullhd"
+          >
+            <game-card
+              class="game-card"
+              :game="game"
+              @click="to(game.abbreviation)"
+            />
           </div>
         </div>
       </div>
     </section>
+    <b-loading :is-full-page="false" :active="isLoading"></b-loading>
     <ss-footer />
   </div>
 </template>
 
 <script>
+import GameCard from "@/components/GameCard.vue";
+
 export default {
   name: "games",
+  components: { GameCard },
   data: () => ({
     games: [],
     isLoading: false
   }),
+  methods: {
+    to(abbreviation) {
+      this.$router.push({
+        name: "game",
+        params: { abbreviation }
+      });
+    }
+  },
   async mounted() {
     this.isLoading = true;
     this.games = await this.$speedsouls.getGames();
@@ -57,12 +56,9 @@ export default {
 
   .main {
     flex-grow: 1;
-  }
 
-  .game {
-    ::v-deep .is-active {
-      background-color: inherit;
-      color: inherit;
+    .game-card {
+      cursor: pointer;
     }
   }
 }
