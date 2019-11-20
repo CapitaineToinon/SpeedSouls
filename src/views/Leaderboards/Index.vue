@@ -1,7 +1,7 @@
 <template>
   <div id="leaderboards">
     <navbar class="is-primary" />
-    <keep-alive :include="cachedRouted">
+    <keep-alive include="games">
       <router-view />
     </keep-alive>
   </div>
@@ -13,10 +13,7 @@ import Navbar from "@/components/Navbar.vue";
 export default {
   components: {
     Navbar
-  },
-  data: () => ({
-    cachedRouted: ["games"]
-  })
+  }
 };
 </script>
 
