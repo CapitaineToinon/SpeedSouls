@@ -1,8 +1,9 @@
 <template>
   <div
     class="game-card card has-text-centered is-bold is-unselectable"
-    @click="e => $emit('click', e)"
+    :class="{ clickable }"
     :style="style"
+    @click="onClick"
   >
     <div class="card-image">
       <figure class="image is-16by9"></figure>
@@ -16,9 +17,22 @@ export default {
     game: {
       type: Object,
       required: true
+    },
+    to: {
+      type: Object,
+      required: false
+    }
+  },
+  methods: {
+    onClick() {
+      if (this.to)
+        this.$router.push(this.to);
     }
   },
   computed: {
+    clickable() {
+      return this.to !== undefined
+    },
     style() {
       return {
         "--bg-url": `url(${this.game.assets["background"].uri})`,
@@ -32,6 +46,10 @@ export default {
 <style lang="scss" scoped>
 .game-card {
   position: relative;
+
+  &.clickable {
+    cursor: pointer;
+  }
 
   .card-image {
     overflow: hidden;

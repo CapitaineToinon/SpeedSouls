@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Buefy from "buefy";
+import VueScrollTo from "vue-scrollto";
 
 import "@/api";
 
@@ -10,6 +11,7 @@ import "@/api";
 import Footer from "@/components/Footer.vue";
 Vue.component("ss-footer", Footer);
 
+Vue.use(VueScrollTo);
 Vue.use(Buefy, {
   defaultIconPack: "fa"
 });

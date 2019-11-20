@@ -139,9 +139,6 @@ export default {
       ];
     }
   },
-  activated() {
-    this.openSidebar = false;
-  },
   async mounted() {
     this.game = await this.$speedsouls.getGame(this.$route.params.abbreviation);
     this.category = this.getCategoryFromHash() || this.game.categories[0];

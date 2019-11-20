@@ -15,11 +15,9 @@
           <b-button
             class="is-medium is-warning is-inverted"
             icon-left="fas fa-list"
-            tag="router-link"
-            :to="{ name: 'games' }"
+            v-scroll-to="'#games'"
             type="is-link"
-            >Leaderboards</b-button
-          >
+          >Leaderboards</b-button>
           <b-button
             class="is-medium is-warning is-inverted"
             pack="fas"
@@ -27,17 +25,33 @@
             tag="a"
             href="https://wiki.speedsouls.com/Main_Page"
             type="is-info"
-            >Speedrunning Wiki</b-button
-          >
+          >Speedrunning Wiki</b-button>
         </div>
       </div>
     </hero-nav>
+    <section id="games" class="games hero is-black is-fullheight">
+      <div class="hero-body is-clipped">
+        <div class="container">
+          <div class="columns is-mobile is-multiline">
+            <p class="column is-full has-text-weight-bold is-size-2">Leaderbaords</p>
+            <div
+              v-for="game in games"
+              :key="game.id"
+              class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-fullhd"
+            >
+              <game-card
+                class="game-card"
+                :game="game"
+                :to="{ name: 'game', params: { abbreviation: game.abbreviation } }"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="about hero is-black is-small">
       <div class="hero-body is-clipped">
-        <div
-          class="container hero-content has-text-centered"
-          data-aos="fade-left"
-        >
+        <div class="container hero-content has-text-centered">
           <div class="block">
             <b-icon icon="clock" size="is-large" type="is-primary"></b-icon>
           </div>
@@ -60,15 +74,11 @@
               tag="a"
               href="https://discord.speedsouls.com"
               type="is-primary"
-              >Join our discord</b-button
-            >
+            >Join our discord</b-button>
           </div>
         </div>
         <div class="separator"></div>
-        <div
-          class="container hero-content has-text-centered"
-          data-aos="fade-left"
-        >
+        <div class="container hero-content has-text-centered">
           <div class="block">
             <b-icon icon="question" size="is-large" type="is-success"></b-icon>
           </div>
@@ -90,15 +100,19 @@
 
 <script>
 import HeroNav from "@/components/HeroNav.vue";
+import GameCard from "@/components/GameCard.vue";
 
 export default {
   name: "home",
   components: {
-    HeroNav
+    HeroNav,
+    GameCard
   },
+  data: () => ({
+    games: []
+  }),
   async created() {
-    const Aos = await import("aos");
-    Aos.init();
+    this.games = await this.$speedsouls.getGames();
   }
 };
 </script>

@@ -9,9 +9,8 @@
             class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-fullhd"
           >
             <game-card
-              class="game-card"
               :game="game"
-              @click="to(game.abbreviation)"
+              :to="{ name: 'game', params: { abbreviation: game.abbreviation } }"
             />
           </div>
         </div>
@@ -32,14 +31,6 @@ export default {
     games: [],
     isLoading: false
   }),
-  methods: {
-    to(abbreviation) {
-      this.$router.push({
-        name: "game",
-        params: { abbreviation }
-      });
-    }
-  },
   async mounted() {
     this.isLoading = true;
     this.games = await this.$speedsouls.getGames();
@@ -56,10 +47,6 @@ export default {
 
   .main {
     flex-grow: 1;
-
-    .game-card {
-      cursor: pointer;
-    }
   }
 }
 </style>
