@@ -17,7 +17,8 @@
             icon-left="fas fa-list"
             v-scroll-to="'#games'"
             type="is-link"
-          >Leaderboards</b-button>
+            >Leaderboards</b-button
+          >
           <b-button
             class="is-medium is-warning is-inverted"
             pack="fas"
@@ -25,7 +26,8 @@
             tag="a"
             href="https://wiki.speedsouls.com/Main_Page"
             type="is-info"
-          >Speedrunning Wiki</b-button>
+            >Speedrunning Wiki</b-button
+          >
         </div>
       </div>
     </hero-nav>
@@ -33,7 +35,9 @@
       <div class="hero-body is-clipped">
         <div class="container">
           <div class="columns is-mobile is-multiline">
-            <p class="column is-full has-text-weight-bold is-size-2">Leaderbaords</p>
+            <p class="column is-full has-text-weight-bold is-size-2">
+              Leaderbaords
+            </p>
             <div
               v-for="game in games"
               :key="game.id"
@@ -42,7 +46,10 @@
               <game-card
                 class="game-card"
                 :game="game"
-                :to="{ name: 'game', params: { abbreviation: game.abbreviation } }"
+                :to="{
+                  name: 'game',
+                  params: { abbreviation: game.abbreviation }
+                }"
               />
             </div>
           </div>
@@ -74,7 +81,8 @@
               tag="a"
               href="https://discord.speedsouls.com"
               type="is-primary"
-            >Join our discord</b-button>
+              >Join our discord</b-button
+            >
           </div>
         </div>
         <div class="separator"></div>

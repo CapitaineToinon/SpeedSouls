@@ -25,13 +25,12 @@ export default {
   },
   methods: {
     onClick() {
-      if (this.to)
-        this.$router.push(this.to);
+      if (this.to) this.$router.push(this.to);
     }
   },
   computed: {
     clickable() {
-      return this.to !== undefined
+      return this.to !== undefined;
     },
     style() {
       return {
