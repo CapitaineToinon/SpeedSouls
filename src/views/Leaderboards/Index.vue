@@ -1,9 +1,12 @@
 <template>
-  <div id="leaderboards">
-    <navbar class="is-primary" />
-    <keep-alive include="games">
-      <router-view />
-    </keep-alive>
+  <div class="leaderboards">
+    <navbar class="ss-navbar is-primary is-fixed-top" />
+    <main class="ss-main">
+      <keep-alive include="games">
+        <router-view />
+      </keep-alive>
+    </main>
+    <ss-footer class="ss-footer" />
   </div>
 </template>
 
@@ -18,10 +21,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#leaderboards {
-  display: inherit;
-  flex-direction: inherit;
+.leaderboards {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  overflow: hidden;
+
+  .ss-main {
+    padding-top: $navbar-height;
+    flex-grow: 1;
+  }
 }
 </style>

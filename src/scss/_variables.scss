@@ -20,6 +20,18 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
+// updating section
+$section-padding-y: 3rem;
+$section-padding-x: 1.5rem;
+$section-padding-medium-y: 9rem;
+$section-padding-medium-x: 1.5rem;
+$section-padding-large-y: 18rem;
+$section-padding-large-x: 1.5rem;
+
+$section-padding: $section-padding-y $section-padding-x;
+$section-padding-medium: $section-padding-medium-y $section-padding-medium-x;
+$section-padding-large: $section-padding-large-y $section-padding-large-x;
+
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
   "white": (
