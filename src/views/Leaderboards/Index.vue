@@ -16,12 +16,12 @@ export default {
       assets: [
         "bloodborne.png",
         "darksouls3.jpg",
-        "darksouls.png",
-        "darksouls2.png",
-        "darksouls2sotfs.png",
+        "darksouls.jpg",
+        "darksouls2.jpg",
+        "darksouls2sotfs.jpg",
         "darksouls3ext.png",
-        "darksoulsremastered.png",
-        "demonssouls.png"
+        "darksoulsremastered.jpg",
+        "demonssouls.jpg"
       ]
     };
   },
