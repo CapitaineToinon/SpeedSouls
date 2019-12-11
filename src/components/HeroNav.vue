@@ -14,7 +14,16 @@ import Navbar from "@/components/Navbar.vue";
 export default {
   data: () => ({
     // todo other backgrounds
-    assets: ["bloodborne.png", "darksouls3.jpg"]
+    assets: [
+      "bloodborne.png",
+      "darksouls3.jpg",
+      "darksouls.png",
+      "darksouls2.png",
+      "darksouls2sotfs.png",
+      "darksouls3ext.png",
+      "darksoulsremastered.png",
+      "demonssouls.png"
+    ]
   }),
   props: {
     navbarClass: {

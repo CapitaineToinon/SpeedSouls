@@ -17,7 +17,7 @@
 
 <style scoped lang="scss">
 .footer {
-  background: $dark;
+  background: $beige-lighter !important;
   color: $white;
 }
 </style>

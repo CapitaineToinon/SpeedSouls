@@ -110,7 +110,7 @@ export default {
 nav {
   .navbar-brand {
     .router-link-active:hover {
-      background-color: inherit !important;
+      // background-color: inherit !important;
     }
   }
 

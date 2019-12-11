@@ -187,11 +187,17 @@ $sidebar-width: 300px;
       flex-direction: column;
       width: 20rem;
       padding: 0 1rem;
-      background: $beige-lighter;
+      //2019/12/11 Jason LI
+      // background: $beige-lighter;
       height: calc(100vh - #{$navbar-height});
-      overflow-y: scroll;
+      //2019/12/11 Jason LI
+      // overflow-y: scroll;
+      overflow-y: hidden;
 
       .categories {
+        //2019/12/11 Jason LI
+        background: $beige-lighter;
+        padding: 0.5rem;
         position: sticky;
         top: 1rem;
       }
@@ -218,7 +224,8 @@ $sidebar-width: 300px;
     }
 
     .main {
-      background: $white;
+      // background: $white;
+      background: $beige-lighter;
       height: calc(100vh - #{$navbar-height});
       width: 100%;
       overflow-y: scroll;
@@ -250,7 +257,9 @@ $sidebar-width: 300px;
         }
 
         .seperator {
-          border-bottom: 1px solid $beige-lighter;
+          //2019/12/11 Jason LI
+          // border-bottom: 1px solid $beige-lighter;
+          border-bottom: 1px solid $primary;
         }
 
         .sub-categories {

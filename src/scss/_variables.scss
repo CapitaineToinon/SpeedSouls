@@ -15,6 +15,39 @@ $link: $pink;
 $twitter: $twitter;
 $twitter-invert: findColorInvert($twitter);
 
+// dark 
+$dark: rgb(10,10,10,0.8);
+$primary: rgb(255,255,255,0.92);
+$background: rgba(255,255,255,0.1);
+$beige-light: rgba(0,0,0,0.8);
+$beige-lighter: rgba(0,0,0,0.5);
+$primary-invert: $dark;
+$scheme-main: $dark;
+$border: $background;
+
+$grey: $primary;
+$grey-dark: $primary;
+$grey-darker: $primary;
+$grey-light: $primary;
+
+$text: $white-ter;
+$text-light: $white-bis;
+$text-strong: $white;
+
+$link: $white-bis;
+$link-hover: $white;
+
+$button-background-color: transparent;
+$button-text-hover-background-color: $background;
+
+$menu-item-hover-background-color: $background;
+
+$divider-color: $white-bis;
+$divider-background-color: $white-ter;
+
+$table-background-color: transparent;
+$table-row-hover-background-color: $background;
+
 // Update some of Bulma's component variables
 $control-border-width: 2px;
 $input-border-color: transparent;
