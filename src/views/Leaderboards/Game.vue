@@ -138,7 +138,7 @@ $sidebar-width: 300px;
     flex-grow: 1;
 
     .sidebar-button {
-      position: absolute;
+      position: fixed;
       right: 1rem;
       bottom: 1rem;
       cursor: pointer;
@@ -146,7 +146,6 @@ $sidebar-width: 300px;
       display: none;
       box-shadow: 1px 1px 15px $dark;
       transition: all $speed-slow;
-      transform: translateX(-200%);
 
       &.-open {
         box-shadow: none;
@@ -154,7 +153,6 @@ $sidebar-width: 300px;
 
       @include touch {
         display: block;
-        transform: translateX(0);
       }
     }
 
@@ -165,10 +163,35 @@ $sidebar-width: 300px;
       top: $navbar-height;
       position: -webkit-sticky;
       position: sticky;
+
+      @include touch {
+        position: fixed;
+        z-index: $navbar-z - 2;
+        overflow-y: scroll;
+        top: navbar-height;
+        height: 100%;
+        width: 100%;
+        transition: all $speed-slower;
+        transform: translateY(100%);
+        background-color: $white;
+
+        .categories {
+          padding-bottom: 4rem;
+        }
+
+        &.-open {
+          transform: translateY(0);
+        }
+      }
     }
 
     .content {
       flex-grow: 1;
+      transition: all $speed-slower;
+
+      &.-open {
+        opacity: .5;
+      }
     }
   }
 }
