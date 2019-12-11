@@ -55,5 +55,6 @@ export default {
   background-position: center;
   background-size: auto;
   background-repeat: repeat;
+  transition: background-image 1s ease-in-out;
 }
 </style>
