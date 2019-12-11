@@ -36,7 +36,7 @@
         <div class="container">
           <div class="columns is-mobile is-multiline">
             <p class="column is-full has-text-weight-bold is-size-2">
-              Leaderbaords
+              Leaderboards
             </p>
             <div
               v-for="game in games"
