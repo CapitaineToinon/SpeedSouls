@@ -1,30 +1,12 @@
 <template>
-  <div id="app">
-    <main>
-      <keep-alive include="home">
-        <router-view />
-      </keep-alive>
-    </main>
-  </div>
+  <keep-alive include="home">
+    <router-view />
+  </keep-alive>
 </template>
 
 <style lang="scss">
-body,
-#app {
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-}
-
 body {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-main {
-  flex-grow: 1;
+  min-height: 100vh;
 
   display: flex;
   flex-direction: column;
