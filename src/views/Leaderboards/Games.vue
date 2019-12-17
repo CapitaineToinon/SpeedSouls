@@ -10,9 +10,9 @@
           <game-card
             :game="game"
             :to="{
-                name: 'game',
-                params: { abbreviation: game.abbreviation }
-              }"
+              name: 'game',
+              params: { abbreviation: game.abbreviation }
+            }"
           />
         </div>
       </div>

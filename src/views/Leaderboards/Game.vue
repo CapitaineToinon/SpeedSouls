@@ -6,7 +6,11 @@
         class="sidebar-button button is-large is-primary"
         :class="{ '-open': openSidebar }"
       >
-        <b-icon class="sidebar-button_icon" pack="fas" :icon="buttonIcon"></b-icon>
+        <b-icon
+          class="sidebar-button_icon"
+          pack="fas"
+          :icon="buttonIcon"
+        ></b-icon>
       </button>
       <aside class="sidebar" :class="{ '-open': openSidebar }">
         <Categories
@@ -20,14 +24,21 @@
         <header class="header">
           <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-              <li v-for="(b, i) in breadcrumbs" :key="i" :class="b.active ? 'is-active' : ''">
+              <li
+                v-for="(b, i) in breadcrumbs"
+                :key="i"
+                :class="b.active ? 'is-active' : ''"
+              >
                 <router-link :to="b.to">{{ b.text }}</router-link>
               </li>
             </ul>
           </nav>
         </header>
         <div class="seperator"></div>
-        <div class="sub-categories" v-if="variables.filter(v => v['is-subcategory']).length">
+        <div
+          v-if="variables.filter(v => v['is-subcategory']).length"
+          class="sub-categories"
+        >
           <Subcategory
             v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
             :key="i"
@@ -35,7 +46,11 @@
           />
         </div>
         <div class="body">
-          <Leaderboard :game="game" :category="category" :variables="variables" />
+          <Leaderboard
+            :game="game"
+            :category="category"
+            :variables="variables"
+          />
         </div>
       </div>
     </div>
@@ -190,7 +205,7 @@ $sidebar-width: 300px;
       transition: all $speed-slower;
 
       &.-open {
-        opacity: .5;
+        opacity: 0.5;
       }
     }
   }
