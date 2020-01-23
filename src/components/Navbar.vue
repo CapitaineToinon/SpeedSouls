@@ -75,22 +75,22 @@ export default {
     socials: [
       {
         title: "Discord",
-        icon: "fa-discord",
+        icon: "discord",
         url: "http://discord.speedsouls.com"
       },
       {
         title: "Patreon",
-        icon: "fa-patreon",
+        icon: "patreon",
         url: "https://www.patreon.com/speedsouls"
       },
       {
         title: "Twitter",
-        icon: "fa-twitter",
+        icon: "twitter",
         url: "https://twitter.com/soulsruns"
       },
       {
         title: "Github",
-        icon: "fa-github",
+        icon: "github",
         url: "https://github.com/CapitaineToinon/buefy-souls"
       }
     ]
