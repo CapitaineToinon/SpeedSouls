@@ -1,20 +1,24 @@
 <template>
-  <div class="leaderboard" v-if="game && category">
+  <div v-if="status.pending" class="pending">
+    <b-loading :is-full-page="false" :active="true"></b-loading>
+  </div>
+  <div v-else-if="status.rejected">Failed</div>
+  <div v-else-if="status.fulfilled" class="fulfilled">
     <b-table
-      :data="isEmpty ? [] : data"
+      :data="data"
       :bordered="isBordered"
       :striped="isStriped"
       :narrowed="isNarrowed"
       :hoverable="isHoverable"
-      :loading="isLoading"
       :focusable="isFocusable"
+      :loading="false"
       :mobile-cards="hasMobileCards"
       @click="onRowClick"
     >
       <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">
-          {{ props.row.place }}
-        </b-table-column>
+        <b-table-column centered field="place" label="Rank">{{
+          props.row.place
+        }}</b-table-column>
 
         <b-table-column centered field="players" label="Players">
           <div
@@ -65,7 +69,12 @@
 </template>
 
 <script>
+import status from "@/mixins/status";
+import { prepareGetLeaderboard } from "@/api/speedsouls";
+const [getLeaderboard, cancel] = prepareGetLeaderboard();
+
 export default {
+  mixins: [status],
   props: {
     game: {
       type: Object,
@@ -88,7 +97,6 @@ export default {
     isNarrowed: false,
     isHoverable: true,
     isFocusable: false,
-    isLoading: false,
     hasMobileCards: true
   }),
   watch: {
@@ -96,49 +104,69 @@ export default {
       immediate: true,
       deep: true,
       handler() {
-        this.update();
+        this.fetchData();
       }
     }
   },
   methods: {
-    async update() {
-      this.isLoading = true;
-      this.data = [];
+    async fetchData() {
+      cancel(); // cancel current request if any
+      this.status.pending = true;
+      this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
 
-      const runs = await this.$speedsouls.getLeaderboard(
-        this.game.id,
-        this.category.id,
-        this.variables.filter(v => v["is-subcategory"])
-      );
+      try {
+        const runs = await getLeaderboard(
+          this.game.id,
+          this.category.id,
+          this.variables.filter(v => v["is-subcategory"])
+        );
 
-      this.data = runs.map(run => {
-        const primary_t = run.getPrimaryTime(this.game.ruleset);
-        const others_t = run.getOtherTimes(this.game.ruleset);
-        const players = run.players;
+        this.data = runs.map(run => {
+          const primary_t = run.getPrimaryTime(this.game.ruleset);
+          const others_t = run.getOtherTimes(this.game.ruleset);
+          const players = run.players;
 
-        return {
-          id: run.id,
-          place: run.place,
-          showicon: run.showicon,
-          weblink: run.weblink,
-          values: run.values,
-          primary_t,
-          others_t,
-          players
-        };
-      });
-      this.isLoading = false;
+          return {
+            id: run.id,
+            place: run.place,
+            showicon: run.showicon,
+            weblink: run.weblink,
+            values: run.values,
+            primary_t,
+            others_t,
+            players
+          };
+        });
+        this.status.fulfilled = true;
+        this.status.rejected = false;
+      } catch (e) {
+        if (e.name === "AbortError") return;
+        this.status.rejected = true;
+        this.status.fulfilled = false;
+      }
+
+      this.status.pending = false;
     },
     onRowClick(run) {
-      if (this.isLoading) return;
+      if (this.status.pending) return;
       window.open(run.weblink, "_blank");
     }
-  }
+  },
+  unmount: cancel,
+  destroyed: cancel
 };
 </script>
 
-<style scoped>
-table td {
-  cursor: pointer;
+<style lang="scss" scoped>
+.pending {
+  position: relative;
+  height: 100px;
+  width: auto;
+}
+
+.fulfilled {
+  table td {
+    cursor: pointer;
+  }
 }
 </style>

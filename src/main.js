@@ -5,8 +5,6 @@ import store from "./store";
 import Buefy from "buefy";
 import VueScrollTo from "vue-scrollto";
 
-import "@/api";
-
 // Global components
 import Footer from "@/components/Footer.vue";
 Vue.component("ss-footer", Footer);

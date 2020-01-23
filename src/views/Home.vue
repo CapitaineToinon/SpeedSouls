@@ -38,19 +38,8 @@
             <p class="column is-full has-text-weight-bold is-size-2">
               Leaderboards
             </p>
-            <div
-              v-for="game in games"
-              :key="game.id"
-              class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-fullhd"
-            >
-              <game-card
-                class="game-card"
-                :game="game"
-                :to="{
-                  name: 'game',
-                  params: { abbreviation: game.abbreviation }
-                }"
-              />
+            <div class="column is-full">
+              <GameCards />
             </div>
           </div>
         </div>
@@ -108,19 +97,13 @@
 
 <script>
 import HeroNav from "@/components/HeroNav.vue";
-import GameCard from "@/components/GameCard.vue";
+import GameCards from "@/components/GameCards.vue";
 
 export default {
   name: "home",
   components: {
     HeroNav,
-    GameCard
-  },
-  data: () => ({
-    games: []
-  }),
-  async created() {
-    this.games = await this.$speedsouls.getGames();
+    GameCards
   }
 };
 </script>
