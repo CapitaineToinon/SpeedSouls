@@ -1,16 +1,15 @@
 import { SnackbarProgrammatic as Snackbar } from "buefy";
 import { getGames } from "@/api/speedruncom/endpoints/series";
 import { getFullGame } from "@/api/speedruncom/endpoints/leaderboards";
-import formatGame from "./Game";
-import formatRun from "./Run";
-import formatPlayer from "./Player";
+import formatGame from "./formatting/Game";
+import formatRun from "./formatting/Run";
+import formatPlayer from "./formatting/Player";
 
 const SERIE = "souls";
 
 async function log(promise) {
   return promise.catch(error => {
     if (error.name !== "AbortError") showError(error);
-
     throw error;
   });
 }
@@ -80,7 +79,6 @@ export function prepareGetGame() {
     if (!candidate) {
       const error = new Error("Game not found");
       showError(error);
-      throw error;
     }
     return candidate;
   }

@@ -14,15 +14,16 @@
         <div class="buttons">
           <b-button
             class="is-medium is-warning is-inverted"
-            icon-left="fas fa-list"
+            icon-pack="fa"
+            icon-left="list"
             v-scroll-to="'#games'"
             type="is-link"
             >Leaderboards</b-button
           >
           <b-button
             class="is-medium is-warning is-inverted"
-            pack="fas"
-            icon-left="fas fa-angle-double-right"
+            icon-pack="fa"
+            icon-left="angle-double-right"
             tag="a"
             href="https://wiki.speedsouls.com/Main_Page"
             type="is-info"
@@ -66,7 +67,7 @@
             <b-button
               class="is-medium is-outlined is-inverted"
               icon-pack="fab"
-              icon-left="fa-discord"
+              icon-left="discord"
               tag="a"
               href="https://discord.speedsouls.com"
               type="is-primary"
@@ -77,7 +78,12 @@
         <div class="separator"></div>
         <div class="container hero-content has-text-centered">
           <div class="block">
-            <b-icon icon="question" size="is-large" type="is-success"></b-icon>
+            <b-icon
+              pack="fa"
+              icon="question"
+              size="is-large"
+              type="is-success"
+            ></b-icon>
           </div>
           <h1 class="title">What's up with this page?</h1>
           <h2 class="subtitle">
