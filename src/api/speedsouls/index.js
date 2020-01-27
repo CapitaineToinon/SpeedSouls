@@ -7,15 +7,11 @@ import formatPlayer from "./Player";
 
 const SERIE = "souls";
 
-async function json(promise) {
-  const response = await promise;
-  return await response.json();
-}
-
 async function log(promise) {
   return promise.catch(error => {
-    if (error.name === "AbortError") return;
-    showError(error);
+    if (error.name !== "AbortError") showError(error);
+
+    throw error;
   });
 }
 
@@ -50,15 +46,14 @@ export function prepareGetGames() {
       embed: "categories,variables"
     };
 
-    const { data } = await log(
-      json(
-        getGames(SERIE, {
-          queryParams,
-          signal
-        })
-      )
+    const response = await log(
+      getGames(SERIE, {
+        queryParams,
+        signal
+      })
     );
 
+    const { data } = await response.json();
     return data.map(formatGame);
   }
 
@@ -125,16 +120,15 @@ export function prepareGetLeaderboard() {
       embed: "players,variables"
     };
 
-    const { data } = await log(
-      json(
-        getFullGame(game, category, {
-          queryParams,
-          signal
-        })
-      )
+    const response = await log(
+      getFullGame(game, category, {
+        queryParams,
+        signal
+      })
     );
 
-    const runs = data.runs.map(run => {
+    const { data } = await response.json();
+    return data.runs.map(run => {
       const players = run.run.players
         .map(player => {
           return player.hasOwnProperty("id")
@@ -145,8 +139,6 @@ export function prepareGetLeaderboard() {
 
       return formatRun(run, players);
     });
-
-    return runs;
   }
 
   /**

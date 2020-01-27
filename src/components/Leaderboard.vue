@@ -1,10 +1,13 @@
 <template>
-  <div v-if="status.pending" class="pending">
-    <b-loading :is-full-page="false" :active="true"></b-loading>
-  </div>
-  <div v-else-if="status.rejected">Failed</div>
-  <div v-else-if="status.fulfilled" class="fulfilled">
+  <div v-if="status.rejected">Failed</div>
+  <div v-else-if="status.fulfilled || status.pending" class="fulfilled-pending">
+    <b-loading
+      :is-full-page="false"
+      :active="status.pending"
+      :class="{ 'is-hidden': !status.pending }"
+    ></b-loading>
     <b-table
+      :class="{ 'is-hidden': status.pending }"
       :data="data"
       :bordered="isBordered"
       :striped="isStriped"
@@ -16,9 +19,9 @@
       @click="onRowClick"
     >
       <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">{{
-          props.row.place
-        }}</b-table-column>
+        <b-table-column centered field="place" label="Rank">
+          {{ props.row.place }}
+        </b-table-column>
 
         <b-table-column centered field="players" label="Players">
           <div
@@ -114,6 +117,8 @@ export default {
       this.status.pending = true;
       this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
 
+      // await new Promise(resolve => setTimeout(resolve, 1000));
+
       try {
         const runs = await getLeaderboard(
           this.game.id,
@@ -140,6 +145,7 @@ export default {
         this.status.fulfilled = true;
         this.status.rejected = false;
       } catch (e) {
+        console.error(e);
         if (e.name === "AbortError") return;
         this.status.rejected = true;
         this.status.fulfilled = false;
@@ -158,13 +164,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pending {
+.fulfilled-pending {
   position: relative;
-  height: 100px;
-  width: auto;
-}
-
-.fulfilled {
+  min-height: 100px;
   table td {
     cursor: pointer;
   }
