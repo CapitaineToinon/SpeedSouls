@@ -34,3 +34,4 @@ jobs:
         METHOD: sftp
         LOCAL_DIR: dist
         REMOTE_DIR: /var/www/html
+        ARGS: --delete
