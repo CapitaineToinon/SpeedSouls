@@ -9,6 +9,9 @@
     "client:serve": "vue-cli-service serve",
     "client:build": "vue-cli-service build"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "buefy": "^0.8.3",
     "moment": "^2.24.0",
@@ -26,6 +29,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
