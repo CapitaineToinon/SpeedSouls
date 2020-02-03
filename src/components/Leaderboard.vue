@@ -19,9 +19,9 @@
       @click="onRowClick"
     >
       <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">
-          {{ props.row.place }}
-        </b-table-column>
+        <b-table-column centered field="place" label="Rank">{{
+          props.row.place
+        }}</b-table-column>
 
         <b-table-column centered field="players" label="Players">
           <div
@@ -155,7 +155,12 @@ export default {
     },
     onRowClick(run) {
       if (this.status.pending) return;
-      window.open(run.weblink, "_blank");
+      this.$router.push({
+        name: "run",
+        params: {
+          id: run.id
+        }
+      });
     }
   },
   unmount: cancel,

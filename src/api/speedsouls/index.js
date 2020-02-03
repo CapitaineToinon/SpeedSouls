@@ -1,6 +1,7 @@
 import { SnackbarProgrammatic as Snackbar } from "buefy";
 import { getGames } from "@/api/speedruncom/endpoints/series";
 import { getFullGame } from "@/api/speedruncom/endpoints/leaderboards";
+import { get as getRun } from "@/api/speedruncom/endpoints/runs";
 import formatGame from "./formatting/Game";
 import formatRun from "./formatting/Run";
 import formatPlayer from "./formatting/Player";
@@ -137,6 +138,44 @@ export function prepareGetLeaderboard() {
 
       return formatRun(run, players);
     });
+  }
+
+  /**
+   * Cancel the request
+   */
+  function cancel() {
+    if (controller) controller.abort();
+  }
+
+  return [resolve, cancel];
+}
+
+/**
+ * Prepare
+ */
+export function prepareGetRun() {
+  let controller = null;
+
+  /**
+   * Get the souls games
+   */
+  async function resolve(id) {
+    controller = new AbortController();
+    const { signal } = controller;
+
+    const queryParams = {
+      // embed: "categories,variables"
+    };
+
+    const response = await log(
+      getRun(id, {
+        queryParams,
+        signal
+      })
+    );
+
+    const { data } = await response.json();
+    return data;
   }
 
   /**

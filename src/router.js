@@ -34,6 +34,11 @@ export default new Router({
           path: ":abbreviation",
           name: "game",
           component: () => import("@/views/Leaderboards/Game.vue")
+        },
+        {
+          path: "/run/:id",
+          name: "run",
+          component: () => import("@/views/Run.vue")
         }
       ]
     },
