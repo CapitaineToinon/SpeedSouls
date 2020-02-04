@@ -7,7 +7,7 @@
       <b-message type="is-danger">Something broke</b-message>
     </div>
   </div>
-  <div v-else-if="status.fulfilled" class="fulfilled container sidebar-layout">
+  <div v-else-if="status.fulfilled" class="fulfilled container">
     <button
       @click="toggle"
       class="sidebar-button button is-large is-primary"
@@ -19,15 +19,15 @@
         :icon="buttonIcon"
       ></b-icon>
     </button>
-    <aside class="sidebar" :class="{ '-open': openSidebar }">
+    <aside class="section sidebar" :class="{ '-open': openSidebar }">
       <Categories
         class="categories"
-        :categories="[...game.categories]"
+        :categories="game.categories"
         :active="category"
         @CategoryClick="onCategoryClick"
       />
     </aside>
-    <div class="content" :class="{ '-open': openSidebar }">
+    <div class="section main-layout" :class="{ '-open': openSidebar }">
       <header class="header">
         <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
@@ -41,7 +41,6 @@
           </ul>
         </nav>
       </header>
-      <div class="seperator"></div>
       <div
         class="sub-categories"
         v-if="variables.filter(v => v['is-subcategory']).length"
@@ -167,7 +166,7 @@ export default {
 <style scoped lang="scss">
 $sidebar-width: 300px;
 
-.fulfilled.sidebar-layout {
+.fulfilled {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -176,8 +175,8 @@ $sidebar-width: 300px;
 
   .sidebar-button {
     position: fixed;
-    right: 1rem;
-    bottom: 1rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
     cursor: pointer;
     z-index: $navbar-z - 1;
     display: none;
@@ -222,11 +221,15 @@ $sidebar-width: 300px;
     }
   }
 
-  .content {
+  .main-layout {
     flex-grow: 1;
     transition: all $speed-slower;
 
-    // .leaderboards
+    .breadcrumb,
+    .sub-categories {
+      margin-bottom: 1.5rem;
+    }
+
     .leaderboards {
       width: auto;
     }

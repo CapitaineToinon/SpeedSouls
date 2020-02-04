@@ -7,7 +7,7 @@
       >Something broke</b-message
     >
   </div>
-  <div v-else-if="status.fulfilled" class="container">
+  <div v-else-if="status.fulfilled">
     <div class="columns is-mobile is-multiline">
       <div
         v-for="game in games"

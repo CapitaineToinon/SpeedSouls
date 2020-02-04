@@ -1,6 +1,8 @@
 <template>
-  <section class="section">
-    <GameCards />
+  <section class="container">
+    <div class="section">
+      <GameCards />
+    </div>
   </section>
 </template>
 
