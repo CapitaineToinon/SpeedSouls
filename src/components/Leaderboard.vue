@@ -1,6 +1,17 @@
 <template>
-  <div v-if="status.rejected">Failed</div>
-  <div v-else-if="status.fulfilled || status.pending" class="fulfilled-pending">
+  <div v-if="status.rejected" class="rejected">
+    <b-message
+      title="Error"
+      type="is-danger"
+      aria-close-label="Close message"
+      :closable="false"
+      >Something broke</b-message
+    >
+  </div>
+  <div
+    v-else-if="status.fulfilled || status.pending"
+    class="fulfilled-pending is-relative"
+  >
     <b-loading
       :is-full-page="false"
       :active="status.pending"
@@ -165,8 +176,7 @@ export default {
 
 <style lang="scss" scoped>
 .fulfilled-pending {
-  position: relative;
-  min-height: 100px;
+  min-height: $loading-icon-size;
   table td {
     cursor: pointer;
   }

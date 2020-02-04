@@ -11,7 +11,7 @@
           frontpage up and running. In the meantime, follow one of the links
           below to get to the content you're looking for.
         </h2>
-        <div class="buttons">
+        <div class="section buttons">
           <b-button
             class="is-medium is-warning is-inverted"
             icon-pack="fa"
@@ -138,12 +138,14 @@ export default {
       max-width: 650px;
       margin: auto;
     }
-    .buttons {
-      max-width: 500px;
-      margin: auto;
-      padding: 30px;
 
-      .button {
+    .buttons {
+      margin: 0 auto;
+
+      @include touch {
+        .button {
+          width: 100%;
+        }
       }
     }
   }

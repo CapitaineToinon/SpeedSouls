@@ -4,7 +4,13 @@
   </div>
   <div v-else-if="status.rejected" class="rejected container">
     <div class="section">
-      <b-message type="is-danger">Something broke</b-message>
+      <b-message
+        title="Error"
+        type="is-danger"
+        aria-close-label="Close message"
+        :closable="false"
+        >Something broke</b-message
+      >
     </div>
   </div>
   <div v-else-if="status.fulfilled" class="fulfilled container">
