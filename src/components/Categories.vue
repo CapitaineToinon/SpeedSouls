@@ -2,6 +2,8 @@
   <div class="categories">
     <b-menu-list label="Categories">
       <b-menu-item
+        tag="router-link"
+        :to="{}"
         v-for="(category, i) in categories"
         :key="i"
         icon="information-outline"
