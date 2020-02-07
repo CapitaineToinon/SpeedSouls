@@ -73,6 +73,7 @@
         <b-table-column centered class="is-hidden-touch">
           <b-icon
             v-if="props.row.showicon"
+            pack="fas"
             icon="video"
             size="is-small"
           ></b-icon>
