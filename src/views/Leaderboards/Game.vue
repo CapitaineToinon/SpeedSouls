@@ -25,7 +25,7 @@
         :icon="buttonIcon"
       ></b-icon>
     </button>
-    <aside class="section sidebar" :class="{ '-open': openSidebar }">
+    <aside class="sidebar" :class="{ '-open': openSidebar }">
       <Categories
         class="categories"
         :categories="game.categories"
@@ -181,8 +181,8 @@ $sidebar-width: 300px;
 
   .sidebar-button {
     position: fixed;
-    right: 1.5rem;
-    bottom: 1.5rem;
+    right: $size-4;
+    bottom: $size-4;
     cursor: pointer;
     z-index: $navbar-z - 1;
     display: none;
@@ -203,6 +203,7 @@ $sidebar-width: 300px;
     max-height: calc(100vh - #{$navbar-height});
     overflow-y: auto;
     top: $navbar-height;
+    padding: $size-1 0 $size-1 $size-4;
     position: -webkit-sticky;
     position: sticky;
 
@@ -210,6 +211,7 @@ $sidebar-width: 300px;
       position: fixed;
       z-index: $navbar-z - 2;
       overflow-y: scroll;
+      padding: $size-1 $size-4;
       top: navbar-height;
       height: 100%;
       width: 100%;
@@ -218,7 +220,7 @@ $sidebar-width: 300px;
       background-color: $white;
 
       .categories {
-        padding-bottom: 4rem;
+        padding-bottom: $size-1 * 2;
       }
 
       &.-open {
@@ -233,7 +235,7 @@ $sidebar-width: 300px;
 
     .breadcrumb,
     .sub-categories {
-      margin-bottom: 1.5rem;
+      margin-bottom: $size-4;
     }
 
     .leaderboards {

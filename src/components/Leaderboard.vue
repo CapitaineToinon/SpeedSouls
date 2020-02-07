@@ -40,6 +40,10 @@
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
           >
+            <span
+              v-if="player.country"
+              :class="`flag-icon flag-icon-${player.country}`"
+            ></span>
             {{ player.name }}
           </div>
         </b-table-column>
