@@ -1,6 +1,10 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <!-- <div class=""> -->
+  <nav
+    class="navbar is-black"
+    :style="style"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div class="navbar-brand">
       <router-link class="navbar-item" :to="{ name: 'home' }">
         <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
@@ -59,12 +63,14 @@
         </a>
       </div>
     </div>
-    <!-- </div> -->
   </nav>
 </template>
 
 <script>
+import withScroll from "../mixins/withScroll";
+
 export default {
+  mixins: [withScroll],
   data: () => ({
     active: false,
     links: {
@@ -95,6 +101,19 @@ export default {
       }
     ]
   }),
+  computed: {
+    style() {
+      let opacity = 1;
+
+      if (this.off.y < 200 && this.off.y >= 0 && this.$route.name === "home") {
+        opacity = this.off.y / 200;
+      }
+
+      return {
+        "--navbar-opacity": opacity
+      };
+    }
+  },
   methods: {
     toggle() {
       this.active = !this.active;
@@ -108,6 +127,13 @@ export default {
 
 <style scoped lang="scss">
 nav {
+  transition: all $speed-slow;
+
+  background-color: rgba(
+    $color: $black,
+    $alpha: #{var(--navbar-opacity)}
+  ) !important;
+
   .navbar-brand {
     .router-link-active:hover {
       background-color: inherit !important;

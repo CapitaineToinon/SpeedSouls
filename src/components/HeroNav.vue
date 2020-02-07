@@ -1,8 +1,5 @@
 <template>
   <section class="hero" :style="style">
-    <div class="hero-head">
-      <navbar :class="navbarClass" />
-    </div>
     <div class="hero-body">
       <slot />
     </div>
@@ -10,7 +7,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
 export default {
   data: () => ({
     // todo other backgrounds
@@ -21,9 +17,6 @@ export default {
       type: String,
       default: ""
     }
-  },
-  components: {
-    Navbar
   },
   computed: {
     style() {

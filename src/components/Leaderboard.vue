@@ -43,7 +43,6 @@
             <b-tooltip
               v-if="player.country"
               :label="player.country.name"
-              :delay="1000"
               animated
             >
               <span
