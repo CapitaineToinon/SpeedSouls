@@ -3,8 +3,11 @@ export default function Player(json) {
   let country = null;
 
   if (location) {
-    const { code } = location.country;
-    country = code.split("/")[0]; // some countries on speedrun.com have region support
+    const { code, names } = location.country;
+    country = {
+      code: code.split("/")[0], // some countries on speedrun.com have region support
+      name: names.international
+    };
   }
 
   if (id !== undefined) {

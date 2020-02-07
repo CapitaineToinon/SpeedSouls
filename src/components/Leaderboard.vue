@@ -40,10 +40,16 @@
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
           >
-            <span
+            <b-tooltip
               v-if="player.country"
-              :class="`flag-icon flag-icon-${player.country}`"
-            ></span>
+              :label="player.country.name"
+              :delay="1000"
+              animated
+            >
+              <span
+                :class="`flag-icon flag-icon-${player.country.code}`"
+              ></span>
+            </b-tooltip>
             {{ player.name }}
           </div>
         </b-table-column>
