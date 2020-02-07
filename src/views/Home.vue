@@ -97,7 +97,6 @@
         </div>
       </div>
     </section>
-    <ss-footer />
   </div>
 </template>
 
@@ -116,6 +115,8 @@ export default {
 
 <style scoped lang="scss">
 .home {
+  padding-top: 0 !important;
+
   .hero-nav {
     border-bottom: 1px solid $dark;
   }

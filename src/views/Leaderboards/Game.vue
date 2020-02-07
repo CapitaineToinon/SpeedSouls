@@ -1,5 +1,5 @@
 <template>
-  <div v-if="status.pending">
+  <div v-if="status.pending" class="pending">
     <b-loading :is-full-page="false" :active="true"></b-loading>
   </div>
   <div v-else-if="status.rejected" class="rejected container">
@@ -171,6 +171,12 @@ export default {
 
 <style scoped lang="scss">
 $sidebar-width: 300px;
+
+.pending,
+.rejected,
+.fulfilled {
+  min-height: 100vh;
+}
 
 .fulfilled {
   display: flex;

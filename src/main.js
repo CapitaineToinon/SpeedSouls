@@ -4,10 +4,6 @@ import router from "./router";
 import Buefy from "buefy";
 import VueScrollTo from "vue-scrollto";
 
-// Global components
-import Footer from "@/components/Footer.vue";
-Vue.component("ss-footer", Footer);
-
 Vue.use(VueScrollTo);
 Vue.use(Buefy);
 
