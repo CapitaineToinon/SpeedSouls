@@ -56,9 +56,8 @@ const router = new Router({
 /**
  * Scroll back on top of route change
  */
-router.afterEach((to, from, next) => {
+router.afterEach(() => {
   window.scrollTo({ top: 0 });
-  next();
 });
 
 export default router;
