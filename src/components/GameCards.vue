@@ -8,7 +8,8 @@
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-    >Something broke</b-message>
+      >Something broke</b-message
+    >
   </div>
   <div v-else-if="status.fulfilled" class="fulfilled-pending is-relative">
     <div class="columns is-mobile is-multiline">
