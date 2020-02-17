@@ -7,6 +7,9 @@ import VueScrollTo from "vue-scrollto";
 Vue.use(VueScrollTo);
 Vue.use(Buefy);
 
+import ssLoading from "./components/ssLoading.vue";
+Vue.component("ss-loading", ssLoading);
+
 Vue.config.productionTip = false;
 
 new Vue({

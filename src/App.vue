@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <navbar class="ss-navbar is-fixed-top" />
-    <keep-alive include="home">
-      <router-view class="router-view-content" />
-    </keep-alive>
+    <main>
+      <keep-alive include="home">
+        <router-view class="router-view-content" />
+      </keep-alive>
+    </main>
     <ss-footer class="ss-footer" />
   </div>
 </template>
@@ -27,8 +29,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  .router-view-content {
-    padding-top: $navbar-height;
+  main {
     flex-grow: 1;
   }
 }

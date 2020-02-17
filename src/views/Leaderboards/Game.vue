@@ -1,6 +1,8 @@
 <template>
-  <div v-if="status.pending" class="pending">
-    <b-loading :is-full-page="false" :active="true"></b-loading>
+  <div v-if="status.pending" class="pending container">
+    <div class="section">
+      <ss-loading :active="true" />
+    </div>
   </div>
   <div v-else-if="status.rejected" class="rejected container">
     <div class="section">
@@ -9,8 +11,7 @@
         type="is-danger"
         aria-close-label="Close message"
         :closable="false"
-        >Something broke</b-message
-      >
+      >Something broke</b-message>
     </div>
   </div>
   <div v-else-if="status.fulfilled" class="fulfilled container">
@@ -19,11 +20,7 @@
       class="sidebar-button button is-large is-primary"
       :class="{ '-open': openSidebar }"
     >
-      <b-icon
-        class="sidebar-button_icon"
-        pack="fas"
-        :icon="buttonIcon"
-      ></b-icon>
+      <b-icon class="sidebar-button_icon" pack="fas" :icon="buttonIcon"></b-icon>
     </button>
     <aside class="sidebar" :class="{ '-open': openSidebar }">
       <Categories
@@ -37,20 +34,13 @@
       <header class="header">
         <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
-            <li
-              v-for="(b, i) in breadcrumbs"
-              :key="i"
-              :class="b.active ? 'is-active' : ''"
-            >
+            <li v-for="(b, i) in breadcrumbs" :key="i" :class="b.active ? 'is-active' : ''">
               <router-link :to="b.to">{{ b.text }}</router-link>
             </li>
           </ul>
         </nav>
       </header>
-      <div
-        class="sub-categories"
-        v-if="variables.filter(v => v['is-subcategory']).length"
-      >
+      <div class="sub-categories" v-if="variables.filter(v => v['is-subcategory']).length">
         <Subcategory
           v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
           :key="i"
@@ -105,9 +95,11 @@ export default {
     },
     onCategoryClick(category) {
       this.openSidebar = false;
-      this.category = category;
       this.updateHash(category);
       window.scrollTo({ top: 0 });
+    },
+    onhashchange() {
+      this.category = this.getCategoryFromHash()
     },
     updateHash(category) {
       window.location.replace("#" + category.hash);
@@ -163,27 +155,28 @@ export default {
   },
   mounted() {
     this.fetchData();
+    window.addEventListener("hashchange", this.onhashchange);
   },
-  unmounted: cancel,
+  unmounted() {
+    cancel();
+    window.removeEventListener("hashchange", this.onhashchange);
+  },
   destroyed: cancel
 };
 </script>
 
 <style scoped lang="scss">
-$sidebar-width: 300px;
-
 .pending,
 .rejected,
 .fulfilled {
-  min-height: 100vh;
+  min-height: calc(100vh - #{$navbar-height});
 }
 
 .fulfilled {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  position: relative;
-  flex-grow: 1;
+  // position: relative;
 
   .sidebar-button {
     position: fixed;

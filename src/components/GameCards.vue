@@ -1,22 +1,16 @@
 <template>
-  <div v-if="status.rejected" class="rejected">
+  <div v-if="status.pending" class="pending container">
+    <ss-loading />
+  </div>
+  <div v-else-if="status.rejected" class="rejected">
     <b-message
       title="Error"
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >Something broke</b-message
-    >
+    >Something broke</b-message>
   </div>
-  <div
-    v-else-if="status.fulfilled || status.pending"
-    class="fulfilled-pending is-relative"
-  >
-    <b-loading
-      :is-full-page="false"
-      :active="status.pending"
-      :class="{ 'is-hidden': !status.pending }"
-    ></b-loading>
+  <div v-else-if="status.fulfilled" class="fulfilled-pending is-relative">
     <div class="columns is-mobile is-multiline">
       <div
         v-for="game in games"
@@ -74,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fulfilled-pending {
-  min-height: $loading-icon-size;
-}
+// .pending {
+//   min-height: $loading-icon-size;
+// }
 </style>

@@ -1,23 +1,18 @@
 <template>
-  <div v-if="status.rejected" class="rejected">
+  <div v-if="status.pending" class="rejected">
+    <ss-loading :active="status.pending" />
+  </div>
+  <div v-else-if="status.rejected" class="rejected">
     <b-message
       title="Error"
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >Something broke</b-message
-    >
+    >Something broke</b-message>
   </div>
-  <div
-    v-else-if="status.fulfilled || status.pending"
-    class="fulfilled-pending is-relative"
-  >
-    <b-loading
-      :is-full-page="false"
-      :active="status.pending"
-      :class="{ 'is-hidden': !status.pending }"
-    ></b-loading>
+  <div v-else-if="status.fulfilled" class="fulfilled is-relative">
     <b-table
+      class="actual-table"
       :class="{ 'is-hidden': status.pending }"
       :data="data"
       :bordered="isBordered"
@@ -30,9 +25,7 @@
       @click="onRowClick"
     >
       <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">
-          {{ props.row.place }}
-        </b-table-column>
+        <b-table-column centered field="place" label="Rank">{{ props.row.place }}</b-table-column>
 
         <b-table-column centered field="players" label="Players">
           <div
@@ -40,14 +33,8 @@
             v-for="(player, i) in props.row.players"
             :key="`${props.row.id}-player-${i}`"
           >
-            <b-tooltip
-              v-if="player.country"
-              :label="player.country.name"
-              animated
-            >
-              <span
-                :class="`flag-icon flag-icon-${player.country.code}`"
-              ></span>
+            <b-tooltip v-if="player.country" :label="player.country.name" animated>
+              <span :class="`flag-icon flag-icon-${player.country.code}`"></span>
             </b-tooltip>
             {{ player.name }}
           </div>
@@ -57,16 +44,14 @@
           centered
           field="primary_t"
           :label="props.row.primary_t.name"
-          >{{ props.row.primary_t.time }}</b-table-column
-        >
+        >{{ props.row.primary_t.time }}</b-table-column>
 
         <b-table-column
           centered
           v-for="(time, i) in props.row.others_t"
           :key="i"
           :label="time.name"
-          >{{ time.time }}</b-table-column
-        >
+        >{{ time.time }}</b-table-column>
 
         <b-table-column
           centered
@@ -74,18 +59,13 @@
           :key="variable.id"
           :label="variable.name"
         >
-          <div v-if="props.row.values[variable.id]">
-            {{ variable.values[props.row.values[variable.id]].label }}
-          </div>
+          <div
+            v-if="props.row.values[variable.id]"
+          >{{ variable.values[props.row.values[variable.id]].label }}</div>
         </b-table-column>
 
         <b-table-column centered class="is-hidden-touch">
-          <b-icon
-            v-if="props.row.showicon"
-            pack="fas"
-            icon="video"
-            size="is-small"
-          ></b-icon>
+          <b-icon v-if="props.row.showicon" pack="fas" icon="video" size="is-small"></b-icon>
         </b-table-column>
       </template>
     </b-table>
@@ -185,10 +165,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fulfilled-pending {
-  min-height: $loading-icon-size;
-  table td {
-    cursor: pointer;
+.fulfilled {
+  .actual-table {
+    width: 100%;
+
+    td {
+      cursor: pointer;
+    }
   }
 }
 </style>

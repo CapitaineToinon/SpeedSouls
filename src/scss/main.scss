@@ -3,10 +3,13 @@
 
 // Custom variables
 @import "./variables";
-@import "./flags";
 
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 @import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~flag-icon-css/css/flag-icon.css";
+
+// custom styles
+@import "./flags";
+@import "./layout";
