@@ -126,6 +126,11 @@ export default {
     }
   },
   watch: {
+    "$route.params.abbreviation": {
+      handler() {
+        this.fetchData();
+      }
+    },
     game: {
       immediate: true,
       handler() {
