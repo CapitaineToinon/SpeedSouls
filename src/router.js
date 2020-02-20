@@ -12,7 +12,10 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      meta: {
+        title: "SpeedSouls"
+      }
     },
     {
       // In case anyone links to the old wiki page
@@ -28,19 +31,28 @@ const router = new Router({
         {
           path: "",
           name: "games",
-          component: () => import("@/views/Leaderboards/Games.vue")
+          component: () => import("@/views/Leaderboards/Games.vue"),
+          meta: {
+            title: "SpeedSouls - Leaderboards"
+          }
         },
         {
           path: ":abbreviation",
           name: "game",
-          component: () => import("@/views/Leaderboards/Game.vue")
+          component: () => import("@/views/Leaderboards/Game.vue"),
+          meta: {
+            // title updated asynchronusly by the component
+          }
         }
       ]
     },
     {
       path: "/about",
       name: "about",
-      component: () => import("./views/About.vue")
+      component: () => import("./views/About.vue"),
+      meta: {
+        title: "SpeedSouls - About"
+      }
     },
     {
       path: "**",
@@ -51,6 +63,22 @@ const router = new Router({
       }
     }
   ]
+});
+
+// from https://alligator.io/vuejs/vue-router-modify-head/
+// This callback runs before every route change, including on page load.
+router.beforeEach((to, from, next) => {
+  // This goes through the matched routes from last to first, finding the closest route with a title.
+  // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
+  const nearestWithTitle = to.matched
+    .slice()
+    .reverse()
+    .find(r => r.meta && r.meta.title);
+
+  // If a route with a title was found, set the document (page) title to that value.
+  if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
+
+  next();
 });
 
 /**

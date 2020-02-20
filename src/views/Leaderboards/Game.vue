@@ -126,6 +126,16 @@ export default {
     }
   },
   watch: {
+    game: {
+      immediate: true,
+      handler() {
+        if (this.game && this.game.name) {
+          document.title = `SpeedSouls - ${this.game.name} Leaderboards`;
+        } else {
+          document.title = "SpeedSouls";
+        }
+      }
+    },
     category: {
       handler() {
         this.variables = this.game.variables
