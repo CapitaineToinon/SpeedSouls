@@ -10,7 +10,15 @@
 export default {
   data: () => ({
     // todo other backgrounds
-    assets: ["bloodborne.png", "darksouls3.jpg"]
+    assets: [
+      "bloodborne.png",
+      "darksouls.png",
+      "darksouls2.png",
+      "darksouls3.png",
+      "darksoulsremastered.png",
+      "darksouls2sotfs.png",
+      "demonssouls.png"
+    ]
   }),
   props: {
     navbarClass: {
@@ -36,10 +44,12 @@ export default {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  background-color: black;
 
   &::after {
     content: "";
     filter: blur(2px);
+    opacity: 0.8;
     transform: scale(1.1);
     background-image: var(--bg-url);
     background-repeat: no-repeat;
