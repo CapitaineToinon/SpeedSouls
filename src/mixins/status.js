@@ -4,7 +4,8 @@ export default {
       pending: false,
       rejected: false,
       fulfilled: false,
-      cancelled: false
+      cancelled: false,
+      error: null
     }
   })
 };

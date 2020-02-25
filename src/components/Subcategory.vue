@@ -1,12 +1,12 @@
 <template>
   <b-field>
     <b-radio-button
-      v-model="subcategory.value"
-      v-for="(v, i) in subcategory.values"
-      :native-value="i"
       :key="i"
+      v-for="(option, i) in options"
+      :native-value="i"
+      @input="onInput"
     >
-      <span>{{ v.label }}</span>
+      <span>{{ option.label }}</span>
     </b-radio-button>
   </b-field>
 </template>
@@ -14,9 +14,15 @@
 <script>
 export default {
   props: {
-    subcategory: {
+    options: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    onInput(e) {
+      console.log(e);
+      this.$emit("input", e);
     }
   }
 };
