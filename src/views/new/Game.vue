@@ -69,7 +69,7 @@
 <script>
 import Categories from "@/components/Categories.vue";
 import Subcategory from "@/components/Subcategory.vue";
-import Leaderboard from "@/components/Leaderboard.vue";
+// import Leaderboard from "@/components/Leaderboard.vue";
 
 import status from "@/mixins/status";
 import { prepareGetGame } from "@/api/speedsouls";
@@ -81,13 +81,13 @@ export default {
   mixins: [status],
   components: {
     Categories,
-    Subcategory,
-    Leaderboard
+    Subcategory
+    // Leaderboard
   },
   data: () => ({
     game: null,
     _variables: [], // own variable because of 2 way binding
-    meme: '',
+    meme: "",
     openSidebar: false
   }),
   watch: {
