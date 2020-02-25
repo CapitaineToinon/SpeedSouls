@@ -25,40 +25,18 @@ const router = new Router({
       }
     },
     {
-      path: "/new",
-      component: () => import("@/views/new/Index.vue"),
-      children: [
-        {
-          path: "",
-          name: "new-games",
-          component: () => import("@/views/new/Games.vue")
-        },
-        {
-          path: ":game/:category?",
-          name: "new-game",
-          component: () => import("@/views/new/Game.vue")
-        }
-      ]
-    },
-    {
       path: "/leaderboards",
       component: () => import("@/views/Leaderboards/Index.vue"),
       children: [
         {
           path: "",
           name: "games",
-          component: () => import("@/views/Leaderboards/Games.vue"),
-          meta: {
-            title: "SpeedSouls - Leaderboards"
-          }
+          component: () => import("@/views/Leaderboards/Games.vue")
         },
         {
-          path: ":abbreviation",
+          path: ":game/:category?",
           name: "game",
-          component: () => import("@/views/Leaderboards/Game.vue"),
-          meta: {
-            // title updated asynchronusly by the component
-          }
+          component: () => import("@/views/Leaderboards/Game.vue")
         }
       ]
     },
