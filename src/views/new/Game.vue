@@ -50,26 +50,18 @@
         </nav>
       </header>
       <div class="sub-categories">
-        <Subcategory
-          v-for="variable in variables.filter(
-            v => v['is-subcategory'] === true
-          )"
-          :key="variable.id"
-          v-model="meme"
-          :options="variable.options"
-        />
+        <!-- TODO -->
       </div>
-      <!-- <div class="leaderboard">
-        <Leaderboard :game="game" :category="category" :variables="variables" />
-      </div>-->
+      <div class="leaderboard">
+        <Leaderboard :game="game" :category="category" :variables="[]" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Categories from "@/components/Categories.vue";
-import Subcategory from "@/components/Subcategory.vue";
-// import Leaderboard from "@/components/Leaderboard.vue";
+import Leaderboard from "@/components/Leaderboard.vue";
 
 import status from "@/mixins/status";
 import { prepareGetGame } from "@/api/speedsouls";
@@ -81,13 +73,10 @@ export default {
   mixins: [status],
   components: {
     Categories,
-    Subcategory
-    // Leaderboard
+    Leaderboard
   },
   data: () => ({
     game: null,
-    _variables: [], // own variable because of 2 way binding
-    meme: "",
     openSidebar: false
   }),
   watch: {
@@ -110,28 +99,6 @@ export default {
             decodeURIComponent(this.$route.params.category).toLowerCase()
         ) || null
       );
-    },
-    variables: {
-      get: function() {
-        if (!this.status.fulfilled) return [];
-
-        return this.game.variables
-          .filter(v => v.category === this.category.id)
-          .map(subc => {
-            return {
-              id: subc.id,
-              ["is-subcategory"]: subc["is-subcategory"],
-              selected: subc.values.default,
-              options: subc.values.values
-            };
-          });
-      },
-      set: function(newValue) {
-        console.log({ newValue });
-      }
-    },
-    subCategories() {
-      return this.variables.filter(v => v["is-subcategory"]);
     },
     breadcrumbs() {
       const array = [

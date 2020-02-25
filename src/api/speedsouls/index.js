@@ -102,7 +102,7 @@ export function prepareGetLeaderboard() {
    * @param {*} current
    */
   function variablesRecuder(previous, current) {
-    previous[`var-${current.id}`] = current.value;
+    previous[`var-${current.id}`] = current.selected;
     return previous;
   }
 

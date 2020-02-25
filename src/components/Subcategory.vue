@@ -4,15 +4,20 @@
       :key="i"
       v-for="(option, i) in options"
       :native-value="i"
+      v-model="radioButton"
       @input="onInput"
     >
       <span>{{ option.label }}</span>
     </b-radio-button>
+    {{ radioButton }}
   </b-field>
 </template>
 
 <script>
 export default {
+  data: () => ({
+    radioButton: ""
+  }),
   props: {
     options: {
       type: Object,
@@ -20,9 +25,8 @@ export default {
     }
   },
   methods: {
-    onInput(e) {
-      console.log(e);
-      this.$emit("input", e);
+    onInput() {
+      this.$emit("change", this.radioButton);
     }
   }
 };
