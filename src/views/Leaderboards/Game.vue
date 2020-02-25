@@ -177,7 +177,7 @@ export default {
             name: "game",
             params: {
               game: game.abbreviation,
-              category: game.categories[0].hash
+              category: game.categories[0].hash.toLowerCase()
             }
           });
         }
