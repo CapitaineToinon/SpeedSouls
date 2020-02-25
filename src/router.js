@@ -25,6 +25,21 @@ const router = new Router({
       }
     },
     {
+      path: "/new",
+      name: "new",
+      component: () => import("@/views/new/Leaderboards.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("@/views/new/Games.vue")
+        },
+        {
+          path: ":game",
+          component: () => import("@/views/new/Game/Game.vue")
+        }
+      ]
+    },
+    {
       path: "/leaderboards",
       component: () => import("@/views/Leaderboards/Index.vue"),
       children: [
