@@ -31,18 +31,12 @@ const router = new Router({
         {
           path: "",
           name: "games",
-          component: () => import("@/views/Leaderboards/Games.vue"),
-          meta: {
-            title: "SpeedSouls - Leaderboards"
-          }
+          component: () => import("@/views/Leaderboards/Games.vue")
         },
         {
-          path: ":abbreviation",
+          path: ":game/:category?",
           name: "game",
-          component: () => import("@/views/Leaderboards/Game.vue"),
-          meta: {
-            // title updated asynchronusly by the component
-          }
+          component: () => import("@/views/Leaderboards/Game.vue")
         }
       ]
     },

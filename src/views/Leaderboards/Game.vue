@@ -11,20 +11,20 @@
         type="is-danger"
         aria-close-label="Close message"
         :closable="false"
-        >Something broke</b-message
+        >{{ status.error.message }}</b-message
       >
     </div>
   </div>
   <div v-else-if="status.fulfilled" class="fulfilled container">
     <button
-      @click="toggle"
+      @click="() => (openSidebar = !openSidebar)"
       class="sidebar-button button is-large is-primary"
       :class="{ '-open': openSidebar }"
     >
       <b-icon
         class="sidebar-button_icon"
         pack="fas"
-        :icon="buttonIcon"
+        :icon="openSidebar ? 'times' : 'list'"
       ></b-icon>
     </button>
     <aside class="sidebar" :class="{ '-open': openSidebar }">
@@ -49,18 +49,24 @@
           </ul>
         </nav>
       </header>
-      <div
-        class="sub-categories"
-        v-if="variables.filter(v => v['is-subcategory']).length"
-      >
-        <Subcategory
-          v-for="(v, i) in variables.filter(v => v['is-subcategory'])"
-          :key="i"
-          :subcategory="v"
-        />
+      <div class="sub-categories">
+        <b-field v-for="variable in subCategories" :key="variable.id">
+          <b-radio-button
+            v-for="(option, id) in variable.values.values"
+            :key="id"
+            :native-value="id"
+            v-model="variable.values.default"
+          >
+            <span>{{ option.label }}</span>
+          </b-radio-button>
+        </b-field>
       </div>
       <div class="leaderboard">
-        <Leaderboard :game="game" :category="category" :variables="variables" />
+        <Leaderboard
+          :game="game"
+          :category="category"
+          :variables="subCategories"
+        />
       </div>
     </div>
   </div>
@@ -68,126 +74,126 @@
 
 <script>
 import Categories from "@/components/Categories.vue";
-import Subcategory from "@/components/Subcategory.vue";
 import Leaderboard from "@/components/Leaderboard.vue";
 
 import status from "@/mixins/status";
-import { prepareGetGame } from "../../api/speedsouls";
+import { prepareGetGame } from "@/api/speedsouls";
+
 const [getGame, cancel] = prepareGetGame();
 
 export default {
-  name: "game",
+  name: "games",
   mixins: [status],
-  data: () => ({
-    game: null,
-    category: Object.apply(null),
-    variables: [],
-    openSidebar: false
-  }),
   components: {
     Categories,
-    Subcategory,
     Leaderboard
   },
+  data: () => ({
+    game: null,
+    openSidebar: false
+  }),
+  watch: {
+    "$route.params.game": {
+      immediate: true,
+      handler(val, oldVal) {
+        if (val === oldVal) return;
+        this.fetchGame();
+      }
+    }
+  },
+  computed: {
+    category() {
+      if (!this.status.fulfilled) return null;
+
+      return (
+        this.game.categories.find(
+          c =>
+            decodeURIComponent(c.hash).toLowerCase() ===
+            decodeURIComponent(this.$route.params.category).toLowerCase()
+        ) || null
+      );
+    },
+    breadcrumbs() {
+      const array = [
+        {
+          text: "Leaderboards",
+          to: { name: "games" }
+        }
+      ];
+
+      if (this.game) {
+        array.push({
+          text: this.game.name,
+          to: {},
+          active: true
+        });
+      }
+
+      if (this.category) {
+        array.push({
+          text: this.category.name,
+          to: {},
+          active: true
+        });
+      }
+
+      return array;
+    },
+    categoryVariables() {
+      return this.game.variables.filter(v => v.category === this.category.id);
+    },
+    subCategories() {
+      return this.categoryVariables.filter(v => v["is-subcategory"]);
+    }
+  },
   methods: {
-    async fetchData() {
+    onCategoryClick(category) {
+      this.openSidebar = false;
+      if (category === this.category) return;
+
+      this.$router.push({
+        name: "game",
+        params: {
+          game: this.$route.params.game,
+          category: category.hash.toLowerCase()
+        }
+      });
+    },
+    async fetchGame() {
       this.status.pending = true;
       this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
 
       try {
-        this.game = await getGame(this.$route.params.abbreviation);
-        this.category = this.getCategoryFromHash() || this.game.categories[0];
+        const game = await getGame(this.$route.params.game);
+
+        // If game has no categories, show an error
+        if (!game.categories.length) {
+          throw new Error("Game has no categories");
+        }
+
+        // If the category route param is underfined, we redirect to the first category we find
+        if (this.$route.params.category === undefined) {
+          this.$router.replace({
+            name: "game",
+            params: {
+              game: game.abbreviation,
+              category: game.categories[0].hash
+            }
+          });
+        }
+
+        this.game = game;
         this.status.fulfilled = true;
       } catch (e) {
+        this.status.error = e;
         this.status.rejected = true;
         this.status.fulfilled = false;
       }
 
       this.status.pending = false;
-    },
-    onCategoryClick(category) {
-      this.openSidebar = false;
-      this.updateHash(category);
-      window.scrollTo({ top: 0 });
-    },
-    onhashchange() {
-      this.category = this.getCategoryFromHash();
-    },
-    updateHash(category) {
-      window.location.replace("#" + category.hash);
-    },
-    getCategoryFromHash() {
-      return this.game.categories.find(category => {
-        return window.location.hash === `#${category.hash}`;
-      });
-    },
-    toggle() {
-      this.openSidebar = !this.openSidebar;
     }
   },
-  watch: {
-    "$route.params.abbreviation": {
-      handler() {
-        this.fetchData();
-      }
-    },
-    game: {
-      immediate: true,
-      handler() {
-        if (this.game && this.game.name) {
-          document.title = `SpeedSouls - ${this.game.name} Leaderboards`;
-        } else {
-          document.title = "SpeedSouls";
-        }
-      }
-    },
-    category: {
-      handler() {
-        this.variables = this.game.variables
-          .filter(v => v.category === this.category.id)
-          .map(subc => {
-            return {
-              id: subc.id,
-              name: subc.name,
-              ["is-subcategory"]: subc["is-subcategory"],
-              value: subc.values.default,
-              values: subc.values.values
-            };
-          });
-      }
-    }
-  },
-  computed: {
-    buttonIcon() {
-      return this.openSidebar ? "times" : "list";
-    },
-    breadcrumbs() {
-      return [
-        {
-          text: "Leaderboards",
-          to: { name: "games" }
-        },
-        {
-          text: this.game.name,
-          to: {},
-          active: true
-        },
-        {
-          text: this.category.name,
-          to: {},
-          active: true
-        }
-      ];
-    }
-  },
-  mounted() {
-    this.fetchData();
-    window.addEventListener("hashchange", this.onhashchange);
-  },
-  unmounted() {
-    cancel();
-    window.removeEventListener("hashchange", this.onhashchange);
-  },
+  unmounted: cancel,
   destroyed: cancel
 };
 </script>

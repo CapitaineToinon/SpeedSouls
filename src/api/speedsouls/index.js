@@ -79,6 +79,7 @@ export function prepareGetGame() {
     if (!candidate) {
       const error = new Error("Game not found");
       showError(error);
+      throw error;
     }
     return candidate;
   }
@@ -102,7 +103,7 @@ export function prepareGetLeaderboard() {
    * @param {*} current
    */
   function variablesRecuder(previous, current) {
-    previous[`var-${current.id}`] = current.value;
+    previous[`var-${current.id}`] = current.values.default;
     return previous;
   }
 

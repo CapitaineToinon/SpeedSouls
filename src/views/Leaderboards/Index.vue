@@ -1,7 +1,5 @@
 <template>
-  <div class="leaderboards has-fixed-navbar-top">
-    <keep-alive include="games">
-      <router-view />
-    </keep-alive>
+  <div class="has-fixed-navbar-top">
+    <router-view></router-view>
   </div>
 </template>

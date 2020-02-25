@@ -22,7 +22,7 @@
           :game="game"
           :to="{
             name: 'game',
-            params: { abbreviation: game.abbreviation }
+            params: { game: game.abbreviation }
           }"
         />
       </div>

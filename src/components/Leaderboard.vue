@@ -66,12 +66,14 @@
 
         <b-table-column
           centered
-          v-for="variable in variables.filter(v => !v['is-subcategory'])"
+          v-for="variable in game.variables
+            .filter(v => v.category === category.id)
+            .filter(v => !v['is-subcategory'])"
           :key="variable.id"
           :label="variable.name"
         >
           <div v-if="props.row.values[variable.id]">
-            {{ variable.values[props.row.values[variable.id]].label }}
+            {{ variable.values.values[props.row.values[variable.id]].label }}
           </div>
         </b-table-column>
 
@@ -103,10 +105,6 @@ export default {
     category: {
       type: Object,
       required: true
-    },
-    variables: {
-      type: Array,
-      require: true
     }
   },
   data: () => ({
@@ -120,12 +118,13 @@ export default {
     hasMobileCards: true
   }),
   watch: {
-    variables: {
-      immediate: true,
+    game: {
       deep: true,
-      handler() {
-        this.fetchData();
-      }
+      immediate: true,
+      handler: "fetchData"
+    },
+    category: {
+      handler: "fetchData"
     }
   },
   methods: {
@@ -134,13 +133,11 @@ export default {
       this.status.pending = true;
       this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
 
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-
       try {
         const runs = await getLeaderboard(
           this.game.id,
           this.category.id,
-          this.variables.filter(v => v["is-subcategory"])
+          this.game.variables.filter(v => v["is-subcategory"])
         );
 
         this.data = runs.map(run => {
@@ -162,7 +159,6 @@ export default {
         this.status.fulfilled = true;
         this.status.rejected = false;
       } catch (e) {
-        console.error(e);
         if (e.name === "AbortError") return;
         this.status.rejected = true;
         this.status.fulfilled = false;
@@ -184,6 +180,10 @@ export default {
 .fulfilled {
   .actual-table {
     width: 100%;
+
+    &::v-deep th:last-child {
+      @extend .is-hidden-touch;
+    }
 
     td {
       cursor: pointer;
