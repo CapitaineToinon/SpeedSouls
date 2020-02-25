@@ -50,10 +50,23 @@
         </nav>
       </header>
       <div class="sub-categories">
-        <!-- TODO -->
+        <b-field v-for="variable in subCategories" :key="variable.id">
+          <b-radio-button
+            v-for="(option, id) in variable.values.values"
+            :key="id"
+            :native-value="id"
+            v-model="variable.values.default"
+          >
+            <span>{{ option.label }}</span>
+          </b-radio-button>
+        </b-field>
       </div>
       <div class="leaderboard">
-        <Leaderboard :game="game" :category="category" :variables="[]" />
+        <Leaderboard
+          :game="game"
+          :category="category"
+          :variables="subCategories"
+        />
       </div>
     </div>
   </div>
@@ -125,6 +138,12 @@ export default {
       }
 
       return array;
+    },
+    categoryVariables() {
+      return this.game.variables.filter(v => v.category === this.category.id);
+    },
+    subCategories() {
+      return this.categoryVariables.filter(v => v["is-subcategory"]);
     }
   },
   methods: {
