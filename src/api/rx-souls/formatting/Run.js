@@ -1,6 +1,6 @@
 import formatTimingMethod from "./TimingMethod";
 
-export default function Run(json, players) {
+export default function Run(json, players, gameRuleset) {
   const { place, run } = json;
   const { id, times, videos, weblink, values } = run;
 
@@ -23,12 +23,12 @@ export default function Run(json, players) {
      * See : https://github.com/speedruncomorg/api/issues/69
      */
     if (ruleset["default-time"] === "realtime_noloads") {
-      return formatTimingMethod("realtime_noloads", this.times["primary_t"]);
+      return formatTimingMethod("realtime_noloads", times["primary_t"]);
     }
 
     return formatTimingMethod(
       ruleset["default-time"],
-      this.times[ruleset["default-time"] + "_t"]
+      times[ruleset["default-time"] + "_t"]
     );
   }
 
@@ -52,7 +52,7 @@ export default function Run(json, players) {
      */
     if (
       ruleset["default-time"] === "realtime_noloads" &&
-      this.times[ruleset["default-time"] + "_t"] === 0
+      times[ruleset["default-time"] + "_t"] === 0
     ) {
       return ruleset["run-times"]
         .filter(t => t !== ruleset["default-time"])
@@ -61,7 +61,7 @@ export default function Run(json, players) {
 
     return ruleset["run-times"]
       .filter(t => t !== ruleset["default-time"])
-      .map(t => formatTimingMethod(t, this.times[t + "_t"]));
+      .map(t => formatTimingMethod(t, times[t + "_t"]));
   }
 
   return {
@@ -72,8 +72,8 @@ export default function Run(json, players) {
     videos,
     weblink,
     values,
-    getPrimaryTime,
-    getOtherTimes,
+    primary_t: getPrimaryTime(gameRuleset),
+    others_t: getOtherTimes(gameRuleset),
     showicon: videos !== null
   };
 }

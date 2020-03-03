@@ -1,17 +1,17 @@
 <template>
-  <div v-if="status.pending" class="pending container">
-    <ss-loading />
-  </div>
-  <div v-else-if="status.rejected" class="rejected">
+  <div v-if="error" class="rejected">
     <b-message
       title="Error"
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >Something broke</b-message
+      >{{ error }}</b-message
     >
   </div>
-  <div v-else-if="status.fulfilled" class="fulfilled-pending is-relative">
+  <div v-else-if="!games" class="pending container">
+    <ss-loading />
+  </div>
+  <div v-else class="fulfilled-pending is-relative">
     <div class="columns is-mobile is-multiline">
       <div
         v-for="game in games"
@@ -32,44 +32,26 @@
 
 <script>
 import GameCard from "@/components/GameCard.vue";
-import status from "@/mixins/status";
-import { prepareGetGames } from "@/api/speedsouls";
-
-const [getGames, cancel] = prepareGetGames();
+import { useSoulsGames } from "../api/rx-souls";
 
 export default {
   name: "games",
-  mixins: [status],
   components: { GameCard },
   data: () => ({
-    games: []
+    games: undefined,
+    error: null
   }),
   methods: {
-    async fetchData() {
-      this.status.pending = true;
-      this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
-
-      try {
-        this.games = await getGames();
-        this.status.fulfilled = true;
-      } catch (e) {
-        this.status.rejected = true;
-        this.status.fulfilled = false;
-      }
-
-      this.status.pending = false;
+    onSuccess(games) {
+      this.error = null;
+      this.games = games;
+    },
+    onError(error) {
+      this.error = error;
     }
   },
   mounted() {
-    this.fetchData();
-  },
-  unmounted: cancel,
-  destroyed: cancel
+    this.$subscribeTo(useSoulsGames(), this.onSuccess, this.onError);
+  }
 };
 </script>
-
-<style lang="scss" scoped>
-// .pending {
-//   min-height: $loading-icon-size;
-// }
-</style>
