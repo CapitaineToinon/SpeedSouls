@@ -12,14 +12,41 @@
     <ss-loading :active="true" />
   </div>
   <div v-else class="fulfilled is-relative">
-    <table class="table is-fullwidth is-hoverable has-text-centered">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr v-if="leaderboard.length">
+          <th>Rank</th>
+          <th>Players</th>
+          <th>{{ leaderboard[0].primary_t.name }}</th>
+          <th
+            v-for="(time, i) in leaderboard[0].others_t"
+            :key="`other-time-th-${i}`"
+          >
+            {{ time.name }}
+          </th>
+          <th
+            v-for="variable in game.variables
+              .filter(v => v.category === category.id)
+              .filter(v => !v['is-subcategory'])"
+            :key="`th-${variable.id}`"
+          >
+            {{ variable.name }}
+          </th>
+          <th class="is-hidden-touch">
+            <!-- empty for VOD -->
+          </th>
+        </tr>
+        <tr v-else>
+          <th>Rank</th>
+          <th>Players</th>
+          <th>Time</th>
+          <th class="is-hidden-touch">
+            <!-- empty for VOD -->
+          </th>
+        </tr>
+      </thead>
       <tbody>
-        <tr
-          class="table-row"
-          v-for="row in leaderboard"
-          :key="row.id"
-          @click="onRowClick(row)"
-        >
+        <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
           <td data-label="Rank">{{ row.place }}</td>
 
           <td data-label="Players">
@@ -90,6 +117,10 @@ export default {
     category: {
       type: Object,
       required: true
+    },
+    variables: {
+      type: Array,
+      default: () => []
     }
   },
   data: () => ({
@@ -120,7 +151,7 @@ export default {
       this.$watchAsObservable("game", { immediate: true, deep: true }).pipe(
         pluck("newValue"),
         switchMap(() =>
-          useLeaderboard(this.game, this.category).pipe(
+          useLeaderboard(this.game, this.category, this.variables).pipe(
             map(leaderboard => leaderboard.runs),
             startWith(undefined)
           )
@@ -134,7 +165,7 @@ export default {
       this.$watchAsObservable("category.id", { immediate: true }).pipe(
         pluck("newValue"),
         switchMap(() =>
-          useLeaderboard(this.game, this.category).pipe(
+          useLeaderboard(this.game, this.category, this.variables).pipe(
             map(leaderboard => leaderboard.runs),
             startWith(undefined)
           )
@@ -143,41 +174,51 @@ export default {
       this.onLeaderboardSuccess,
       this.onLeaderboardError
     );
-  },
-  beforeDestroy() {
-    console.log("destroying soon tm");
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .fulfilled {
-  .table {
-    &-row {
-      cursor: pointer;
+  table.table {
+    td,
+    th {
+      text-align: center;
+      vertical-align: middle;
+    }
 
-      td {
-        text-align: center;
+    thead {
+      @include mobile {
+        display: none;
       }
+    }
 
-      @include touch {
-        display: flex;
-        flex-direction: column;
-        box-shadow: $card-shadow;
-        margin-bottom: $size-4;
+    tbody {
+      tr {
+        cursor: pointer;
 
-        td {
-          text-align: right;
-          position: relative;
-          height: 41px;
+        @include desktop {
+          &:hover {
+            background-color: $table-row-hover-background-color;
+          }
+        }
 
-          &::before {
-            content: attr(data-label);
-            padding: $table-cell-padding;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            top: 0;
+        @include mobile {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          box-shadow: $card-shadow;
+          margin-bottom: $size-6;
+
+          td {
+            text-align: right;
+            position: relative;
+
+            &::before {
+              content: attr(data-label);
+              font-weight: bold;
+              float: left;
+            }
           }
         }
       }

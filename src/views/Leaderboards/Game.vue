@@ -36,7 +36,7 @@
       />
     </aside>
     <div class="section main-layout" :class="{ '-open': openSidebar }">
-      <!-- <header class="header">
+      <header class="header">
         <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
             <li
@@ -60,9 +60,13 @@
             <span>{{ option.label }}</span>
           </b-radio-button>
         </b-field>
-      </div>-->
+      </div>
       <div class="leaderboard">
-        <Leaderboard :game="game" :category="category" :variables="[]" />
+        <Leaderboard
+          :game="game"
+          :category="category"
+          :variables="subCategories"
+        />
       </div>
     </div>
   </div>
@@ -89,45 +93,35 @@ export default {
     openSidebar: false
   }),
   computed: {
-    // category() {
-    //   if (!this.status.fulfilled) return null;
-    //   return (
-    //     this.game.categories.find(
-    //       c =>
-    //         decodeURIComponent(c.hash).toLowerCase() ===
-    //         decodeURIComponent(this.$route.params.category).toLowerCase()
-    //     ) || null
-    //   );
-    // },
-    // breadcrumbs() {
-    //   const array = [
-    //     {
-    //       text: "Leaderboards",
-    //       to: { name: "games" }
-    //     }
-    //   ];
-    //   if (this.game) {
-    //     array.push({
-    //       text: this.game.name,
-    //       to: {},
-    //       active: true
-    //     });
-    //   }
-    //   if (this.category) {
-    //     array.push({
-    //       text: this.category.name,
-    //       to: {},
-    //       active: true
-    //     });
-    //   }
-    //   return array;
-    // },
-    // categoryVariables() {
-    //   return this.game.variables.filter(v => v.category === this.category.id);
-    // },
-    // subCategories() {
-    //   return this.categoryVariables.filter(v => v["is-subcategory"]);
-    // }
+    breadcrumbs() {
+      const array = [
+        {
+          text: "Leaderboards",
+          to: { name: "games" }
+        }
+      ];
+      if (this.game) {
+        array.push({
+          text: this.game.name,
+          to: {},
+          active: true
+        });
+      }
+      if (this.category) {
+        array.push({
+          text: this.category.name,
+          to: {},
+          active: true
+        });
+      }
+      return array;
+    },
+    categoryVariables() {
+      return this.game.variables.filter(v => v.category === this.category.id);
+    },
+    subCategories() {
+      return this.categoryVariables.filter(v => v["is-subcategory"]);
+    }
   },
   methods: {
     onGameSuccess(data) {

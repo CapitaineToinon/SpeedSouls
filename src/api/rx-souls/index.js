@@ -15,10 +15,10 @@ function getSoulsGames() {
     .pipe(map(response => response.data.map(formatGame)));
 }
 
-function getLeaderboard(gameLookFor, categoryLookFor) {
+function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = "") {
   return ajax
     .getJSON(
-      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables`
+      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables&${variablesQuery}`
     )
     .pipe(
       map(response => response.data),
@@ -59,9 +59,13 @@ export function useSoulsCategory(gameLookFor, categoryLookFor) {
   );
 }
 
-export function useLeaderboard(gameLookFor, categoryLookFor) {
+export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
+  const variablesQuery = variables.reduce((previous, current) => {
+    return `${previous}&var-${current.id}=${current.values.default}`;
+  }, "");
+
   return CACHE.get(
-    `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}`,
-    getLeaderboard(gameLookFor, categoryLookFor)
+    `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}/${variablesQuery}`,
+    getLeaderboard(gameLookFor, categoryLookFor, variablesQuery)
   );
 }
