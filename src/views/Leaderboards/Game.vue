@@ -151,6 +151,7 @@ export default {
     },
     onCategoryClick(category) {
       this.openSidebar = false;
+      if (this.category === category) return;
 
       this.$router.push({
         name: "game",
