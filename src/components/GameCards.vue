@@ -5,7 +5,7 @@
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >{{ error }}</b-message
+      >{{ error.message }}</b-message
     >
   </div>
   <div v-else-if="!games" class="pending container">
@@ -33,6 +33,7 @@
 <script>
 import GameCard from "@/components/GameCard.vue";
 import { useSoulsGames } from "../api/rx-souls";
+import { catchError } from "rxjs/operators";
 
 export default {
   name: "games",
@@ -51,7 +52,10 @@ export default {
     }
   },
   mounted() {
-    this.$subscribeTo(useSoulsGames(), this.onSuccess, this.onError);
+    this.$subscribeTo(
+      useSoulsGames().pipe(catchError(this.onError)),
+      this.onSuccess
+    );
   }
 };
 </script>
