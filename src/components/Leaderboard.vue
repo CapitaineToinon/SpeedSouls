@@ -1,102 +1,114 @@
 <template>
-  <div v-if="status.pending" class="rejected">
-    <ss-loading :active="status.pending" />
-  </div>
-  <div v-else-if="status.rejected" class="rejected">
+  <div v-if="leaderboardError" class="rejected">
     <b-message
       title="Error"
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >Something broke</b-message
+      >{{ leaderboardError }}</b-message
     >
   </div>
-  <div v-else-if="status.fulfilled" class="fulfilled is-relative">
-    <b-table
-      class="actual-table"
-      :class="{ 'is-hidden': status.pending }"
-      :data="data"
-      :bordered="isBordered"
-      :striped="isStriped"
-      :narrowed="isNarrowed"
-      :hoverable="isHoverable"
-      :focusable="isFocusable"
-      :loading="false"
-      :mobile-cards="hasMobileCards"
-      @click="onRowClick"
-    >
-      <template slot-scope="props">
-        <b-table-column centered field="place" label="Rank">{{
-          props.row.place
-        }}</b-table-column>
-
-        <b-table-column centered field="players" label="Players">
-          <div
-            class="player"
-            v-for="(player, i) in props.row.players"
-            :key="`${props.row.id}-player-${i}`"
+  <div v-else-if="!leaderboard" class="pending">
+    <ss-loading :active="true" />
+  </div>
+  <div v-else class="fulfilled is-relative">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr v-if="leaderboard.length">
+          <th>Rank</th>
+          <th>Players</th>
+          <th>{{ leaderboard[0].primary_t.name }}</th>
+          <th
+            v-for="(time, i) in leaderboard[0].others_t"
+            :key="`other-time-th-${i}`"
           >
-            <b-tooltip
-              v-if="player.country"
-              :label="player.country.name"
-              animated
+            {{ time.name }}
+          </th>
+          <th
+            v-for="variable in game.variables
+              .filter(v => v.category === category.id)
+              .filter(v => !v['is-subcategory'])"
+            :key="`th-${variable.id}`"
+          >
+            {{ variable.name }}
+          </th>
+          <th class="is-hidden-touch">
+            <!-- empty for VOD -->
+          </th>
+        </tr>
+        <tr v-else>
+          <th>Rank</th>
+          <th>Players</th>
+          <th>Time</th>
+          <th class="is-hidden-touch">
+            <!-- empty for VOD -->
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
+          <td data-label="Rank">{{ row.place }}</td>
+
+          <td data-label="Players">
+            <div
+              class="player"
+              v-for="(player, i) in row.players"
+              :key="`${row.id}-player-${i}`"
             >
-              <span
-                :class="`flag-icon flag-icon-${player.country.code}`"
-              ></span>
-            </b-tooltip>
-            {{ player.name }}
-          </div>
-        </b-table-column>
+              <b-tooltip
+                v-if="player.country"
+                :label="player.country.name"
+                animated
+              >
+                <span
+                  :class="`flag-icon flag-icon-${player.country.code}`"
+                ></span>
+              </b-tooltip>
+              {{ player.name }}
+            </div>
+          </td>
 
-        <b-table-column
-          centered
-          field="primary_t"
-          :label="props.row.primary_t.name"
-          >{{ props.row.primary_t.time }}</b-table-column
-        >
+          <td :data-label="row.primary_t.name">{{ row.primary_t.time }}</td>
 
-        <b-table-column
-          centered
-          v-for="(time, i) in props.row.others_t"
-          :key="i"
-          :label="time.name"
-          >{{ time.time }}</b-table-column
-        >
+          <td
+            v-for="(time, i) in row.others_t"
+            :key="`${row.id}-other-time-${i}`"
+            :data-label="time.name"
+          >
+            {{ time.time }}
+          </td>
 
-        <b-table-column
-          centered
-          v-for="variable in game.variables
-            .filter(v => v.category === category.id)
-            .filter(v => !v['is-subcategory'])"
-          :key="variable.id"
-          :label="variable.name"
-        >
-          <div v-if="props.row.values[variable.id]">
-            {{ variable.values.values[props.row.values[variable.id]].label }}
-          </div>
-        </b-table-column>
+          <td
+            v-for="variable in game.variables
+              .filter(v => v.category === category.id)
+              .filter(v => !v['is-subcategory'])"
+            :key="variable.id"
+            :data-label="variable.name"
+          >
+            <div v-if="row.values[variable.id]">
+              {{ variable.values.values[row.values[variable.id]].label }}
+            </div>
+          </td>
 
-        <b-table-column centered class="is-hidden-touch">
-          <b-icon
-            v-if="props.row.showicon"
-            pack="fas"
-            icon="video"
-            size="is-small"
-          ></b-icon>
-        </b-table-column>
-      </template>
-    </b-table>
+          <td class="is-hidden-touch">
+            <b-icon
+              v-if="row.showicon"
+              pack="fas"
+              icon="video"
+              size="is-small"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import status from "@/mixins/status";
-import { prepareGetLeaderboard } from "@/api/speedsouls";
-const [getLeaderboard, cancel] = prepareGetLeaderboard();
+import { useLeaderboard } from "../api/rx-souls";
+import { startWith, pluck, switchMap, map } from "rxjs/operators";
 
 export default {
-  mixins: [status],
   props: {
     game: {
       type: Object,
@@ -105,10 +117,15 @@ export default {
     category: {
       type: Object,
       required: true
+    },
+    variables: {
+      type: Array,
+      default: () => []
     }
   },
   data: () => ({
-    data: [],
+    leaderboard: undefined,
+    leaderboardError: null,
     isEmpty: false,
     isBordered: false,
     isStriped: false,
@@ -117,76 +134,94 @@ export default {
     isFocusable: false,
     hasMobileCards: true
   }),
-  watch: {
-    game: {
-      deep: true,
-      immediate: true,
-      handler: "fetchData"
-    },
-    category: {
-      handler: "fetchData"
-    }
-  },
   methods: {
-    async fetchData() {
-      cancel(); // cancel current request if any
-      this.status.pending = true;
-      this.status.rejected = this.status.cancelled = this.status.fulfilled = false;
-
-      try {
-        const runs = await getLeaderboard(
-          this.game.id,
-          this.category.id,
-          this.game.variables.filter(v => v["is-subcategory"])
-        );
-
-        this.data = runs.map(run => {
-          const primary_t = run.getPrimaryTime(this.game.ruleset);
-          const others_t = run.getOtherTimes(this.game.ruleset);
-          const players = run.players;
-
-          return {
-            id: run.id,
-            place: run.place,
-            showicon: run.showicon,
-            weblink: run.weblink,
-            values: run.values,
-            primary_t,
-            others_t,
-            players
-          };
-        });
-        this.status.fulfilled = true;
-        this.status.rejected = false;
-      } catch (e) {
-        if (e.name === "AbortError") return;
-        this.status.rejected = true;
-        this.status.fulfilled = false;
-      }
-
-      this.status.pending = false;
+    onLeaderboardSuccess(runs) {
+      this.leaderboardError = null;
+      this.leaderboard = runs;
+    },
+    onLeaderboardError(error) {
+      this.leaderboardError = error;
     },
     onRowClick(run) {
-      if (this.status.pending) return;
       window.open(run.weblink, "_blank");
     }
   },
-  unmount: cancel,
-  destroyed: cancel
+  mounted() {
+    this.$subscribeTo(
+      this.$watchAsObservable("game", { immediate: true, deep: true }).pipe(
+        pluck("newValue"),
+        switchMap(() =>
+          useLeaderboard(this.game, this.category, this.variables).pipe(
+            map(leaderboard => leaderboard.runs),
+            startWith(undefined)
+          )
+        )
+      ),
+      this.onLeaderboardSuccess,
+      this.onLeaderboardError
+    );
+
+    this.$subscribeTo(
+      this.$watchAsObservable("category.id", { immediate: true }).pipe(
+        pluck("newValue"),
+        switchMap(() =>
+          useLeaderboard(this.game, this.category, this.variables).pipe(
+            map(leaderboard => leaderboard.runs),
+            startWith(undefined)
+          )
+        )
+      ),
+      this.onLeaderboardSuccess,
+      this.onLeaderboardError
+    );
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .fulfilled {
-  .actual-table {
-    width: 100%;
-
-    &::v-deep th:last-child {
-      @extend .is-hidden-touch;
+  table.table {
+    td,
+    th {
+      text-align: center;
+      vertical-align: middle;
     }
 
-    td {
-      cursor: pointer;
+    thead {
+      @include mobile {
+        display: none;
+      }
+    }
+
+    tbody {
+      tr {
+        cursor: pointer;
+
+        @include desktop {
+          &:hover {
+            background-color: $table-row-hover-background-color;
+          }
+        }
+
+        @include mobile {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          box-shadow: $card-shadow;
+          margin-bottom: $size-6;
+
+          td {
+            text-align: right;
+            position: relative;
+
+            &::before {
+              content: attr(data-label);
+              font-weight: bold;
+              float: left;
+            }
+          }
+        }
+      }
     }
   }
 }

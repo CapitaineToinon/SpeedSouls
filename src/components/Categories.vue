@@ -8,7 +8,7 @@
         :key="i"
         icon="information-outline"
         :label="category.name"
-        :active="category === active"
+        :active="category.hash === active"
         @click="$emit('CategoryClick', category)"
       ></b-menu-item>
     </b-menu-list>
@@ -19,8 +19,8 @@
 export default {
   props: {
     active: {
-      type: Object,
-      default: undefined
+      type: String,
+      default: () => ""
     },
     categories: {
       type: Array,

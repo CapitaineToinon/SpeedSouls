@@ -5,7 +5,7 @@ export default function Category(json) {
     id,
     name,
     weblink,
-    hash: weblink.split("#")[1],
+    hash: weblink.split("#")[1].toLowerCase(),
     misc: miscellaneous
   };
 }
