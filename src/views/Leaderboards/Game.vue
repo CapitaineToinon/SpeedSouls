@@ -189,12 +189,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.pending,
-.rejected,
-.fulfilled {
-  min-height: calc(100vh - #{$navbar-height});
-}
-
 .fulfilled {
   display: flex;
   flex-direction: row;
