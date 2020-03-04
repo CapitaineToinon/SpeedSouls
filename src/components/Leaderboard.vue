@@ -5,16 +5,21 @@
       type="is-danger"
       aria-close-label="Close message"
       :closable="false"
-      >{{ leaderboardError }}</b-message
+      >{{ leaderboardError.message }}</b-message
     >
   </div>
   <div v-else-if="!leaderboard" class="pending">
     <ss-loading :active="true" />
   </div>
+  <div v-else-if="leaderboard && !leaderboard.length" class="rejected">
+    <b-message title="Warning" type="is-warning" :closable="false"
+      >There are no runs</b-message
+    >
+  </div>
   <div v-else class="fulfilled is-relative">
     <table class="table is-fullwidth">
       <thead>
-        <tr v-if="leaderboard.length">
+        <tr>
           <th>Rank</th>
           <th>Players</th>
           <th>{{ leaderboard[0].primary_t.name }}</th>
@@ -32,14 +37,6 @@
           >
             {{ variable.name }}
           </th>
-          <th class="is-hidden-touch">
-            <!-- empty for VOD -->
-          </th>
-        </tr>
-        <tr v-else>
-          <th>Rank</th>
-          <th>Players</th>
-          <th>Time</th>
           <th class="is-hidden-touch">
             <!-- empty for VOD -->
           </th>
@@ -106,7 +103,7 @@
 
 <script>
 import { useLeaderboard } from "../api/rx-souls";
-import { startWith, pluck, switchMap, map } from "rxjs/operators";
+import { startWith, pluck, switchMap, map, catchError } from "rxjs/operators";
 
 export default {
   props: {
@@ -153,12 +150,12 @@ export default {
         switchMap(() =>
           useLeaderboard(this.game, this.category, this.variables).pipe(
             map(leaderboard => leaderboard.runs),
-            startWith(undefined)
+            startWith(undefined),
+            catchError(this.onLeaderboardError)
           )
         )
       ),
-      this.onLeaderboardSuccess,
-      this.onLeaderboardError
+      this.onLeaderboardSuccess
     );
 
     this.$subscribeTo(
@@ -167,12 +164,12 @@ export default {
         switchMap(() =>
           useLeaderboard(this.game, this.category, this.variables).pipe(
             map(leaderboard => leaderboard.runs),
-            startWith(undefined)
+            startWith(undefined),
+            catchError(this.onLeaderboardError)
           )
         )
       ),
-      this.onLeaderboardSuccess,
-      this.onLeaderboardError
+      this.onLeaderboardSuccess
     );
   }
 };

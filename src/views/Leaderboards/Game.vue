@@ -6,7 +6,7 @@
         type="is-danger"
         aria-close-label="Close message"
         :closable="false"
-        >{{ gameError }}</b-message
+        >{{ gameError.message }}</b-message
       >
     </div>
   </div>
@@ -35,7 +35,27 @@
         @CategoryClick="onCategoryClick"
       />
     </aside>
-    <div class="section main-layout" :class="{ '-open': openSidebar }">
+    <div
+      v-if="categoryError"
+      class="section main-layout"
+      :class="{ '-open': openSidebar }"
+    >
+      <b-message
+        title="Error"
+        type="is-danger"
+        aria-close-label="Close message"
+        :closable="false"
+        >{{ categoryError.message }}</b-message
+      >
+    </div>
+    <div
+      v-else-if="!category"
+      class="section main-layout"
+      :class="{ '-open': openSidebar }"
+    >
+      <ss-loading :active="true" />
+    </div>
+    <div v-else class="section main-layout" :class="{ '-open': openSidebar }">
       <header class="header">
         <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
@@ -73,7 +93,7 @@
 </template>
 
 <script>
-import { switchMap, pluck } from "rxjs/operators";
+import { switchMap, pluck, catchError } from "rxjs/operators";
 import { useSoulsGame, useSoulsCategory } from "../../api/rx-souls";
 import Categories from "@/components/Categories.vue";
 import Leaderboard from "@/components/Leaderboard.vue";
@@ -166,10 +186,9 @@ export default {
     this.$subscribeTo(
       this.$watchAsObservable("$route.params.game", { immediate: true }).pipe(
         pluck("newValue"),
-        switchMap(game => useSoulsGame(game))
+        switchMap(game => useSoulsGame(game).pipe(catchError(this.onGameError)))
       ),
-      this.onGameSuccess,
-      this.onGameError
+      this.onGameSuccess
     );
 
     this.$subscribeTo(
@@ -178,11 +197,12 @@ export default {
       }).pipe(
         pluck("newValue"),
         switchMap(category =>
-          useSoulsCategory(this.$route.params.game, category)
+          useSoulsCategory(this.$route.params.game, category).pipe(
+            catchError(this.onCategoryError)
+          )
         )
       ),
-      this.onCategorySuccess,
-      this.onCategoryError
+      this.onCategorySuccess
     );
   }
 };
