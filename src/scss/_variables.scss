@@ -1,19 +1,38 @@
-// Set your brand colors
-$purple: #CF5A00;
-$pink: #fa7c91;
-$brown: #757763;
-$beige-light: #d0d1cd;
-$beige-lighter: #eff0eb;
+// brands colors
+$brand-dark: #303242;
+$blue-dark: #032535;
+$orange-dark: #da4302;
+$orange: #ff5700; 
+$orange-light: #ff9a00; 
+$yellow: #ffb515; 
+
+// socials colors
+$patreon: rgb(232, 91, 70);
+$patreon-invert: findColorInvert($patreon);
+$twitch: #772ce8;
+$twitch-invert: findColorInvert($twitch);
+$discord: #7289da;
+$discord-invert: findColorInvert($discord);
 $twitter: #4099ff;
+$twitter-invert: findColorInvert($twitter);
 
 // Update Bulma's global variables
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
+// Set your brand colors
+$dark: $blue-dark;
+$primary: $orange-dark;
 $primary-invert: findColorInvert($primary);
-$link: $pink;
-$twitter: $twitter;
-$twitter-invert: findColorInvert($twitter);
+$link: $yellow;
+$text-light: $light;
+
+// menu
+// $menu-label-color: $white;
+
+// table
+// $table-color: $white;
+$table-background-color: $light;
+
+
+// udpating loading
 $loading-background: none;
 
 // Update some of Bulma's component variables
@@ -79,8 +98,26 @@ $colors: (
   "twitter": (
     $twitter,
     $twitter-invert
-  )
+  ),
+  "discord": (
+    $discord,
+    $discord-invert
+  ),
+  "twitch": (
+    $twitch,
+    $twitch-invert
+  ),
+  "patreon": (
+    $patreon,
+    $patreon-invert
+  ),
 );
+
+@each $key, $color in $colors {
+  .has-text-#{$key}-hover:hover {
+    color: $color !important;
+  }
+}
 
 // Links
 $link: $primary;

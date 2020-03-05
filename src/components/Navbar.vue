@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar is-black"
+    class="navbar is-dark"
     :style="style"
     role="navigation"
     aria-label="main navigation"
@@ -130,7 +130,7 @@ nav {
   transition: all $speed-slow;
 
   background-color: rgba(
-    $color: $black,
+    $color: $primary,
     $alpha: #{var(--navbar-opacity)}
   ) !important;
 

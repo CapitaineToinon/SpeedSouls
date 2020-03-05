@@ -10,9 +10,15 @@
           class="social column is-one-third-mobile is-one-third-desktop"
         >
           <a target="_blank" :href="s.url">
-            <b-icon pack="fab" class="social-icon" :icon="s.icon"></b-icon>
+            <b-icon
+              pack="fab"
+              class="social-icon"
+              :class="`has-text-${s.color}`"
+              :icon="s.icon"
+            ></b-icon>
             <span
               class="social-text is-size-4 has-text-weight-bold is-hidden-mobile"
+              :class="`has-text-${s.color}`"
               >{{ s.title }}</span
             >
           </a>
@@ -64,31 +70,37 @@ export default {
     socials: {
       discord: {
         title: "Discord",
+        color: "discord",
         icon: "discord",
         url: "http://discord.speedsouls.com"
       },
       patreon: {
         title: "Patreon",
+        color: "patreon",
         icon: "patreon",
         url: "https://www.patreon.com/speedsouls"
       },
       twitter: {
         title: "Twitter",
+        color: "twitter",
         icon: "twitter",
         url: "https://twitter.com/soulsruns"
       },
       twitch: {
         title: "Twitch",
+        color: "twitch",
         icon: "twitch",
         url: "https://www.twitch.tv/speedsouls"
       },
       team: {
         title: "Team",
+        color: "twitch",
         icon: "twitch",
         url: "https://www.twitch.tv/team/speedsouls"
       },
       github: {
         title: "Github",
+        color: "primary",
         icon: "github",
         url: "https://github.com/CapitaineToinon/buefy-souls"
       }
@@ -113,17 +125,16 @@ export default {
 
       &.socials {
         .social {
-          a:hover {
+          a:not(:hover) {
             .social-text,
             .social-icon {
-              color: $primary;
+              color: $light !important;
             }
           }
 
           .social-text,
           .social-icon {
             transition: all $speed-slow;
-            color: $light;
           }
 
           .social-icon {
