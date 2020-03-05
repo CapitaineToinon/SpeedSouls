@@ -1,15 +1,24 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import Buefy from "buefy";
 import VueScrollTo from "vue-scrollto";
 import VueRx from "vue-rx";
+import { Button, Field, Radio, Icon, Loading, Menu, Tooltip } from "buefy";
+import ssLoading from "./components/ssLoading.vue";
 
 Vue.use(VueRx);
 Vue.use(VueScrollTo);
-Vue.use(Buefy);
 
-import ssLoading from "./components/ssLoading.vue";
+// Buefy components
+Vue.use(Button);
+Vue.use(Field);
+Vue.use(Radio);
+Vue.use(Icon);
+Vue.use(Loading);
+Vue.use(Menu);
+Vue.use(Tooltip);
+
+// Our global components
 Vue.component("ss-loading", ssLoading);
 
 Vue.config.productionTip = false;
