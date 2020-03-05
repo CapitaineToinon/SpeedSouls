@@ -1,10 +1,11 @@
 // brands colors
-$brand-dark: #303242;
+$brand-dark: #242331;
 $blue-dark: #032535;
 $orange-dark: #da4302;
 $orange: #ff5700; 
 $orange-light: #ff9a00; 
-$yellow: #ffb515; 
+$yellow: #ffdd57; 
+$yellow-invert: findColorInvert($yellow);
 
 // socials colors
 $patreon: rgb(232, 91, 70);
@@ -18,14 +19,24 @@ $twitter-invert: findColorInvert($twitter);
 
 // Update Bulma's global variables
 // Set your brand colors
-$dark: $blue-dark;
+$dark: $brand-dark;
 $primary: $orange-dark;
 $primary-invert: findColorInvert($primary);
-$link: $yellow;
 $text-light: $light;
 
+// Links
+$link: $yellow;
+$link-invert: $orange-dark;
+$link-hover: $orange;
+$link-focus-border: $orange-dark;
+
 // menu
-// $menu-label-color: $white;
+$menu-item-active-color: $light;
+$menu-item-hover-background-color: $white;
+$menu-item-active-background-color: $orange-dark;
+
+// breadcrumb
+$breadcrumb-item-color: $link-invert;
 
 // table
 // $table-color: $white;
@@ -71,6 +82,10 @@ $colors: (
     $light,
     $light-invert
   ),
+  "yellow": (
+    $yellow,
+    $yellow-invert
+  ),
   "dark": (
     $dark,
     $dark-invert
@@ -112,14 +127,3 @@ $colors: (
     $patreon-invert
   ),
 );
-
-@each $key, $color in $colors {
-  .has-text-#{$key}-hover:hover {
-    color: $color !important;
-  }
-}
-
-// Links
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;

@@ -53,7 +53,14 @@ export default {
   .card-image {
     overflow: hidden;
 
+    @include desktop {
+      &:hover:after {
+        transform: translateX(-50%) translateY(-50%) scale(1.1);
+      }
+    }
+
     &::after {
+      transition: all $speed-slow;
       content: var(--game-name);
       position: absolute;
       font-weight: bold;

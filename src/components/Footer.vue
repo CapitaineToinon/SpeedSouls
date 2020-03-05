@@ -100,7 +100,7 @@ export default {
       },
       github: {
         title: "Github",
-        color: "primary",
+        color: "yellow",
         icon: "github",
         url: "https://github.com/CapitaineToinon/buefy-souls"
       }
@@ -125,16 +125,13 @@ export default {
 
       &.socials {
         .social {
+          transition: all $speed-slow;
+
           a:not(:hover) {
             .social-text,
             .social-icon {
               color: $light !important;
             }
-          }
-
-          .social-text,
-          .social-icon {
-            transition: all $speed-slow;
           }
 
           .social-icon {

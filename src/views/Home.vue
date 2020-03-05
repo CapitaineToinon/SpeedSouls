@@ -32,11 +32,11 @@
         </div>
       </div>
     </hero-nav>
-    <section id="games" class="games hero is-black is-fullheight">
+    <section id="games" class="games hero is-dark is-fullheight">
       <div class="hero-body is-clipped">
         <div class="container">
           <div class="columns is-mobile is-multiline">
-            <p class="column is-full has-text-weight-bold is-size-2">
+            <p class="column is-black is-full has-text-weight-bold is-size-2">
               Leaderboards
             </p>
             <div class="column is-full">
@@ -65,7 +65,7 @@
           </h2>
           <div class="buttons">
             <b-button
-              class="is-medium is-outlined is-inverted"
+              class="is-discord is-medium is-outlined is-inverted"
               icon-pack="fab"
               icon-left="discord"
               tag="a"
