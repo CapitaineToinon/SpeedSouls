@@ -12,14 +12,15 @@ export default function Game(json) {
   } = json;
 
   let formatted = {
-    id: id,
-    abbreviation: abbreviation,
-    names: names,
+    id,
+    abbreviation,
+    names,
     name: names.international,
-    assets: assets,
+    assets,
     variables: variables && variables.data ? variables.data : [],
-    background: assets.background.uri,
-    ruleset: ruleset
+    background:
+      assets.background && assets.background.uri ? assets.background.uri : "",
+    ruleset
   };
 
   if (categories) {

@@ -34,8 +34,8 @@ export default {
     },
     style() {
       return {
-        "--bg-url": `url(${this.game.assets["background"].uri})`,
-        "--game-name": `"${this.game.names.international}"`
+        "--bg-url": `url(${this.game.background})`,
+        "--game-name": `"${this.game.name}"`
       };
     }
   }
