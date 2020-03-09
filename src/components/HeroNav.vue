@@ -11,13 +11,13 @@ export default {
   data: () => ({
     // todo other backgrounds
     assets: [
-      "bloodborne.png",
-      "darksouls.png",
-      "darksouls2.png",
-      "darksouls3.png",
-      "darksoulsremastered.png",
-      "darksouls2sotfs.png",
-      "demonssouls.png"
+      "bloodborne",
+      "darksouls",
+      "darksouls2",
+      "darksouls3",
+      "darksoulsremastered",
+      "darksouls2sotfs",
+      "demonssouls"
     ]
   }),
   props: {
@@ -29,7 +29,7 @@ export default {
   computed: {
     style() {
       const image = this.assets[Math.floor(Math.random() * this.assets.length)];
-      const url = require(`@/assets/backgrounds/${image}`);
+      const url = require(`@/assets/backgrounds/${image}-1280.jpg`);
 
       return {
         "--bg-url": `url(${url})`

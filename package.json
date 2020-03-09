@@ -5,9 +5,10 @@
   "scripts": {
     "serve": "yarn client:serve",
     "build": "yarn client:build",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint ./src ./scripts",
     "client:serve": "vue-cli-service serve",
-    "client:build": "vue-cli-service build"
+    "client:build": "yarn download:backgrounds && vue-cli-service build",
+    "download:backgrounds": "node ./scripts/downloadBackgrounds.js"
   },
   "pre-commit": [
     "lint"
@@ -27,6 +28,7 @@
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-prettier": "^5.0.0",
+    "axios": "^0.19.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
@@ -35,6 +37,7 @@
     "prettier": "^1.18.2",
     "sass": "^1.23.0",
     "sass-loader": "^8.0.0",
+    "sharp": "^0.25.1",
     "vue-template-compiler": "^2.6.10"
   }
 }

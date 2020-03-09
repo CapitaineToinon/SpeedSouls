@@ -33,8 +33,10 @@ export default {
       return this.to !== undefined;
     },
     style() {
+      const url = require(`@/assets/backgrounds/${this.game.abbreviation}-240.jpg`);
+
       return {
-        "--bg-url": `url(${this.game.background})`,
+        "--bg-url": `url(${url})`,
         "--game-name": `"${this.game.name}"`
       };
     }
