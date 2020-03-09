@@ -3,7 +3,16 @@ import App from "./App.vue";
 import router from "./router";
 import VueScrollTo from "vue-scrollto";
 import VueRx from "vue-rx";
-import { Button, Field, Radio, Icon, Loading, Menu, Tooltip } from "buefy";
+import {
+  Button,
+  Field,
+  Radio,
+  Icon,
+  Loading,
+  Menu,
+  Tooltip,
+  Message
+} from "buefy";
 import ssLoading from "./components/ssLoading.vue";
 
 Vue.use(VueRx);
@@ -17,6 +26,7 @@ Vue.use(Icon);
 Vue.use(Loading);
 Vue.use(Menu);
 Vue.use(Tooltip);
+Vue.use(Message);
 
 // Our global components
 Vue.component("ss-loading", ssLoading);
