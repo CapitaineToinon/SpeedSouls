@@ -102,8 +102,9 @@
 </template>
 
 <script>
-import { useLeaderboard } from "../api/rx-souls";
+import { of } from "rxjs";
 import { startWith, pluck, switchMap, map, catchError } from "rxjs/operators";
+import { useLeaderboard } from "../api/rx-souls";
 
 export default {
   props: {
@@ -133,11 +134,11 @@ export default {
   }),
   methods: {
     onLeaderboardSuccess(runs) {
-      this.leaderboardError = null;
       this.leaderboard = runs;
     },
     onLeaderboardError(error) {
       this.leaderboardError = error;
+      return of(undefined);
     },
     onRowClick(run) {
       window.open(run.weblink, "_blank");
