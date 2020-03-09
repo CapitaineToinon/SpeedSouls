@@ -17,7 +17,7 @@
     >
   </div>
   <div v-else class="fulfilled is-relative">
-    <table class="table is-fullwidth">
+    <table class="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Rank</th>
@@ -195,12 +195,6 @@ export default {
       tr {
         cursor: pointer;
 
-        @include desktop {
-          &:hover {
-            background-color: $table-row-hover-background-color;
-          }
-        }
-
         @include mobile {
           display: flex;
           flex-direction: column;
@@ -211,6 +205,10 @@ export default {
           td {
             text-align: right;
             position: relative;
+
+            &:not(:last-child) {
+              border: $table-cell-border;
+            }
 
             &::before {
               content: attr(data-label);

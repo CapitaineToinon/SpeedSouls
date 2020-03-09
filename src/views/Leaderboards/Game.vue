@@ -257,7 +257,7 @@ export default {
       width: 100%;
       transition: all $speed-slower;
       transform: translateY(100%);
-      background-color: $white;
+      // background-color: $scheme-main-ter;
 
       .categories {
         padding-bottom: $size-1 * 2;

@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer is-black">
+  <footer class="footer">
     <div class="content container">
       <div
         class="footer-item socials columns is-multiline is-centered is-mobile has-text-centered"
@@ -114,6 +114,8 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+
+  // background-color: #37474F; // @change
 
   .container {
     .footer-item {

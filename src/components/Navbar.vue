@@ -155,7 +155,7 @@ nav {
     }
 
     .router-link-exact-active {
-      background-color: $navbar-item-active-background-color;
+      // background-color: $navbar-item-active-background-color;
     }
 
     .navbar-end {

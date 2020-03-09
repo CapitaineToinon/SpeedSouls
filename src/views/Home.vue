@@ -46,7 +46,7 @@
         </div>
       </div>
     </section>
-    <section class="about hero is-black is-small">
+    <section class="about hero is-black is-fullheight">
       <div class="hero-body is-clipped">
         <div class="container hero-content has-text-centered">
           <div class="block">

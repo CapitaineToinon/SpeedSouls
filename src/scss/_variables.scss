@@ -1,9 +1,7 @@
 // brands colors
-$brand-dark: #242331;
-$blue-dark: #032535;
-$orange-dark: #da4302;
-$orange: #ff5700; 
-$orange-light: #ff9a00; 
+$orange: #ff9a00; 
+$orange-bis: #ff5700; 
+$orange-ter: #da4302;
 $yellow: #ffdd57; 
 $yellow-invert: findColorInvert($yellow);
 
@@ -19,42 +17,61 @@ $twitter-invert: findColorInvert($twitter);
 
 // Update Bulma's global variables
 // Set your brand colors
-$dark: $brand-dark;
-$primary: $orange-dark;
+$primary: $orange-ter;
 $primary-invert: findColorInvert($primary);
 $text-light: $light;
 
+// derived
+$scheme-main: #616161;
+$scheme-main-bis: #424242;
+$scheme-main-ter: #212121;
+
+$black: $scheme-main-ter; 
+$dark: $scheme-main-bis;
+
 // Links
-$link: $yellow;
-$link-invert: $orange-dark;
-$link-hover: $orange;
-$link-focus-border: $orange-dark;
+$link: $primary;
+$link-invert: $primary-invert;
+$link-hover: $yellow;
+$link-focus-border: $orange;
 
 // menu
+$menu-item-color: $light;
 $menu-item-active-color: $light;
-$menu-item-hover-background-color: $white;
-$menu-item-active-background-color: $orange-dark;
+$menu-item-hover-color: $light;
+$menu-item-hover-background-color: $scheme-main;
+$menu-item-active-background-color: $scheme-main-bis;
 
 // breadcrumb
-$breadcrumb-item-color: $link-invert;
+$breadcrumb-item-color: $link;
+$breadcrumb-item-hover-color: $link-invert;
+$breadcrumb-item-active-color: $light;
+
+// button
+$button-color: $light;
+$button-hover-color: $light;
+$button-background-color: $scheme-main-bis;
 
 // table
-// $table-color: $white;
-$table-background-color: $light;
+$table-color: $light;
+$table-head-background-color: $scheme-main-ter;
+$table-background-color: $scheme-main-ter;
+$table-row-hover-background-color: $scheme-main;
+$table-striped-row-even-background-color: $scheme-main-bis;
+$table-striped-row-even-hover-background-color: $scheme-main; 
 
+$table-head-cell-color: $light;
+$table-cell-border: 1px solid $scheme-main;
 
 // udpating loading
 $loading-background: none;
 
-// Update some of Bulma's component variables
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+// sidebar
 $sidebar-width: 300px;
 
 // updating footer
 $footer-padding: 3rem 1.5rem;
-$footer-background-color: $dark;
+$footer-background-color: $scheme-main-bis;
 
 // updating section
 $section-padding-y: 3rem;
