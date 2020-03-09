@@ -54,6 +54,7 @@ export default {
     background-image: var(--bg-url);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     position: absolute;
     top: 0;
     right: 0;
