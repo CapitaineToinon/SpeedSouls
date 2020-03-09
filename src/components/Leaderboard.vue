@@ -139,8 +139,13 @@ export default {
     onLeaderboardError(error) {
       this.leaderboardError = error;
     },
-    onRowClick(run) {
-      window.open(run.weblink, "_blank");
+    onRowClick({ id }) {
+      this.$router.push({
+        name: "run",
+        params: {
+          id
+        }
+      });
     }
   },
   mounted() {
