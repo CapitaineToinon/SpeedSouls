@@ -41,6 +41,14 @@ const router = new Router({
       ]
     },
     {
+      path: "/runs/:id",
+      name: "run",
+      component: () => import("./views/Run.vue"),
+      meta: {
+        title: "SpeedSouls"
+      }
+    },
+    {
       path: "/submit",
       name: "submit",
       component: () => import("./views/Submit.vue"),

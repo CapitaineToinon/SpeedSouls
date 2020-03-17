@@ -15,12 +15,14 @@
   ],
   "dependencies": {
     "buefy": "^0.8.12",
+    "date-fns": "^2.11.0",
     "flag-icon-css": "^3.4.6",
     "rxjs": "^6.5.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue-rx": "^6.2.0",
-    "vue-scrollto": "^2.17.1"
+    "vue-scrollto": "^2.17.1",
+    "vue-youtube": "^1.4.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",

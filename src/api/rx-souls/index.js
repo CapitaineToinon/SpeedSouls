@@ -1,7 +1,9 @@
+import { forkJoin, from } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { map, startWith, flatMap, find } from "rxjs/operators";
 import formatGame from "./formatting/Game";
 import formatLeaderboard from "./formatting/Leaderboard";
+import formatRun from "./formatting/Run";
 import CACHE from "./cache";
 
 export const BASE_URL = "https://www.speedrun.com";
@@ -19,12 +21,34 @@ function getSoulsGames() {
 function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = "") {
   return ajax
     .getJSON(
-      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables&${variablesQuery}`
+      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
     )
     .pipe(
       map(response => response.data),
       map(raw => formatLeaderboard(raw, gameLookFor))
     );
+}
+
+function getRun(runId) {
+  return forkJoin(
+    from(getSoulsGames()),
+    from(
+      ajax
+        .getJSON(`${API_ENDPOINT}/runs/${runId}?embed=players,category`)
+        .pipe(map(response => response.data))
+    )
+  ).pipe(
+    map(([games, run]) => {
+      const game = games.find(g => g.id === run.game);
+
+      if (!game) {
+        throw new Error("Run not found");
+      }
+
+      return [game, run];
+    }),
+    map(([game, run]) => formatRun(run, game))
+  );
 }
 
 export function useSoulsGames() {
@@ -69,4 +93,8 @@ export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
     `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}/${variablesQuery}`,
     getLeaderboard(gameLookFor, categoryLookFor, variablesQuery)
   );
+}
+
+export function useRuns(runId) {
+  return CACHE.get(`getRun/${runId}`, getRun(runId));
 }
