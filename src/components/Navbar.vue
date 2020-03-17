@@ -47,8 +47,11 @@
         <a class="text navbar-item" target="_blank" :href="links.forums"
           >Forums</a
         >
-        <a tag="a" class="text navbar-item" target="_blank" :href="links.submit"
-          >Submit a run</a
+        <router-link
+          @click.native="close"
+          class="text navbar-item"
+          :to="{ name: 'submit' }"
+          >Submit a run</router-link
         >
         <span class="separator"></span>
         <a

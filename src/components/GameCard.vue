@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     onClick() {
+      this.$emit("click", this);
       if (this.to) this.$router.push(this.to);
     }
   },

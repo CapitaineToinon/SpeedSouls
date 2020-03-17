@@ -11,7 +11,8 @@ import {
   Loading,
   Menu,
   Tooltip,
-  Message
+  Message,
+  Collapse
 } from "buefy";
 import ssLoading from "./components/ssLoading.vue";
 
@@ -27,6 +28,7 @@ Vue.use(Loading);
 Vue.use(Menu);
 Vue.use(Tooltip);
 Vue.use(Message);
+Vue.use(Collapse);
 
 // Our global components
 Vue.component("ss-loading", ssLoading);
