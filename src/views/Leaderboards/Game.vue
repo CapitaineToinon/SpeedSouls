@@ -27,66 +27,74 @@
         :icon="openSidebar ? 'times' : 'list'"
       ></b-icon>
     </button>
-    <aside class="sidebar" :class="{ '-open': openSidebar }">
-      <Categories
-        class="categories"
-        :categories="game.categories"
-        :active="$route.params.category"
-        @CategoryClick="onCategoryClick"
-      />
-    </aside>
-    <div
-      v-if="categoryError"
-      class="section main-layout"
-      :class="{ '-open': openSidebar }"
-    >
-      <b-message
-        title="Error"
-        type="is-danger"
-        aria-close-label="Close message"
-        :closable="false"
-        >{{ categoryError.message }}</b-message
-      >
-    </div>
-    <div
-      v-else-if="!category"
-      class="section main-layout"
-      :class="{ '-open': openSidebar }"
-    >
-      <ss-loading :active="true" />
-    </div>
-    <div v-else class="section main-layout" :class="{ '-open': openSidebar }">
-      <header class="header">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-          <ul>
-            <li
-              v-for="(b, i) in breadcrumbs"
-              :key="i"
-              :class="b.active ? 'is-active' : ''"
-            >
-              <router-link :to="b.to">{{ b.text }}</router-link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <div class="sub-categories">
-        <b-field v-for="variable in subCategories" :key="variable.id">
-          <b-radio-button
-            v-for="(option, id) in variable.values.values"
-            :key="id"
-            :native-value="id"
-            v-model="variable.values.default"
+    <div class="section">
+      <div class="columns is-mobile">
+        <div class="column left is-narrow">
+          <aside class="sidebar" :class="{ '-open': openSidebar }">
+            <Categories
+              class="categories"
+              :categories="game.categories"
+              :active="$route.params.category"
+              @CategoryClick="onCategoryClick"
+            />
+          </aside>
+        </div>
+        <div class="column right">
+          <div
+            v-if="categoryError"
+            class="section main-layout"
+            :class="{ '-open': openSidebar }"
           >
-            <span>{{ option.label }}</span>
-          </b-radio-button>
-        </b-field>
-      </div>
-      <div class="leaderboard">
-        <Leaderboard
-          :game="game"
-          :category="category"
-          :variables="subCategories"
-        />
+            <b-message
+              title="Error"
+              type="is-danger"
+              aria-close-label="Close message"
+              :closable="false"
+              >{{ categoryError.message }}</b-message
+            >
+          </div>
+          <div
+            v-else-if="!category"
+            class="section main-layout"
+            :class="{ '-open': openSidebar }"
+          >
+            <ss-loading :active="true" />
+          </div>
+          <div v-else class="main-layout" :class="{ '-open': openSidebar }">
+            <header class="header">
+              <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                  <li
+                    v-for="(b, i) in breadcrumbs"
+                    :key="i"
+                    :class="b.active ? 'is-active' : ''"
+                  >
+                    <router-link :to="b.to">{{ b.text }}</router-link>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            <div class="sub-categories">
+              <b-field v-for="variable in subCategories" :key="variable.id">
+                <b-radio-button
+                  v-for="(option, id) in variable.values.values"
+                  :key="id"
+                  :native-value="id"
+                  v-model="variable.values.default"
+                >
+                  <span>{{ option.label }}</span>
+                </b-radio-button>
+              </b-field>
+            </div>
+            <div class="leaderboard">
+              <Leaderboard
+                :game="game"
+                :category="category"
+                :variables="subCategories"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -216,9 +224,28 @@ export default {
 
 <style scoped lang="scss">
 .fulfilled {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  .column {
+    &.left {
+      @include touch {
+        padding: 0;
+      }
+    }
+
+    &.right {
+      .breadcrumb,
+      .sub-categories {
+        margin-bottom: $size-4;
+      }
+
+      .main-layout {
+        transition: $speed-slow;
+
+        &.-open {
+          opacity: 0;
+        }
+      }
+    }
+  }
 
   .sidebar-button {
     position: fixed;
@@ -240,15 +267,15 @@ export default {
 
   .sidebar {
     width: $sidebar-width;
-    max-height: calc(100vh - #{$navbar-height});
-    overflow-y: auto;
-    top: $navbar-height;
-    padding: $size-1 0 $size-1 $size-4;
     position: -webkit-sticky;
     position: sticky;
+    top: calc(#{$navbar-height} + #{$section-padding-y});
 
     @include touch {
       position: fixed;
+      top: $navbar-height;
+      left: 0;
+      right: 0;
       z-index: $navbar-z - 2;
       overflow-y: scroll;
       padding: $size-1 $size-4;
@@ -257,7 +284,7 @@ export default {
       width: 100%;
       transition: all $speed-slower;
       transform: translateY(100%);
-      // background-color: $scheme-main-ter;
+      background-color: $scheme-main-ter;
 
       .categories {
         padding-bottom: $size-1 * 2;
@@ -266,23 +293,6 @@ export default {
       &.-open {
         transform: translateY(0);
       }
-    }
-  }
-
-  .main-layout {
-    flex-grow: 1;
-
-    .breadcrumb,
-    .sub-categories {
-      margin-bottom: $size-4;
-    }
-
-    .leaderboards {
-      width: auto;
-    }
-
-    &.-open {
-      opacity: 0.5;
     }
   }
 }

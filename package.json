@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "buefy": "^0.8.12",
+    "date-fns": "^2.11.0",
     "flag-icon-css": "^3.4.6",
     "rxjs": "^6.5.4",
     "vue": "^2.6.10",

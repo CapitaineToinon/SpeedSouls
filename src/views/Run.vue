@@ -18,7 +18,7 @@
   <div v-else class="fulfilled container has-fixed-navbar-top">
     <div class="section">
       <div class="columns is-mobile is-multiline">
-        <div class="column is-narrow">
+        <div class="column is-full-mobile left is-narrow">
           <div class="card aside">
             <div class="card-image">
               <figure class="image">
@@ -44,7 +44,7 @@
             </footer>
           </div>
         </div>
-        <div class="column">
+        <div class="column is-full-mobile right">
           <header class="header">
             <nav class="breadcrumb" aria-label="breadcrumbs">
               <ul>
@@ -75,30 +75,54 @@
             </div>
             <div class="card-content">
               <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img
-                      src="https://bulma.io/images/placeholders/96x96.png"
-                      alt="Placeholder image"
-                    />
-                  </figure>
-                </div>
                 <div class="media-content">
-                  <p class="title has-text-light is-4">John Smith</p>
-                  <p class="subtitle has-text-light is-6">@johnsmith</p>
+                  <p class="title has-text-light is-4">
+                    <router-link
+                      :to="{
+                        name: 'game',
+                        params: {
+                          game: run.game.abbreviation,
+                          category: run.category.hash
+                        }
+                      }"
+                      >{{ run.category.name }}</router-link
+                    >
+                    in {{ run.primary_t.time }} by
+                    <span
+                      class="player"
+                      v-for="(player, i) in run.players"
+                      :key="`player-${i}`"
+                    >
+                      <b-tooltip
+                        v-if="player.country"
+                        :label="player.country.name"
+                        animated
+                      >
+                        <span
+                          :class="`flag-icon flag-icon-${player.country.code}`"
+                        ></span>
+                      </b-tooltip>
+                      {{ player.name }}
+                    </span>
+                  </p>
+                  <p class="subtitle has-text-light is-6">{{ date }}</p>
                 </div>
               </div>
 
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris.
-                <a>@bulmaio</a>.
+              <div v-if="run.comment" class="content">
+                {{ run.comment }}
+                <!-- <a>@bulmaio</a>.
                 <a href="#">#css</a>
                 <a href="#">#responsive</a>
                 <br />
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>-->
               </div>
             </div>
+            <footer class="card-footer">
+              <a :href="`${run.weblink}/editrun`" class="card-footer-item"
+                >View on speedrun.com</a
+              >
+            </footer>
           </div>
         </div>
       </div>
@@ -111,6 +135,7 @@ import { of } from "rxjs";
 import { pluck, switchMap, catchError } from "rxjs/operators";
 import { useRuns } from "@/api/rx-souls";
 import RunVideo from "@/components/RunVideo";
+import formatDate from "date-fns/format";
 
 export default {
   data: () => ({
@@ -119,6 +144,15 @@ export default {
   }),
   components: { RunVideo },
   computed: {
+    date() {
+      let date = "";
+
+      if (this.run) {
+        date = formatDate(new Date(this.run.date), "do MMM yyyy");
+      }
+
+      return date;
+    },
     breadcrumbs() {
       const array = [
         {
@@ -126,8 +160,6 @@ export default {
           to: { name: "games" }
         }
       ];
-
-      console.log(this.run);
 
       if (this.run) {
         array.push({
@@ -162,6 +194,8 @@ export default {
         });
       }
 
+      console.log(this.run);
+
       return array;
     }
   },
@@ -186,8 +220,24 @@ export default {
 
 <style lang="scss" scoped>
 .fulfilled {
-  .aside {
-    width: $sidebar-width;
+  .column {
+    &.left {
+      order: 1;
+      width: $sidebar-width;
+
+      @include mobile {
+        order: 2;
+        width: 100%;
+      }
+    }
+
+    &.right {
+      order: 2;
+
+      @include mobile {
+        order: 1;
+      }
+    }
   }
 
   .header {
