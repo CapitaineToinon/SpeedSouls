@@ -3,7 +3,9 @@
     <div class="section">
       <div class="columns is-mobile is-multiline">
         <div class="column is-full">
-          <h1 class="has-text-light is-full has-text-weight-bold is-size-2">Leaderboards</h1>
+          <h1 class="has-text-light is-full has-text-weight-bold is-size-2">
+            Leaderboards
+          </h1>
         </div>
         <div class="column is-full">
           <GameCards />
