@@ -19,3 +19,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# generated images
+src/assets/backgrounds/*
+!src/assets/backgrounds/.gitkeep
