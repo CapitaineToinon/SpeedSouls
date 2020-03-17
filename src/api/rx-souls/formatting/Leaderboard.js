@@ -1,9 +1,29 @@
 import formatPlayer from "./Player";
-import formatRun from "./Run";
+import { getPrimaryTime, getOtherTimes } from "./TimingMethod";
+
+function formatLeaderboardRun(json, players, fullGame, fullCategory) {
+  const { place, run } = json;
+  const { ruleset } = fullGame;
+  const { id, times, videos, weblink, values } = run;
+
+  return {
+    game: fullGame,
+    category: fullCategory,
+    players,
+    place,
+    id,
+    times,
+    videos,
+    weblink,
+    values,
+    primary_t: getPrimaryTime(times, ruleset),
+    others_t: getOtherTimes(times, ruleset),
+    showicon: videos !== null
+  };
+}
 
 export default function formatLeaderboard(json, game) {
-  const { runs, players } = json;
-  const { ruleset } = game;
+  const { runs, players, category } = json;
 
   const formatted = {
     runs: runs.map(run => {
@@ -15,7 +35,7 @@ export default function formatLeaderboard(json, game) {
         })
         .map(formatPlayer);
 
-      return formatRun(run, formattedPlayers, ruleset);
+      return formatLeaderboardRun(run, formattedPlayers, game, category.data);
     })
   };
 

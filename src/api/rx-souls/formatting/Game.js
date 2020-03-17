@@ -21,6 +21,10 @@ export default function Game(json) {
     variables: variables && variables.data ? variables.data : [],
     background:
       assets.background && assets.background.uri ? assets.background.uri : "",
+    coverLarge:
+      assets["cover-large"] && assets["cover-large"].uri
+        ? assets["cover-large"].uri
+        : "",
     ruleset,
     weblink
   };

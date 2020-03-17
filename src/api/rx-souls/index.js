@@ -3,6 +3,7 @@ import { ajax } from "rxjs/ajax";
 import { map, startWith, flatMap, find } from "rxjs/operators";
 import formatGame from "./formatting/Game";
 import formatLeaderboard from "./formatting/Leaderboard";
+import formatRun from "./formatting/Run";
 import CACHE from "./cache";
 
 export const BASE_URL = "https://www.speedrun.com";
@@ -20,7 +21,7 @@ function getSoulsGames() {
 function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = "") {
   return ajax
     .getJSON(
-      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables&${variablesQuery}`
+      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
     )
     .pipe(
       map(response => response.data),
@@ -44,9 +45,9 @@ function getRun(runId) {
         throw new Error("Run not found");
       }
 
-      run.game = game;
-      return run;
-    })
+      return [game, run];
+    }),
+    map(([game, run]) => formatRun(run, game))
   );
 }
 

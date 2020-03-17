@@ -94,14 +94,13 @@
 
 <script>
 import { of } from "rxjs";
-import { switchMap, pluck, catchError } from "rxjs/operators";
-import { useSoulsGame, useSoulsCategory } from "../../api/rx-souls";
+import { switchMap, pluck, catchError, skipWhile } from "rxjs/operators";
+import { useSoulsGame, useSoulsCategory } from "@/api/rx-souls";
 import Categories from "@/components/Categories.vue";
 import Leaderboard from "@/components/Leaderboard.vue";
 
 export default {
   name: "games",
-  mixins: [status],
   components: {
     Categories,
     Leaderboard
@@ -202,6 +201,7 @@ export default {
         immediate: true
       }).pipe(
         pluck("newValue"),
+        skipWhile(v => v === undefined),
         switchMap(category =>
           useSoulsCategory(this.$route.params.game, category).pipe(
             catchError(this.onCategoryError)
