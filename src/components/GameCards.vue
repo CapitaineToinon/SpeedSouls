@@ -31,9 +31,10 @@
 </template>
 
 <script>
-import GameCard from "@/components/GameCard.vue";
-import { useSoulsGames } from "../api/rx-souls";
+import { of } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { useSoulsGames } from "../api/rx-souls";
+import GameCard from "@/components/GameCard.vue";
 
 export default {
   name: "games",
@@ -44,11 +45,14 @@ export default {
   }),
   methods: {
     onSuccess(games) {
+      if (!games) return;
+
       this.error = null;
       this.games = games;
     },
     onError(error) {
       this.error = error;
+      return of(undefined);
     }
   },
   mounted() {

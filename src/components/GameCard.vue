@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     onClick() {
+      this.$emit("click", this);
       if (this.to) this.$router.push(this.to);
     }
   },
@@ -33,8 +34,10 @@ export default {
       return this.to !== undefined;
     },
     style() {
+      const url = require(`@/assets/backgrounds/${this.game.abbreviation}-240.jpg`);
+
       return {
-        "--bg-url": `url(${this.game.background})`,
+        "--bg-url": `url(${url})`,
         "--game-name": `"${this.game.name}"`
       };
     }
@@ -53,7 +56,14 @@ export default {
   .card-image {
     overflow: hidden;
 
+    @include desktop {
+      &:hover:after {
+        transform: translateX(-50%) translateY(-50%) scale(1.1);
+      }
+    }
+
     &::after {
+      transition: all $speed-slow;
       content: var(--game-name);
       position: absolute;
       font-weight: bold;

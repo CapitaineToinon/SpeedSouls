@@ -102,8 +102,9 @@
 </template>
 
 <script>
-import { useLeaderboard } from "../api/rx-souls";
+import { of } from "rxjs";
 import { startWith, pluck, switchMap, map, catchError } from "rxjs/operators";
+import { useLeaderboard } from "../api/rx-souls";
 
 export default {
   props: {
@@ -133,11 +134,11 @@ export default {
   }),
   methods: {
     onLeaderboardSuccess(runs) {
-      this.leaderboardError = null;
       this.leaderboard = runs;
     },
     onLeaderboardError(error) {
       this.leaderboardError = error;
+      return of(undefined);
     },
     onRowClick({ id }) {
       this.$router.push({
@@ -199,12 +200,6 @@ export default {
       tr {
         cursor: pointer;
 
-        @include desktop {
-          &:hover {
-            background-color: $table-row-hover-background-color;
-          }
-        }
-
         @include mobile {
           display: flex;
           flex-direction: column;
@@ -215,6 +210,10 @@ export default {
           td {
             text-align: right;
             position: relative;
+
+            &:not(:last-child) {
+              border: $table-cell-border;
+            }
 
             &::before {
               content: attr(data-label);

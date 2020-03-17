@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar is-black"
+    class="navbar is-dark"
     :style="style"
     role="navigation"
     aria-label="main navigation"
@@ -47,8 +47,11 @@
         <a class="text navbar-item" target="_blank" :href="links.forums"
           >Forums</a
         >
-        <a tag="a" class="text navbar-item" target="_blank" :href="links.submit"
-          >Submit a run</a
+        <router-link
+          @click.native="close"
+          class="text navbar-item"
+          :to="{ name: 'submit' }"
+          >Submit a run</router-link
         >
         <span class="separator"></span>
         <a
@@ -130,7 +133,7 @@ nav {
   transition: all $speed-slow;
 
   background-color: rgba(
-    $color: $black,
+    $color: $primary,
     $alpha: #{var(--navbar-opacity)}
   ) !important;
 
@@ -155,7 +158,7 @@ nav {
     }
 
     .router-link-exact-active {
-      background-color: $navbar-item-active-background-color;
+      // background-color: $navbar-item-active-background-color;
     }
 
     .navbar-end {

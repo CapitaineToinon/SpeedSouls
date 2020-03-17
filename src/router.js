@@ -49,6 +49,14 @@ const router = new Router({
       }
     },
     {
+      path: "/submit",
+      name: "submit",
+      component: () => import("./views/Submit.vue"),
+      meta: {
+        title: "SpeedSouls - Submit a run"
+      }
+    },
+    {
       path: "/about",
       name: "about",
       component: () => import("./views/About.vue"),

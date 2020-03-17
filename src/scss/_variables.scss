@@ -1,30 +1,82 @@
-// Set your brand colors
-$purple: #8a4d76;
-$pink: #fa7c91;
-$brown: #757763;
-$beige-light: #d0d1cd;
-$beige-lighter: #eff0eb;
+// brands colors
+$orange: #ff9a00; 
+$orange-bis: #ff5700; 
+$orange-ter: #da4302;
+$yellow: #ffdd57; 
+$yellow-invert: findColorInvert($yellow);
+
+// socials colors
+$patreon: rgb(232, 91, 70);
+$patreon-invert: findColorInvert($patreon);
+$twitch: #772ce8;
+$twitch-invert: findColorInvert($twitch);
+$discord: #7289da;
+$discord-invert: findColorInvert($discord);
 $twitter: #4099ff;
+$twitter-invert: findColorInvert($twitter);
 
 // Update Bulma's global variables
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
+// Set your brand colors
+$primary: $orange-ter;
 $primary-invert: findColorInvert($primary);
-$link: $pink;
-$twitter: $twitter;
-$twitter-invert: findColorInvert($twitter);
+$text-light: $light;
+
+// derived
+$scheme-main: #616161;
+$scheme-main-bis: #424242;
+$scheme-main-ter: #212121;
+
+$black: $scheme-main-ter; 
+$dark: $scheme-main-bis;
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-hover: $yellow;
+$link-focus-border: $orange;
+
+// menu
+$menu-item-color: $light;
+$menu-item-active-color: $light;
+$menu-item-hover-color: $light;
+$menu-item-hover-background-color: $scheme-main;
+$menu-item-active-background-color: $scheme-main-bis;
+
+// breadcrumb
+$breadcrumb-item-color: $link;
+$breadcrumb-item-hover-color: $link-invert;
+$breadcrumb-item-active-color: $light;
+
+// button
+$button-color: $light;
+$button-hover-color: $light;
+$button-background-color: $scheme-main-bis;
+
+// card
+$card-color: $light;
+$card-header-color: $light;
+$card-background-color: $scheme-main-bis;
+
+// table
+$table-color: $light;
+$table-head-background-color: $scheme-main-ter;
+$table-background-color: $scheme-main-ter;
+$table-row-hover-background-color: $scheme-main;
+$table-striped-row-even-background-color: $scheme-main-bis;
+$table-striped-row-even-hover-background-color: $scheme-main; 
+
+$table-head-cell-color: $light;
+$table-cell-border: 1px solid $scheme-main;
+
+// udpating loading
 $loading-background: none;
 
-// Update some of Bulma's component variables
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+// sidebar
 $sidebar-width: 300px;
 
 // updating footer
 $footer-padding: 3rem 1.5rem;
-$footer-background-color: $dark;
+$footer-background-color: $scheme-main-bis;
 
 // updating section
 $section-padding-y: 3rem;
@@ -51,6 +103,10 @@ $colors: (
   "light": (
     $light,
     $light-invert
+  ),
+  "yellow": (
+    $yellow,
+    $yellow-invert
   ),
   "dark": (
     $dark,
@@ -79,10 +135,17 @@ $colors: (
   "twitter": (
     $twitter,
     $twitter-invert
-  )
+  ),
+  "discord": (
+    $discord,
+    $discord-invert
+  ),
+  "twitch": (
+    $twitch,
+    $twitch-invert
+  ),
+  "patreon": (
+    $patreon,
+    $patreon-invert
+  ),
 );
-
-// Links
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;

@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { of } from "rxjs";
 import { switchMap, pluck, catchError } from "rxjs/operators";
 import { useSoulsGame, useSoulsCategory } from "../../api/rx-souls";
 import Categories from "@/components/Categories.vue";
@@ -145,7 +146,7 @@ export default {
   },
   methods: {
     onGameSuccess(data) {
-      this.gameError = null;
+      if (!data) return;
 
       if (!this.$route.params.category && data.categories.length) {
         this.$router.replace({
@@ -157,17 +158,22 @@ export default {
         });
       }
 
+      this.gameError = null;
       this.game = data;
     },
     onGameError(error) {
       this.gameError = error;
+      return of(undefined);
     },
     onCategorySuccess(category) {
+      if (!category) return;
+
       this.categoryError = null;
       this.category = category;
     },
     onCategoryError(error) {
       this.categoryError = error;
+      return of(undefined);
     },
     onCategoryClick(category) {
       this.openSidebar = false;
@@ -251,7 +257,7 @@ export default {
       width: 100%;
       transition: all $speed-slower;
       transform: translateY(100%);
-      background-color: $white;
+      // background-color: $scheme-main-ter;
 
       .categories {
         padding-bottom: $size-1 * 2;

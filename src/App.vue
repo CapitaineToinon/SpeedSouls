@@ -35,7 +35,7 @@ export default {
     flex-grow: 1;
     z-index: var(--main-z-index);
     margin-bottom: var(--footer-height);
-    background-color: $white;
+    background-color: $scheme-main-ter;
     box-shadow: $card-shadow;
   }
 

@@ -8,7 +8,8 @@ export default function Game(json) {
     assets,
     categories,
     ruleset,
-    variables
+    variables,
+    weblink
   } = json;
 
   let formatted = {
@@ -20,7 +21,8 @@ export default function Game(json) {
     variables: variables && variables.data ? variables.data : [],
     background:
       assets.background && assets.background.uri ? assets.background.uri : "",
-    ruleset
+    ruleset,
+    weblink
   };
 
   if (categories) {
