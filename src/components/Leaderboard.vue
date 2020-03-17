@@ -17,7 +17,7 @@
     >
   </div>
   <div v-else class="fulfilled is-relative">
-    <table class="table is-striped is-fullwidth">
+    <table class="table is-fullwidth">
       <thead>
         <tr>
           <th>Rank</th>
