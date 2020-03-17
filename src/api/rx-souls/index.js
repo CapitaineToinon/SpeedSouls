@@ -4,7 +4,8 @@ import formatGame from "./formatting/Game";
 import formatLeaderboard from "./formatting/Leaderboard";
 import CACHE from "./cache";
 
-const API_ENDPOINT = "https://www.speedrun.com/api/v1";
+export const BASE_URL = "https://www.speedrun.com";
+export const API_ENDPOINT = `${BASE_URL}/api/v1`;
 const SERIE = "souls";
 
 // use distinctUntilChanged() ?

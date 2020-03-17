@@ -1,6 +1,6 @@
 <template>
   <div class="categories">
-    <b-menu-list label="Categories">
+    <b-menu-list :label="showLabel ? 'Categories' : ''">
       <b-menu-item
         v-for="(category, i) in categories"
         :key="i"
@@ -23,6 +23,10 @@ export default {
     categories: {
       type: Array,
       required: true
+    },
+    showLabel: {
+      type: Boolean,
+      default: () => true
     }
   }
 };
