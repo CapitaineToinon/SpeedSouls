@@ -229,7 +229,7 @@ export default {
       width: $sidebar-width;
 
       @include touch {
-        width: 100%;
+        width: 0;
         padding: 0;
       }
     }
