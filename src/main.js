@@ -1,7 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import VueScrollTo from "vue-scrollto";
 import VueRx from "vue-rx";
 import {
   Button,
@@ -17,7 +16,6 @@ import {
 import ssLoading from "./components/ssLoading.vue";
 
 Vue.use(VueRx);
-Vue.use(VueScrollTo);
 
 // Buefy components
 Vue.use(Button);

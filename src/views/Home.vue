@@ -13,10 +13,11 @@
         </h2>
         <div class="section buttons">
           <b-button
+            tag="router-link"
             class="is-medium is-warning is-inverted"
+            :to="{ name: 'games' }"
             icon-pack="fa"
             icon-left="list"
-            v-scroll-to="'#games'"
             type="is-link"
             >Leaderboards</b-button
           >
@@ -32,7 +33,7 @@
         </div>
       </div>
     </hero-nav>
-    <section id="games" class="games hero is-dark is-fullheight">
+    <section class="games hero is-dark is-fullheight">
       <div class="hero-body is-clipped">
         <div class="container">
           <div class="columns is-mobile is-multiline">

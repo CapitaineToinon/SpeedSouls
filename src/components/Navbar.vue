@@ -1,7 +1,7 @@
 <template>
   <nav
     class="navbar is-dark"
-    :style="style"
+    :class="{ '-transparant': isTransparant }"
     role="navigation"
     aria-label="main navigation"
   >
@@ -105,16 +105,8 @@ export default {
     ]
   }),
   computed: {
-    style() {
-      let opacity = 1;
-
-      if (this.off.y < 200 && this.off.y >= 0 && this.$route.name === "home") {
-        opacity = this.off.y / 200;
-      }
-
-      return {
-        "--navbar-opacity": opacity
-      };
+    isTransparant() {
+      return this.$route.name === "home" && this.off.y < 100;
     }
   },
   methods: {
@@ -130,12 +122,14 @@ export default {
 
 <style scoped lang="scss">
 nav {
-  transition: all $speed-slow;
+  transition: all $speed-slower;
 
-  background-color: rgba(
-    $color: $primary,
-    $alpha: #{var(--navbar-opacity)}
-  ) !important;
+  --opacity: 1;
+  background-color: rgba($color: $primary, $alpha: var(--opacity)) !important;
+
+  &.-transparant {
+    --opacity: 0;
+  }
 
   .navbar-brand {
     .router-link-active:hover {

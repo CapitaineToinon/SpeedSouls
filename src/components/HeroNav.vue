@@ -48,8 +48,7 @@ export default {
 
   &::after {
     content: "";
-    filter: blur(2px);
-    opacity: 0.8;
+    opacity: 0.5;
     transform: scale(1.1);
     background-image: var(--bg-url);
     background-repeat: no-repeat;
