@@ -194,8 +194,6 @@ export default {
         });
       }
 
-      console.log(this.run);
-
       return array;
     }
   },

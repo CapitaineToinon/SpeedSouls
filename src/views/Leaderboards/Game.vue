@@ -226,7 +226,10 @@ export default {
 .fulfilled {
   .column {
     &.left {
+      width: $sidebar-width;
+
       @include touch {
+        width: 100%;
         padding: 0;
       }
     }
@@ -266,7 +269,7 @@ export default {
   }
 
   .sidebar {
-    width: $sidebar-width;
+    width: 100%;
     position: -webkit-sticky;
     position: sticky;
     top: calc(#{$navbar-height} + #{$section-padding-y});
@@ -281,7 +284,6 @@ export default {
       padding: $size-1 $size-4;
       top: navbar-height;
       height: 100%;
-      width: 100%;
       transition: all $speed-slower;
       transform: translateY(100%);
       background-color: $scheme-main-ter;
