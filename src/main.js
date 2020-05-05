@@ -6,6 +6,7 @@ import VueRx from "vue-rx";
 import VTooltip from "v-tooltip";
 import "./directives/clickOutside";
 import "./filters/relativeDate";
+import "./filters/date";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {

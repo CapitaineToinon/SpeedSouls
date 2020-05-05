@@ -10,7 +10,7 @@
         @error="onImageError"
         :alt="`${player.name}'s profile picture`"
       />
-      <div class="px-6">
+      <div class="px-6 pb-3">
         <div class="font-bold text-xl text-center text-nord0 dark:text-nord6">
           <player-name :player="player" />
         </div>
@@ -18,24 +18,46 @@
           v-if="player.signup"
           class="text-nord3 dark:text-nord4 text-center text-base"
         >
-          {{ joinedDate }}
+          {{ player.signup | date }}
         </p>
       </div>
-      <div
-        v-if="playerLinks.length"
-        class="links flex flex-row justify-center px-6"
-      >
+      <div class="links flex flex-row justify-center px-6">
         <a
-          v-for="(link, i) in playerLinks"
-          :key="i"
-          :href="player[link].uri"
+          v-if="player['twitch']"
+          :href="player['twitch'].uri"
           target="_blank"
-          v-tooltip.top-center="capitalize(link)"
+          v-tooltip.top-center="`Twitch`"
           class="mx-1"
         >
           <font-awesome-icon
-            :class="`text-${link}`"
-            :icon="['fab', link]"
+            class="text-twitch"
+            :icon="['fab', 'twitch']"
+            size="1x"
+          />
+        </a>
+        <a
+          v-if="player['twitter']"
+          :href="player['twitter'].uri"
+          target="_blank"
+          v-tooltip.top-center="`Twitter`"
+          class="mx-1"
+        >
+          <font-awesome-icon
+            class="text-twitter"
+            :icon="['fab', 'twitter']"
+            size="1x"
+          />
+        </a>
+        <a
+          v-if="player['youtube']"
+          :href="player['youtube'].uri"
+          target="_blank"
+          v-tooltip.top-center="`Youtube`"
+          class="mx-1"
+        >
+          <font-awesome-icon
+            class="text-youtube"
+            :icon="['fab', 'youtube']"
             size="1x"
           />
         </a>
@@ -47,7 +69,7 @@
           target="_blank"
         >
           <font-awesome-icon
-            class="text-nord3 dark:text-nord4"
+            class="text-nord0 dark:text-nord4"
             :icon="['fas', 'link']"
             size="1x"
           />
@@ -72,12 +94,10 @@
 
 <script>
 import PlayerName from "@/components/PlayerName";
-import formatDate from "date-fns/format";
 
 export default {
   components: { PlayerName },
   data: () => ({
-    links: ["twitch", "youtube", "twitter"],
     playerImage: true
   }),
   props: {
@@ -91,22 +111,11 @@ export default {
     }
   },
   methods: {
-    capitalize(s) {
-      if (typeof s !== "string") return "";
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    },
     onImageError() {
       this.playerImage = false;
     }
   },
   computed: {
-    joinedDate() {
-      if (!this.player.signup) return;
-      return formatDate(new Date(this.player.signup), "do MMM yyyy");
-    },
-    playerLinks() {
-      return this.links.filter(link => this.player[link]);
-    },
     profile() {
       return {
         name: "Player",

@@ -22,7 +22,7 @@ table {
 
   td,
   th {
-    @apply px-6;
+    @apply px-3;
 
     &.shrink {
       @apply whitespace-no-wrap;

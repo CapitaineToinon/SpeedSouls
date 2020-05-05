@@ -43,7 +43,9 @@
               />
             </span>
           </div>
-          <p class="text-nord1 dark:text-nord4 text-base">{{ date }}</p>
+          <p class="text-nord1 dark:text-nord4 text-base">
+            {{ run.date | date }}
+          </p>
           <p
             v-if="run.comment"
             class="text-nord1 dark:text-nord4 text-base mt-5 italic"
@@ -67,7 +69,6 @@ import Spinner from "@/components/Spinner";
 import PlayerName from "@/components/PlayerName";
 import PlayerCard from "@/components/PlayerCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import formatDate from "date-fns/format";
 
 export default {
   components: {
@@ -110,15 +111,6 @@ export default {
     }
   },
   computed: {
-    date() {
-      let date = "";
-
-      if (this.run) {
-        date = formatDate(new Date(this.run.date), "do MMM yyyy");
-      }
-
-      return date;
-    },
     breadcrumbs() {
       const array = [
         {

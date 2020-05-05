@@ -22,7 +22,7 @@
         @click="onCategoryClick"
       />
     </aside>
-    <div class="flex flex-col flex-grow overflow-x-scroll ml-0 md:ml-5">
+    <div class="flex flex-col flex-grow ml-0 md:ml-5">
       <breadcrumbs class="mb-4" :items="breadcrumbs" />
       <div
         class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
