@@ -2,10 +2,7 @@
   <div class="home flex items-center justify-center h-2/3" :style="style">
     <div class="py-10 px-2 max-w-screen-md text-center">
       <div class="flex flex-row justify-center py-6">
-        <img
-          src="http://beta.speedsouls.com/img/flame.aa7a595c.png"
-          alt="speedsouls logo"
-        />
+        <img :src="require('@/assets/flame.png')" alt="speedsouls logo" />
       </div>
       <h1 class="text-5xl font-semibold text-gray-100 leading-none">
         Welcome!
