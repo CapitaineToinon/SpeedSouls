@@ -1,5 +1,5 @@
 <template>
-  <footer class="font-sans bg-nord6 dark:bg-nord1 py-8 px-6">
+  <footer class="font-sans shadow-md bg-nord6 dark:bg-nord1 py-8 px-6">
     <div class="flex flex-col md:flex-row justify-evenly pb-4">
       <ButtonGroup
         :options="themes"
@@ -8,7 +8,7 @@
       />
     </div>
     <div
-      class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs border-t border-gray-300 text-center"
+      class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs border-t border-nord5 dark:border-nord3 text-center"
     >
       ©2019 Hyperyolo. All rights reserved.
     </div>

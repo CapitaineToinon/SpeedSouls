@@ -1,18 +1,18 @@
 <template>
   <nav
-    class="font-sans text-center flex h-12 justify-between px-2 bg-nord6 dark:bg-nord1"
+    class="font-sans text-center flex h-12 justify-between px-3 bg-nord6 dark:bg-nord1"
     :class="{ transparant: isTransparant, active: !hidden, dark: dark }"
   >
     <router-link to="/" class="h-full flex flex-col justify-center">
       <img
-        class="h-10 sm:h-10 p-2"
+        class="h-10 sm:h-10 py-2"
         v-show="isWhiteLogo"
         :src="require('@/assets/logo-white.png')"
         alt="speedsouls logo"
       />
       <img
         v-show="!isWhiteLogo"
-        class="h-10 sm:h-10 p-2"
+        class="h-10 sm:h-10 py-2"
         :src="require('@/assets/logo-black.png')"
         alt="speedsouls logo"
       />
@@ -46,7 +46,9 @@
       <li class="menu-item">
         <a href="#">Forums.</a>
       </li>
-      <li class="menu-item separator">
+      <li
+        class="menu-item separator border-b py-2 px-4 lg:border-b-0 lg:pb-2 lg:border-r lg:pr-4"
+      >
         <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
       </li>
       <li
@@ -159,7 +161,6 @@ nav {
     @apply z-50;
     @apply shadow-lg;
     @apply py-5;
-    @apply px-2;
 
     @screen lg {
       @apply flex;
@@ -178,11 +179,13 @@ nav {
     @apply uppercase;
     @apply inline-block;
     @apply no-underline;
-    @apply pt-2;
-    @apply pr-2;
-    @apply pl-2;
-    @apply pb-2;
     @apply text-nord0;
+
+    &:not(.separator) {
+      @apply pt-2;
+      @apply pl-4;
+      @apply pb-2;
+    }
 
     a:hover {
       @apply text-nord10;

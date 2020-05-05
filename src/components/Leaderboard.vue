@@ -8,83 +8,98 @@
   <div v-else-if="leaderboard && !leaderboard.length" class="rejected">
     <alert type="warning">There are no runs.</alert>
   </div>
-  <table v-else class="fulfilled">
-    <thead>
-      <tr>
-        <th class="shrink">Rank</th>
-        <th class="expand">Players</th>
-        <th class="shrink">{{ leaderboard[0].primary_t.name }}</th>
-        <th
-          class="shrink"
-          v-for="(time, i) in leaderboard[0].others_t"
-          :key="`other-time-th-${i}`"
-        >
-          {{ time.name }}
-        </th>
-        <th
-          class="shrink"
-          v-for="variable in game.variables
-            .filter(v => v.category === category.id)
-            .filter(v => !v['is-subcategory'])"
-          :key="`th-${variable.id}`"
-        >
-          {{ variable.name }}
-        </th>
-        <th class="shrink">Date</th>
-        <th class="shrink hidden lg:table-cell"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
-        <td class="shrink" data-label="Rank">{{ row.place }}</td>
+  <div v-else class="fulfilled responsive-table">
+    <table class="text-center">
+      <thead>
+        <tr>
+          <th class="shrink">Rank</th>
+          <th class="shrink">Players</th>
+          <th class="shrink">
+            <span class="block md:hidden lg:block">{{
+              leaderboard[0].primary_t.name
+            }}</span>
+            <span class="hidden md:block lg:hidden">Time</span>
+          </th>
+          <th
+            class="shrink table-cell md:hidden lg:table-cell"
+            v-for="(time, i) in leaderboard[0].others_t"
+            :key="`other-time-th-${i}`"
+          >
+            {{ time.name }}
+          </th>
+          <th
+            class="shrink table-cell md:hidden lg:table-cell"
+            v-for="variable in game.variables
+              .filter(v => v.category === category.id)
+              .filter(v => !v['is-subcategory'])"
+            :key="`th-${variable.id}`"
+          >
+            {{ variable.name }}
+          </th>
+          <th class="shrink table-cell md:hidden xl:table-cell">Date</th>
+          <th class="shrink hidden xl:table-cell"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
+          <td class="shrink" data-label="Rank">{{ row.place }}</td>
 
-        <td class="expand" data-label="Players">
-          <player-name
-            v-for="(player, i) in row.players"
-            :key="`${row.id}-player-${i}`"
-            :player="player"
-          />
-        </td>
+          <td class="expand" data-label="Players">
+            <player-name
+              v-for="(player, i) in row.players"
+              :key="`${row.id}-player-${i}`"
+              :player="player"
+            />
+          </td>
 
-        <td class="shrink" :data-label="row.primary_t.name">
-          {{ row.primary_t.time }}
-        </td>
+          <td class="shrink" :data-label="row.primary_t.name">
+            <span class="block md:hidden lg:block">{{
+              row.primary_t.time
+            }}</span>
+            <span class="hidden md:block lg:hidden">{{ row.time.time }}</span>
+          </td>
 
-        <td
-          class="shrink"
-          v-for="(time, i) in row.others_t"
-          :key="`${row.id}-other-time-${i}`"
-          :data-label="time.name"
-        >
-          {{ time.time }}
-        </td>
+          <td
+            class="shrink table-cell md:hidden lg:table-cell"
+            v-for="(time, i) in row.others_t"
+            :key="`${row.id}-other-time-${i}`"
+            :data-label="time.name"
+          >
+            {{ time.time }}
+          </td>
 
-        <td
-          class="shrink"
-          v-for="variable in game.variables
-            .filter(v => v.category === category.id)
-            .filter(v => !v['is-subcategory'])"
-          :key="variable.id"
-          :data-label="variable.name"
-        >
-          <div v-if="row.values[variable.id]">
-            {{ variable.values.values[row.values[variable.id]].label }}
-          </div>
-        </td>
+          <td
+            class="shrink table-cell md:hidden lg:table-cell"
+            v-for="variable in game.variables
+              .filter(v => v.category === category.id)
+              .filter(v => !v['is-subcategory'])"
+            :key="variable.id"
+            :data-label="variable.name"
+          >
+            <div v-if="row.values[variable.id]">
+              {{ variable.values.values[row.values[variable.id]].label }}
+            </div>
+          </td>
 
-        <td class="shrink">{{ row.date | relativeDate }} ago</td>
+          <td
+            class="shrink table-cell md:hidden xl:table-cell"
+            data-label="Date"
+          >
+            {{ row.date | relativeDate }} ago
+          </td>
 
-        <td class="shrink hidden lg:table-cell">
-          <font-awesome-icon v-if="row.showicon" :icon="['fas', 'video']" />
-          <font-awesome-icon
-            v-else
-            class="text-nord11"
-            :icon="['fas', 'video-slash']"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="shrink hidden xl:table-cell">
+            <font-awesome-icon v-if="row.showicon" :icon="['fas', 'video']" />
+            <font-awesome-icon
+              v-else
+              class="text-nord11"
+              :icon="['fas', 'video-slash']"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -179,3 +194,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+table {
+  tr {
+    td {
+    }
+  }
+}
+</style>

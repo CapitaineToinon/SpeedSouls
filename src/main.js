@@ -27,8 +27,13 @@ import {
   faLink
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faDiscord, faPatreon, faTwitter, faTwitch, faGithub, faYoutube);
 library.add(
+  faDiscord,
+  faPatreon,
+  faTwitter,
+  faTwitch,
+  faGithub,
+  faYoutube,
   faList,
   faAngleDoubleRight,
   faVideo,

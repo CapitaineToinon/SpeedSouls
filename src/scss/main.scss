@@ -5,3 +5,9 @@
 @import "./flags";
 @import "./table";
 @import "./vtooltip";
+
+.container {
+  @apply py-6;
+  @apply px-3;
+  @apply mx-auto;
+}

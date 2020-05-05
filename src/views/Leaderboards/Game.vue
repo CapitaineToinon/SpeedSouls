@@ -1,11 +1,11 @@
 <template>
-  <div v-if="gameError" class="min-h-screen-navbar container py-6 mx-auto">
+  <div v-if="gameError" class="min-h-screen-navbar container">
     <error :error="gameError" />
   </div>
-  <div v-else-if="!game" class="min-h-screen-navbar container py-6 mx-auto">
+  <div v-else-if="!game" class="min-h-screen-navbar container">
     <spinner />
   </div>
-  <div v-else class="min-h-screen-navbar container py-6 mx-auto flex flex-row">
+  <div v-else class="min-h-screen-navbar container flex flex-row">
     <button id="sidebar-button" @click="openSidebar = !openSidebar">
       <font-awesome-icon
         v-if="!openSidebar"
@@ -22,7 +22,7 @@
         @click="onCategoryClick"
       />
     </aside>
-    <div class="flex flex-col flex-1 ml-0 md:ml-5">
+    <div class="flex flex-col flex-grow overflow-x-scroll ml-0 md:ml-5">
       <breadcrumbs class="mb-4" :items="breadcrumbs" />
       <div
         class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
@@ -237,7 +237,6 @@ aside {
 }
 
 :root.mode-dark {
-  // bg-nord5 dark:bg-nord1
   aside {
     @apply bg-nord1;
   }
@@ -250,7 +249,6 @@ aside {
 }
 
 :root:not(mode-dark) {
-  // bg-nord5 dark:bg-nord1
   aside {
     @apply bg-nord5;
   }

@@ -1,4 +1,15 @@
+.responsive-table {
+  @apply overflow-x-scroll;
+  @apply rounded;
+
+  @screen md {
+    @apply shadow-xl;
+  }
+}
+
 table {
+  @apply w-full;
+
   @screen md {
     @apply rounded;
     @apply overflow-hidden;
@@ -14,7 +25,7 @@ table {
     @apply px-6;
 
     &.shrink {
-      white-space: nowrap;
+      @apply whitespace-no-wrap;
     }
 
     &.expand {
@@ -24,9 +35,9 @@ table {
 
   thead {
     @apply hidden;
-    @apply border-b-2;
-    @apply border-nord3;
-    @apply font-bold;
+    @apply border-b;
+    @apply uppercase;
+    letter-spacing: 1px;
 
     @screen md {
       @apply table-header-group;
@@ -64,15 +75,6 @@ table {
           }
         }
 
-        &:empty::after {
-          content: "-";
-          @apply float-right;
-
-          @screen md {
-            @apply hidden;
-          }
-        }
-
         &:before {
           content: attr(data-label);
           @apply float-left;
@@ -93,10 +95,18 @@ table {
 
 :root:not(.mode-dark) {
   table {
+    @apply text-nord0;
+    
     @screen md {
       @apply bg-nord5;
-      @apply text-nord0;
     }  
+
+    thead {
+      @apply border-nord3;
+      th {
+        @apply text-nord3;
+      }
+    }
 
     tbody {
       tr {
@@ -136,19 +146,49 @@ table {
 
 :root.mode-dark {
   table {
+    @apply text-nord6;
+
     @screen md {
       @apply bg-nord1;
-      @apply text-nord6;
+    }
+
+    thead {
+      @apply border-nord2;
+      th {
+        @apply text-nord4;
+      }
     }
 
     tbody {
       tr {
-        &:nth-of-type(odd) {
-          @apply bg-nord3;
+        td {
+          &:nth-of-type(odd) {
+            @apply bg-nord3;
+          }
+  
+          &:nth-of-type(even) {
+            @apply bg-nord2;
+          }
         }
 
-        &:nth-of-type(even) {
-          @apply bg-nord2;
+        @screen md {
+          td {
+            &:nth-of-type(odd) {
+              @apply bg-transparent;
+            }
+    
+            &:nth-of-type(even) {
+              @apply bg-transparent;
+            }
+          }
+
+          &:nth-of-type(odd) {
+            @apply bg-nord3;
+          }
+  
+          &:nth-of-type(even) {
+            @apply bg-nord2;
+          }
         }
       }
     }

@@ -6,6 +6,10 @@ function formatLeaderboardRun(json, players, fullGame, fullCategory) {
   const { ruleset } = fullGame;
   const { id, times, videos, weblink, values, date } = run;
 
+  const primary_t = getPrimaryTime(times, ruleset);
+  const others_t = getOtherTimes(times, ruleset);
+  const time = primary_t.time ? primary_t : others_t[0];
+
   return {
     game: fullGame,
     category: fullCategory,
@@ -17,8 +21,9 @@ function formatLeaderboardRun(json, players, fullGame, fullCategory) {
     weblink,
     values,
     date,
-    primary_t: getPrimaryTime(times, ruleset),
-    others_t: getOtherTimes(times, ruleset),
+    primary_t,
+    others_t,
+    time,
     showicon: videos !== null
   };
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto flex flex-row flex-wrap">
+  <div class="container flex flex-row flex-wrap">
     <div class="title p-2 w-full">
       <h1 class="font-black text-4xl text-bold text-nord0 dark:text-nord6">
         Leaderboards

@@ -1,5 +1,5 @@
 <template>
-  <span class="player" @click="$emit('click', player)">
+  <span class="player whitespace-no-wrap" @click="$emit('click', player)">
     <span
       v-tooltip.top-center="player.country.name"
       v-if="player.country"

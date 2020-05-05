@@ -4,8 +4,8 @@
   >
     <div class="flex-1 flex flex-col justify-center mx-2">
       <img
-        class="w-auto rounded shadow-inner object-fit mx-auto mb-4"
-        :class="{ hidden: !playerImage }"
+        class="pp w-auto object-fit mx-auto mb-4"
+        :class="{ invisible: !playerImage }"
         :src="`https://www.speedrun.com/themes/user/${player.name}/image.png`"
         @error="onImageError"
         :alt="`${player.name}'s profile picture`"
@@ -120,9 +120,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-img {
+.pp {
+  width: auto;
   max-width: 80%;
-  height: auto;
-  max-height: 10rem;
+  height: 5rem;
+  max-height: 5rem;
 }
 </style>

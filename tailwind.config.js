@@ -12,9 +12,7 @@ module.exports = {
     },
     container: {
       padding: {
-        default: '0.5rem',
-        sm: '1rem',
-        lg: '1.5rem',
+        default: '0.75rem'
       }
     },
     extend: {
@@ -77,5 +75,6 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-dark-mode')(),
+    require('tailwindcss-tables')(),
   ],
 }

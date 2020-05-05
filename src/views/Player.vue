@@ -1,11 +1,11 @@
 <template>
-  <div v-if="playerError" class="container mx-auto py-6">
+  <div v-if="playerError" class="container">
     <error :error="playerError" />
   </div>
-  <div v-else-if="!player" class="container mx-auto py-6">
+  <div v-else-if="!player" class="container">
     <spinner />
   </div>
-  <div v-else class="container py-6 mx-auto flex flex-row flex-wrap">
+  <div v-else class="container flex flex-row flex-wrap">
     <aside class="w-full mb-5 md:mb-0 md:w-64 md:flex-none relative">
       <player-card class="player" :player="player" :showbutton="false" />
     </aside>
@@ -15,12 +15,17 @@
     <div v-else-if="!pbs" class="w-full md:flex-1 ml-0 md:ml-5">
       <spinner />
     </div>
-    <div v-else class="w-full md:flex-1 ml-0 md:ml-5">
-      <alert v-if="pbs.length === 0" type="info">The are no runs.</alert>
+    <div
+      v-else
+      class="w-full flex flex-col items-center md:flex-1 ml-0 md:ml-5"
+    >
+      <alert v-if="pbs.length === 0" type="info" class="w-full mb-6"
+        >The are no runs.</alert
+      >
       <div
         v-for="(group, i) in pbs"
         :key="i"
-        class="flex flex-col justify-center mb-6"
+        class="flex flex-col w-full justify-center mb-6"
       >
         <router-link
           :to="{ name: 'Game', params: { game: group.game.abbreviation } }"
@@ -28,46 +33,57 @@
           >{{ group.game.name }}</router-link
         >
 
-        <table class="w-full">
-          <thead class="border-b-2 border-nord3 font-bold">
-            <tr>
-              <th class="shrink">Rank</th>
-              <th class="expand">Category</th>
-              <th class="shrink">Time</th>
-              <th class="shrink">Date</th>
-              <th class="shrink hidden lg:table-cell"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="row in group.runs"
-              :key="row.id"
-              @click="onRowClick(row)"
-            >
-              <td class="shrink" data-label="Rank">{{ row.place }}</td>
-              <td class="expand" data-label="Category">
-                {{ row.category.name }}
-              </td>
-              <td class="shrink" data-label="Times">
-                {{ row.primary_t.time }}
-              </td>
+        <div class="responsive-table">
+          <table class="text-center">
+            <thead>
+              <tr>
+                <th class="shrink">Rank</th>
+                <th class="expand">Category</th>
+                <th class="shrink">Time</th>
+                <th class="shrink">Date</th>
+                <th class="shrink hidden lg:table-cell"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="row in group.runs"
+                :key="row.id"
+                @click="onRowClick(row)"
+              >
+                <td class="shrink" data-label="Rank">{{ row.place }}</td>
+                <td class="expand" data-label="Category">
+                  {{ row.category.name }}
+                </td>
+                <td class="shrink" data-label="Times">
+                  {{ row.primary_t.time }}
+                </td>
 
-              <td class="shrink">{{ row.date | relativeDate }} ago</td>
-              <td class="shrink hidden lg:table-cell">
-                <font-awesome-icon
-                  v-if="row.showicon"
-                  :icon="['fas', 'video']"
-                />
-                <font-awesome-icon
-                  v-else
-                  class="text-nord11"
-                  :icon="['fas', 'video-slash']"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <td class="shrink" data-label="Date">
+                  {{ row.date | relativeDate }} ago
+                </td>
+                <td class="shrink hidden lg:table-cell">
+                  <font-awesome-icon
+                    v-if="row.showicon"
+                    :icon="['fas', 'video']"
+                  />
+                  <font-awesome-icon
+                    v-else
+                    class="text-nord11"
+                    :icon="['fas', 'video-slash']"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <a
+        :href="player.weblink"
+        target="_blank"
+        class="w-auto bg-nord10 text-white font-bold py-2 px-4 border-b-4 border-nord9 rounded"
+        >View Profile on Speedrun.com</a
+      >
     </div>
   </div>
 </template>

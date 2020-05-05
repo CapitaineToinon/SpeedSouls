@@ -1,5 +1,5 @@
 <template>
-  <div v-if="games" class="container py-6 mx-auto max-w-screen-md">
+  <div v-if="games" class="container max-w-screen-md">
     <alert type="warning" class="mb-3">
       You will need a
       <a href="#" target="_blank">speedrun.com</a> account to submit a run. Runs

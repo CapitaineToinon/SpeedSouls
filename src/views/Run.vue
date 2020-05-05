@@ -1,11 +1,11 @@
 <template>
-  <div v-if="runError" class="container mx-auto py-6">
+  <div v-if="runError" class="container">
     <error :error="runError" />
   </div>
-  <div v-else-if="!run" class="container mx-auto py-6">
+  <div v-else-if="!run" class="container">
     <spinner />
   </div>
-  <div v-else class="container py-6 mx-auto flex flex-row flex-wrap">
+  <div v-else class="container flex flex-row flex-wrap">
     <aside class="w-full order-2 md:order-1 md:w-64 md:flex-none">
       <player-card
         v-for="(player, i) in run.players"
@@ -29,9 +29,9 @@
         </div>
         <div class="px-6 py-4">
           <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-            <router-link :to="to(run.game, run.category)">{{
-              run.category.name
-            }}</router-link>
+            <router-link :to="to(run.game, run.category)">
+              {{ run.category.name }}
+            </router-link>
             in {{ run.primary_t.time }} by
             <span class="player-names">
               <player-name
