@@ -23,7 +23,7 @@
       </div>
       <div
         v-if="playerLinks.length"
-        class="links flex flex-row justify-center px-6 mb-4"
+        class="links flex flex-row justify-center px-6"
       >
         <a
           v-for="(link, i) in playerLinks"

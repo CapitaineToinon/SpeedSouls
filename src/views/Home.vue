@@ -1,5 +1,8 @@
 <template>
-  <div class="home flex items-center justify-center h-2/3" :style="style">
+  <div
+    class="home flex items-center justify-center h-2/3 shadow-lg"
+    :style="style"
+  >
     <div class="py-10 px-2 max-w-screen-md text-center">
       <div class="flex flex-row justify-center py-6">
         <img :src="require('@/assets/flame.png')" alt="speedsouls logo" />
@@ -14,14 +17,14 @@
       </p>
       <div class="flex flex-col items-center sm:justify-center sm:flex-row">
         <router-link
-          class="btn bg-nord10 mx-1 border-nord9 text-nord6 font-bold py-2 px-4 border-b-4 rounded"
+          class="btn bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
           tag="button"
           :to="{ name: 'Games' }"
         >
           <font-awesome-icon class="mr-3" :icon="['fas', 'list']" />Leaderboards
         </router-link>
         <button
-          class="btn bg-nord10 mx-1 border-nord9 text-nord6 font-bold py-2 px-4 border-b-4 rounded"
+          class="btn bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
         >
           <font-awesome-icon
             class="mr-3"
@@ -78,7 +81,7 @@ export default {
 
   &::after {
     content: "";
-    @apply opacity-75;
+    @apply opacity-50;
     transform: scale(1.1);
     background-image: var(--bg-url);
     background-repeat: no-repeat;

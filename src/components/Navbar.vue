@@ -47,7 +47,7 @@
         <a href="#">Forums.</a>
       </li>
       <li class="menu-item separator">
-        <router-link to="/">Submit a run.</router-link>
+        <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
       </li>
       <li
         class="menu-item icon"
