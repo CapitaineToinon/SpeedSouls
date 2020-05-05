@@ -186,10 +186,8 @@ export default {
   @apply rounded;
   @apply bg-nord15;
   @apply text-nord6;
-  @apply border;
-  @apply border-nord3;
-  right: 1.5rem;
-  bottom: 1.5rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
 
   @screen md {
     @apply hidden;
@@ -198,7 +196,7 @@ export default {
 
 aside {
   @apply fixed;
-  @apply w-screen;
+  @apply max-w-sm;
   @apply left-0;
   @apply right-0;
   @apply bottom-0;

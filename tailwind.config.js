@@ -21,6 +21,7 @@ module.exports = {
         discord: '#7289da',
         twitter: '#4099ff',
         youtube: 'red',
+        patreon: 'rgb(232, 91, 70)',
         'nord0': '#2E3440',
         'nord1': '#3B4252',
         'nord2': '#434C5E',

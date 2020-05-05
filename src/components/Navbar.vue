@@ -33,51 +33,53 @@
         </svg>
       </button>
     </div>
-    <ul class="menu list-none" v-click-outside="onClickOutside">
-      <li class="menu-item">
-        <router-link to="/">Home.</router-link>
-      </li>
-      <li class="menu-item">
-        <router-link :to="{ name: 'Games' }">Leaderboards.</router-link>
-      </li>
-      <li class="menu-item">
-        <a href="#">Wiki.</a>
-      </li>
-      <li class="menu-item">
-        <a href="#">Forums.</a>
-      </li>
-      <li
-        class="menu-item separator border-b py-2 px-4 lg:border-b-0 lg:pb-2 lg:border-r lg:pr-4"
-      >
-        <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
-      </li>
-      <li
-        class="menu-item icon"
-        :class="{
-          'border-nord0': !transparant,
-          'dark:border-nord6': transparant
-        }"
-      >
-        <a href="#">
-          <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
-        </a>
-      </li>
-      <li class="menu-item icon">
-        <a href="#">
-          <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
-        </a>
-      </li>
-      <li class="menu-item icon">
-        <a href="#">
-          <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
-        </a>
-      </li>
-      <li class="menu-item icon">
-        <a href="#">
-          <font-awesome-icon :icon="['fab', 'github']" size="2x" />
-        </a>
-      </li>
-    </ul>
+    <div class="menu" v-click-outside="onClickOutside">
+      <ul class="links flex flex-col lg:flex-row list-none">
+        <li class="menu-item">
+          <router-link to="/">Home.</router-link>
+        </li>
+        <li class="menu-item">
+          <router-link :to="{ name: 'Games' }">Leaderboards.</router-link>
+        </li>
+        <li class="menu-item">
+          <a href="#">Wiki.</a>
+        </li>
+        <li class="menu-item">
+          <a href="#">Forums.</a>
+        </li>
+        <li class="menu-item">
+          <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
+        </li>
+      </ul>
+      <ul class="socials">
+        <li
+          class="menu-item discord icon"
+          :class="{
+            'border-nord0': !transparant,
+            'dark:border-nord6': transparant
+          }"
+        >
+          <a href="#">
+            <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
+          </a>
+        </li>
+        <li class="menu-item patreon icon">
+          <a href="#">
+            <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
+          </a>
+        </li>
+        <li class="menu-item twitter icon">
+          <a href="#">
+            <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
+          </a>
+        </li>
+        <li class="menu-item github icon">
+          <a href="#">
+            <font-awesome-icon :icon="['fab', 'github']" size="2x" />
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -156,7 +158,6 @@ nav {
     @apply right-0;
     @apply left-0;
     @apply flex-col;
-    @apply items-stretch;
     @apply bg-nord6;
     @apply z-50;
     @apply shadow-lg;
@@ -174,46 +175,39 @@ nav {
     }
   }
 
+  .links {
+    .menu-item {
+      a:hover {
+        @apply text-nord10;
+      }
+    }
+  }
+
+  .socials {
+    @apply pt-3;
+    @apply mt-3;
+    @apply border-t;
+    @apply border-nord4;
+
+    @screen lg {
+      @apply pt-0;
+      @apply mt-0;
+      @apply pl-3;
+      @apply ml-3;
+      @apply border-l;
+    }
+  }
+
   .menu-item {
     @apply font-bold;
     @apply uppercase;
     @apply inline-block;
     @apply no-underline;
     @apply text-nord0;
-
-    &:not(.separator) {
-      @apply pt-2;
-      @apply pl-4;
-      @apply pb-2;
-    }
-
-    a:hover {
-      @apply text-nord10;
-    }
+    @apply p-2;
 
     &.icon {
       @apply mt-1;
-    }
-
-    &.separator {
-      @apply border-b;
-      @apply pb-5;
-
-      & + .menu-item {
-        @apply pt-5;
-      }
-
-      @screen lg {
-        @apply border-b-0;
-        @apply border-r;
-        @apply pr-5;
-        @apply pb-2;
-
-        & + .menu-item {
-          @apply pt-2;
-          @apply pl-5;
-        }
-      }
     }
   }
 
@@ -230,13 +224,17 @@ nav {
     }
 
     .menu-item {
-      @apply text-gray-100;
+      @apply text-nord6;
+    }
+
+    .socials {
+      @apply border-nord3;
     }
 
     .burger {
       button {
-        @apply text-gray-100;
-        @apply border-gray-100;
+        @apply text-nord6;
+        @apply border-nord6;
       }
     }
   }
@@ -244,11 +242,19 @@ nav {
   &.active {
     .menu {
       top: 100%;
+
+      @screen lg {
+        @apply top-0;
+      }
     }
 
     &::before {
       @apply opacity-75;
       @apply pointer-events-auto;
+
+      @screen lg {
+        @apply hidden;
+      }
     }
   }
 
@@ -261,21 +267,45 @@ nav {
         @apply bg-transparent;
       }
 
-      .menu-item {
-        @apply text-gray-100;
-
-        &.separator {
-          @apply border-gray-100;
-        }
+      .socials {
+        @apply border-nord4;
       }
+    }
+
+    .menu-item {
+      @apply text-nord6;
     }
 
     .burger {
       button {
-        @apply text-gray-100;
-        @apply border-gray-100;
+        @apply text-nord6;
+        @apply border-nord6;
       }
     }
+  }
+}
+
+.discord {
+  a:hover {
+    @apply text-discord;
+  }
+}
+
+.twitter {
+  a:hover {
+    @apply text-twitter;
+  }
+}
+
+.patreon {
+  a:hover {
+    @apply text-patreon;
+  }
+}
+
+.github {
+  a:hover {
+    @apply text-nord10;
   }
 }
 </style>

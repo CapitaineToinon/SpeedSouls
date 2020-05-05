@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs flex flex-row flex-wrap">
     <div
-      class="item text-nord0 dark:text-nord6 flex flex-row flex-no-wrap items-center"
+      class="item text-nord0 dark:text-nord6 flex flex-row flex-no-wrap items-center whitespace-no-wrap"
       v-for="(item, i) in items"
       :key="i"
     >
@@ -16,7 +16,7 @@
         :to="item.to"
         >{{ item.text }}</router-link
       >
-      <span class="mr-3" v-else>{{ item.text }}</span>
+      <span class="text mr-3" v-else>{{ item.text }}</span>
     </div>
   </div>
 </template>
