@@ -4,7 +4,7 @@ import { getPrimaryTime, getOtherTimes } from "./TimingMethod";
 function formatLeaderboardRun(json, players, fullGame, fullCategory) {
   const { place, run } = json;
   const { ruleset } = fullGame;
-  const { id, times, videos, weblink, values } = run;
+  const { id, times, videos, weblink, values, date } = run;
 
   return {
     game: fullGame,
@@ -16,6 +16,7 @@ function formatLeaderboardRun(json, players, fullGame, fullCategory) {
     videos,
     weblink,
     values,
+    date,
     primary_t: getPrimaryTime(times, ruleset),
     others_t: getOtherTimes(times, ruleset),
     showicon: videos !== null

@@ -4,13 +4,15 @@ import { getPrimaryTime } from "./TimingMethod";
 
 export default function PlayerRun(json) {
   const runs = json.map(raw => {
-    let { game, category, run } = raw;
-    let { times, videos } = run;
+    let { game, category, run, place } = raw;
+    let { times, videos, date, id } = run;
 
     const formattedGame = formatGame(game.data);
 
     return {
-      ...raw,
+      place,
+      date,
+      id,
       game: formattedGame,
       category: formatCategory(category.data),
       primary_t: getPrimaryTime(times, formattedGame.ruleset),

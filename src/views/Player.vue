@@ -10,9 +10,7 @@
       <player-card class="player" :player="player" :showbutton="false" />
     </aside>
     <div v-if="pbsError" class="w-full md:flex-1 ml-0 md:ml-5">
-      <alert type="danger"
-        >{{ pbsError.response.message || pbsError.message || pbsError }}.</alert
-      >
+      <error :error="pbsError" />
     </div>
     <div v-else-if="!pbs" class="w-full md:flex-1 ml-0 md:ml-5">
       <spinner />
@@ -33,10 +31,11 @@
         <table class="w-full">
           <thead class="border-b-2 border-nord3 font-bold">
             <tr>
-              <th class="md:w-1/6">Rank</th>
-              <th class="md:w-3/6">Category</th>
-              <th class="md:w-1/6">Time</th>
-              <th class="md:w-1/6 hidden lg:table-cell"></th>
+              <th class="shrink">Rank</th>
+              <th class="expand">Category</th>
+              <th class="shrink">Time</th>
+              <th class="shrink">Date</th>
+              <th class="shrink hidden lg:table-cell"></th>
             </tr>
           </thead>
           <tbody>
@@ -45,14 +44,16 @@
               :key="row.id"
               @click="onRowClick(row)"
             >
-              <td class="md:w-1/6" data-label="Rank">{{ row.place }}</td>
-              <td class="md:w-3/6" data-label="Category">
+              <td class="shrink" data-label="Rank">{{ row.place }}</td>
+              <td class="expand" data-label="Category">
                 {{ row.category.name }}
               </td>
-              <td class="md:w-1/6" data-label="Times">
+              <td class="shrink" data-label="Times">
                 {{ row.primary_t.time }}
               </td>
-              <td class="md:w-1/6 hidden lg:table-cell">
+
+              <td class="shrink">{{ row.date | relativeDate }} ago</td>
+              <td class="shrink hidden lg:table-cell">
                 <font-awesome-icon
                   v-if="row.showicon"
                   :icon="['fas', 'video']"
@@ -104,10 +105,11 @@ export default {
       return of(undefined);
     },
     onRowClick(row) {
+      console.log(row);
       this.$router.push({
         name: "Run",
         params: {
-          id: row.run.id
+          id: row.id
         }
       });
     }

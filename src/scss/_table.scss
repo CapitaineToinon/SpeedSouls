@@ -11,7 +11,15 @@ table {
 
   td,
   th {
-    @apply px-2;
+    @apply px-6;
+
+    &.shrink {
+      white-space: nowrap;
+    }
+
+    &.expand {
+      @apply w-full;
+    }
   }
 
   thead {

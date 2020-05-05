@@ -11,16 +11,18 @@
   <table v-else class="fulfilled">
     <thead>
       <tr>
-        <th>Rank</th>
-        <th>Players</th>
-        <th>{{ leaderboard[0].primary_t.name }}</th>
+        <th class="shrink">Rank</th>
+        <th class="expand">Players</th>
+        <th class="shrink">{{ leaderboard[0].primary_t.name }}</th>
         <th
+          class="shrink"
           v-for="(time, i) in leaderboard[0].others_t"
           :key="`other-time-th-${i}`"
         >
           {{ time.name }}
         </th>
         <th
+          class="shrink"
           v-for="variable in game.variables
             .filter(v => v.category === category.id)
             .filter(v => !v['is-subcategory'])"
@@ -28,14 +30,15 @@
         >
           {{ variable.name }}
         </th>
-        <th class="hidden lg:table-cell"></th>
+        <th class="shrink">Date</th>
+        <th class="shrink hidden lg:table-cell"></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
-        <td data-label="Rank">{{ row.place }}</td>
+        <td class="shrink" data-label="Rank">{{ row.place }}</td>
 
-        <td data-label="Players">
+        <td class="expand" data-label="Players">
           <player-name
             v-for="(player, i) in row.players"
             :key="`${row.id}-player-${i}`"
@@ -43,9 +46,12 @@
           />
         </td>
 
-        <td :data-label="row.primary_t.name">{{ row.primary_t.time }}</td>
+        <td class="shrink" :data-label="row.primary_t.name">
+          {{ row.primary_t.time }}
+        </td>
 
         <td
+          class="shrink"
           v-for="(time, i) in row.others_t"
           :key="`${row.id}-other-time-${i}`"
           :data-label="time.name"
@@ -54,6 +60,7 @@
         </td>
 
         <td
+          class="shrink"
           v-for="variable in game.variables
             .filter(v => v.category === category.id)
             .filter(v => !v['is-subcategory'])"
@@ -65,7 +72,9 @@
           </div>
         </td>
 
-        <td class="hidden lg:table-cell">
+        <td class="shrink">{{ row.date | relativeDate }} ago</td>
+
+        <td class="shrink hidden lg:table-cell">
           <font-awesome-icon v-if="row.showicon" :icon="['fas', 'video']" />
           <font-awesome-icon
             v-else

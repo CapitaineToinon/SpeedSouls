@@ -9,7 +9,9 @@
       class="flex-grow z-0 bg-nord4 dark:bg-nord0"
       :class="{ 'has-fixed-navbar': !isHome }"
     >
-      <router-view />
+      <keep-alive :include="['Home']">
+        <router-view />
+      </keep-alive>
     </main>
     <my-footer />
   </div>
