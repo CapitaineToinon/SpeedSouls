@@ -105,7 +105,6 @@ export default {
       return of(undefined);
     },
     onRowClick(row) {
-      console.log(row);
       this.$router.push({
         name: "Run",
         params: {
