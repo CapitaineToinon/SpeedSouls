@@ -53,28 +53,28 @@
       </ul>
       <ul class="socials">
         <li
-          class="menu-item discord icon"
+          class="menu-item icon"
           :class="{
             'border-nord0': !transparant,
             'dark:border-nord6': transparant
           }"
         >
-          <a href="#">
+          <a href="#" class="hover:text-discord">
             <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
           </a>
         </li>
-        <li class="menu-item patreon icon">
-          <a href="#">
+        <li class="menu-item icon">
+          <a href="#" class="hover:text-patreon">
             <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
           </a>
         </li>
-        <li class="menu-item twitter icon">
-          <a href="#">
+        <li class="menu-item icon">
+          <a href="#" class="hover:text-twitter">
             <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
           </a>
         </li>
-        <li class="menu-item github icon">
-          <a href="#">
+        <li class="menu-item icon">
+          <a href="#" class="hover:text-nord10">
             <font-awesome-icon :icon="['fab', 'github']" size="2x" />
           </a>
         </li>
@@ -282,30 +282,6 @@ nav {
         @apply border-nord6;
       }
     }
-  }
-}
-
-.discord {
-  a:hover {
-    @apply text-discord;
-  }
-}
-
-.twitter {
-  a:hover {
-    @apply text-twitter;
-  }
-}
-
-.patreon {
-  a:hover {
-    @apply text-patreon;
-  }
-}
-
-.github {
-  a:hover {
-    @apply text-nord10;
   }
 }
 </style>
