@@ -1,153 +1,98 @@
 <template>
-  <div class="home">
-    <hero-nav class="hero-nav is-black is-fullheight" navbarClass="is-black">
-      <div class="container hero-content has-text-centered">
-        <figure>
-          <img src="@/assets/flame.png" alt="speedsouls-flame-logo" />
-        </figure>
-        <h1 class="title is-1">Welcome!</h1>
-        <h2 class="subtitle">
-          Thanks for stopping by. We're currently working on getting our
-          frontpage up and running. In the meantime, follow one of the links
-          below to get to the content you're looking for.
-        </h2>
-        <div class="section buttons">
-          <b-button
-            tag="router-link"
-            class="is-medium is-warning is-inverted"
-            :to="{ name: 'games' }"
-            icon-pack="fa"
-            icon-left="list"
-            type="is-link"
-            >Leaderboards</b-button
-          >
-          <b-button
-            class="is-medium is-warning is-inverted"
-            icon-pack="fa"
-            icon-left="angle-double-right"
-            tag="a"
-            href="https://wiki.speedsouls.com/Main_Page"
-            type="is-info"
-            >Speedrunning Wiki</b-button
-          >
-        </div>
+  <div class="home flex items-center justify-center h-2/3" :style="style">
+    <div class="py-10 px-2 max-w-screen-md text-center">
+      <div class="flex flex-row justify-center py-6">
+        <img
+          src="http://beta.speedsouls.com/img/flame.aa7a595c.png"
+          alt="speedsouls logo"
+        />
       </div>
-    </hero-nav>
-    <section class="games hero is-dark is-fullheight">
-      <div class="hero-body is-clipped">
-        <div class="container">
-          <div class="columns is-mobile is-multiline">
-            <p class="column is-black is-full has-text-weight-bold is-size-2">
-              Leaderboards
-            </p>
-            <div class="column is-full">
-              <GameCards />
-            </div>
-          </div>
-        </div>
+      <h1 class="text-5xl font-semibold text-gray-100 leading-none">
+        Welcome!
+      </h1>
+      <p class="text-xl text-gray-100 font-normal py-6">
+        Thanks for stopping by. We're currently working on getting our frontpage
+        up and running. In the meantime, follow one of the links below to get to
+        the content you're looking for.
+      </p>
+      <div class="flex flex-col items-center sm:justify-center sm:flex-row">
+        <router-link
+          class="btn bg-nord10 mx-1 border-nord9 text-nord6 font-bold py-2 px-4 border-b-4 rounded"
+          tag="button"
+          :to="{ name: 'Games' }"
+        >
+          <font-awesome-icon class="mr-3" :icon="['fas', 'list']" />Leaderboards
+        </router-link>
+        <button
+          class="btn bg-nord10 mx-1 border-nord9 text-nord6 font-bold py-2 px-4 border-b-4 rounded"
+        >
+          <font-awesome-icon
+            class="mr-3"
+            :icon="['fas', 'angle-double-right']"
+          />SpeedSouls Wiki
+        </button>
       </div>
-    </section>
-    <section class="about hero is-black is-fullheight">
-      <div class="hero-body is-clipped">
-        <div class="container hero-content has-text-centered">
-          <div class="block">
-            <b-icon icon="clock" size="is-large" type="is-primary"></b-icon>
-          </div>
-          <h1 class="title">What exactly is SpeedSouls?</h1>
-          <h2 class="subtitle">
-            SpeedSouls.com is an independent website run by people passionate
-            about Souls speedrunning. It was founded in August 2014 to have a
-            general place to go to when searching for information on Souls
-            speedrunning instead of having different pastebins floating around
-            the web. This website doesn't dictate the rules for Souls
-            speedrunning in any shape or form whatsoever, it merely represents
-            the community's opinions and decisions. Its only purpose is to
-            provide help and information.
-          </h2>
-          <div class="buttons">
-            <b-button
-              class="is-discord is-medium is-outlined is-inverted"
-              icon-pack="fab"
-              icon-left="discord"
-              tag="a"
-              href="https://discord.speedsouls.com"
-              type="is-primary"
-              >Join our discord</b-button
-            >
-          </div>
-        </div>
-        <div class="separator"></div>
-        <div class="container hero-content has-text-centered">
-          <div class="block">
-            <b-icon
-              pack="fa"
-              icon="question"
-              size="is-large"
-              type="is-success"
-            ></b-icon>
-          </div>
-          <h1 class="title">What's up with this page?</h1>
-          <h2 class="subtitle">
-            Quite a while ago, the good folks at SpeedSouls decided to switch
-            from wiki-based leaderboards to Speedrun.com leaderboards. We've
-            been pretty slow on the site conversion, but we've finally put up a
-            splash page to provide some extra info while we get some more work
-            done. In the meantime, you can still navigate to the content you're
-            looking for directly from this landing page.
-          </h2>
-        </div>
-      </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
-import HeroNav from "@/components/HeroNav.vue";
-import GameCards from "@/components/GameCards.vue";
-
 export default {
-  name: "home",
-  components: {
-    HeroNav,
-    GameCards
+  name: "Home",
+  data: () => ({
+    assets: [
+      "bloodborne",
+      "darksouls",
+      "darksouls2",
+      "darksouls3",
+      "darksoulsremastered",
+      "darksouls2sotfs",
+      "demonssouls"
+    ]
+  }),
+  computed: {
+    style() {
+      const image = this.assets[Math.floor(Math.random() * this.assets.length)];
+      const url = require(`@/assets/backgrounds/${image}-1280.jpg`);
+
+      return {
+        "--bg-url": `url(${url})`
+      };
+    }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .home {
-  .hero-nav {
-    border-bottom: 1px solid $dark;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -11;
   }
 
-  .about {
-    padding: 4rem 0;
-
-    .separator {
-      max-width: 500px;
-      border-bottom: 1px dotted $grey-light;
-      margin: 0 auto 4rem;
-    }
-  }
-
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-
-    .subtitle {
-      max-width: 650px;
-      margin: auto;
-    }
-
-    .buttons {
-      margin: 0 auto;
-
-      @include touch {
-        .button {
-          width: 100%;
-        }
-      }
-    }
+  &::after {
+    content: "";
+    @apply opacity-75;
+    transform: scale(1.1);
+    background-image: var(--bg-url);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -10;
   }
 }
 </style>

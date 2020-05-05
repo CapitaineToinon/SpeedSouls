@@ -1,0 +1,148 @@
+table {
+  @screen md {
+    @apply rounded;
+    @apply overflow-hidden;
+    @apply shadow-xl;
+  }
+
+  th {
+    @apply py-2;
+  }
+
+  td,
+  th {
+    @apply px-2;
+  }
+
+  thead {
+    @apply hidden;
+    @apply border-b-2;
+    @apply border-nord3;
+    @apply font-bold;
+
+    @screen md {
+      @apply table-header-group;
+    }
+  }
+
+  tbody {
+    tr {
+      @apply cursor-pointer;
+      @apply flex;
+      @apply flex-col;
+      @apply text-right;
+      @apply shadow-md;
+      @apply rounded;
+      @apply overflow-hidden;
+
+      @screen md {
+        @apply table-row;
+        @apply text-center;
+        @apply mb-0;
+        @apply rounded-none;
+        @apply shadow-none;
+      }
+
+      &:not(:last-child) {
+        @apply mb-4;
+      }
+
+      td {
+        &.icon {
+          @apply hidden;
+
+          @screen md {
+            @apply table-cell;
+          }
+        }
+
+        &:empty::after {
+          content: "-";
+          @apply float-right;
+
+          @screen md {
+            @apply hidden;
+          }
+        }
+
+        &:before {
+          content: attr(data-label);
+          @apply float-left;
+          @apply font-bold;
+
+          @screen md {
+            @apply hidden;
+          }
+        }
+      }
+    }
+  }
+
+  td {
+    @apply py-2;
+  }
+}
+
+:root:not(.mode-dark) {
+  table {
+    @screen md {
+      @apply bg-nord5;
+      @apply text-nord0;
+    }  
+
+    tbody {
+      tr {
+        td {
+          &:nth-of-type(odd) {
+            @apply bg-nord6;
+          }
+  
+          &:nth-of-type(even) {
+            @apply bg-nord5;
+          }
+        }
+
+        @screen md {
+          td {
+            &:nth-of-type(odd) {
+              @apply bg-transparent;
+            }
+    
+            &:nth-of-type(even) {
+              @apply bg-transparent;
+            }
+          }
+
+          &:nth-of-type(odd) {
+            @apply bg-nord6;
+          }
+  
+          &:nth-of-type(even) {
+            @apply bg-nord5;
+          }
+        }
+      }
+    }
+  }
+}
+
+:root.mode-dark {
+  table {
+    @screen md {
+      @apply bg-nord1;
+      @apply text-nord6;
+    }
+
+    tbody {
+      tr {
+        &:nth-of-type(odd) {
+          @apply bg-nord3;
+        }
+
+        &:nth-of-type(even) {
+          @apply bg-nord2;
+        }
+      }
+    }
+  }
+}

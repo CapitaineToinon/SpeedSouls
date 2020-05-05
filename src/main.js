@@ -1,39 +1,51 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import store from "./store";
 import VueRx from "vue-rx";
+import VTooltip from "v-tooltip";
+import "./directives/clickOutside";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
-  Button,
-  Field,
-  Radio,
-  Icon,
-  Loading,
-  Menu,
-  Tooltip,
-  Message,
-  Collapse
-} from "buefy";
-import ssLoading from "./components/ssLoading.vue";
+  faDiscord,
+  faPatreon,
+  faTwitter,
+  faTwitch,
+  faGithub,
+  faYoutube
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faList,
+  faAngleDoubleRight,
+  faVideo,
+  faVideoSlash,
+  faTimes,
+  faExternalLinkAlt,
+  faChevronRight,
+  faLink
+} from "@fortawesome/free-solid-svg-icons";
 
+library.add(faDiscord, faPatreon, faTwitter, faTwitch, faGithub, faYoutube);
+library.add(
+  faList,
+  faAngleDoubleRight,
+  faVideo,
+  faVideoSlash,
+  faTimes,
+  faExternalLinkAlt,
+  faChevronRight,
+  faLink
+);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueRx);
-
-// Buefy components
-Vue.use(Button);
-Vue.use(Field);
-Vue.use(Radio);
-Vue.use(Icon);
-Vue.use(Loading);
-Vue.use(Menu);
-Vue.use(Tooltip);
-Vue.use(Message);
-Vue.use(Collapse);
-
-// Our global components
-Vue.component("ss-loading", ssLoading);
+Vue.use(VTooltip);
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");

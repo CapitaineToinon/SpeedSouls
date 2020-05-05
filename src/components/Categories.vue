@@ -1,15 +1,19 @@
 <template>
-  <div class="categories">
-    <b-menu-list :label="showLabel ? 'Categories' : ''">
-      <b-menu-item
-        v-for="(category, i) in categories"
-        :key="i"
-        icon="information-outline"
-        :label="category.name"
-        :active="category.hash === active"
-        @click="$emit('CategoryClick', category)"
-      ></b-menu-item>
-    </b-menu-list>
+  <div class="categories w-64 flex flex-col">
+    <span
+      v-if="showLabel"
+      class="label text-xs text-nord0 dark:text-nord6 uppercase mb-1"
+      >Categories</span
+    >
+    <button
+      class="btn text-nord0 dark:text-nord6 text-left py-2 pl-8 px-4 m-px rounded"
+      :class="{ active: category.hash === active }"
+      v-for="(category, i) in categories"
+      :key="i"
+      @click="$emit('click', category)"
+    >
+      {{ category.name }}
+    </button>
   </div>
 </template>
 
@@ -31,3 +35,17 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.label {
+  letter-spacing: 1px;
+}
+.btn {
+  &.active,
+  &:hover {
+    @apply text-gray-100;
+    @apply bg-nord10;
+    @apply shadow-xs;
+  }
+}
+</style>

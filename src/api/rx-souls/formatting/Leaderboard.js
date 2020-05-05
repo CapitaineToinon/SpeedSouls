@@ -29,9 +29,8 @@ export default function formatLeaderboard(json, game) {
     runs: runs.map(run => {
       const formattedPlayers = run.run.players
         .map(player => {
-          return player.hasOwnProperty("id")
-            ? players.data.find(p => p.id === player.id)
-            : player;
+          const isGuest = !Object.prototype.hasOwnProperty.call(player, "id");
+          return isGuest ? player : players.data.find(p => p.id === player.id);
         })
         .map(formatPlayer);
 

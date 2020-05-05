@@ -1,129 +1,55 @@
 <template>
-  <div v-if="runError" class="rejected container has-fixed-navbar-top">
-    <div class="section">
-      <b-message
-        title="Error"
-        type="is-danger"
-        aria-close-label="Close message"
-        :closable="false"
-        >{{ runError.message }}</b-message
-      >
-    </div>
+  <div v-if="runError" class="container mx-auto py-6">
+    <error :error="runError" />
   </div>
-  <div v-else-if="!run" class="pending container has-fixed-navbar-top">
-    <div class="section">
-      <ss-loading :active="true" />
-    </div>
+  <div v-else-if="!run" class="container mx-auto py-6">
+    <spinner />
   </div>
-  <div v-else class="fulfilled container has-fixed-navbar-top">
-    <div class="section">
-      <div class="columns is-mobile is-multiline">
-        <div class="column is-full-mobile left is-narrow">
-          <div class="card aside">
-            <div class="card-image">
-              <figure class="image">
-                <img :src="run.game.coverLarge" alt="Placeholder image" />
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title has-text-light is-4">{{ run.game.name }}</p>
-                </div>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <router-link
-                :to="{ name: 'game', params: { game: run.game.abbreviation } }"
-                class="card-footer-item"
-                >Leaderboards</router-link
-              >
-              <a :href="`${run.game.weblink}/editrun`" class="card-footer-item"
-                >Submit a run</a
-              >
-            </footer>
-          </div>
+  <div v-else class="container py-6 mx-auto flex flex-row flex-wrap">
+    <aside class="w-full order-2 md:order-1 md:w-64 md:flex-none">
+      <player-card
+        v-for="(player, i) in run.players"
+        :key="`player-card-${i}`"
+        class="player"
+        :player="player"
+      />
+    </aside>
+    <div class="w-full order-1 mb-5 md:mb-0 md:order-2 md:flex-1 ml-0 md:ml-5">
+      <breadcrumbs class="pb-3" :items="breadcrumbs" />
+      <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-lg">
+        <div v-if="run && run.videos && run.videos.links" class="w-full">
+          <run-video
+            v-for="(link, i) in run.videos.links"
+            :key="i"
+            :url="link.uri"
+          ></run-video>
         </div>
-        <div class="column is-full-mobile right">
-          <header class="header">
-            <nav class="breadcrumb" aria-label="breadcrumbs">
-              <ul>
-                <li
-                  v-for="(b, i) in breadcrumbs"
-                  :key="i"
-                  :class="b.active ? 'is-active' : ''"
-                >
-                  <router-link :to="b.to">{{ b.text }}</router-link>
-                </li>
-              </ul>
-            </nav>
-          </header>
-          <div class="card">
-            <div class="card-image">
-              <div v-if="run && run.videos && run.videos.links">
-                <run-video
-                  v-for="(link, i) in run.videos.links"
-                  :key="i"
-                  :url="link.uri"
-                ></run-video>
-              </div>
-              <div v-else class="section">
-                <b-message title="Warning" type="is-warning" :closable="false"
-                  >No videos.</b-message
-                >
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title has-text-light is-4">
-                    <router-link
-                      :to="{
-                        name: 'game',
-                        params: {
-                          game: run.game.abbreviation,
-                          category: run.category.hash
-                        }
-                      }"
-                      >{{ run.category.name }}</router-link
-                    >
-                    in {{ run.primary_t.time }} by
-                    <span
-                      class="player"
-                      v-for="(player, i) in run.players"
-                      :key="`player-${i}`"
-                    >
-                      <b-tooltip
-                        v-if="player.country"
-                        :label="player.country.name"
-                        animated
-                      >
-                        <span
-                          :class="`flag-icon flag-icon-${player.country.code}`"
-                        ></span>
-                      </b-tooltip>
-                      {{ player.name }}
-                    </span>
-                  </p>
-                  <p class="subtitle has-text-light is-6">{{ date }}</p>
-                </div>
-              </div>
-
-              <div v-if="run.comment" class="content">
-                {{ run.comment }}
-                <!-- <a>@bulmaio</a>.
-                <a href="#">#css</a>
-                <a href="#">#responsive</a>
-                <br />
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>-->
-              </div>
-            </div>
-            <footer class="card-footer">
-              <a :href="`${run.weblink}/editrun`" class="card-footer-item"
-                >View on speedrun.com</a
-              >
-            </footer>
+        <div v-else class="p-4">
+          <alert type="warning">No video.</alert>
+        </div>
+        <div class="px-6 py-4">
+          <div class="font-bold text-nord0 dark:text-nord6 text-xl">
+            <router-link :to="to(run.game, run.category)">{{
+              run.category.name
+            }}</router-link>
+            in {{ run.primary_t.time }} by
+            <span class="player-names">
+              <player-name
+                class="player-name cursor-pointer"
+                v-for="(player, i) in run.players"
+                :key="`player-${i}`"
+                :player="player"
+                @click="onPlayerClick"
+              />
+            </span>
           </div>
+          <p class="text-nord1 dark:text-nord4 text-base">{{ date }}</p>
+          <p
+            v-if="run.comment"
+            class="text-nord1 dark:text-nord4 text-base mt-5 italic"
+          >
+            {{ run.comment }}
+          </p>
         </div>
       </div>
     </div>
@@ -134,15 +60,55 @@
 import { of } from "rxjs";
 import { pluck, switchMap, catchError } from "rxjs/operators";
 import { useRuns } from "@/api/rx-souls";
+import Alert from "@/components/Alert";
+import Error from "@/components/Error";
 import RunVideo from "@/components/RunVideo";
+import Spinner from "@/components/Spinner";
+import PlayerName from "@/components/PlayerName";
+import PlayerCard from "@/components/PlayerCard";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import formatDate from "date-fns/format";
 
 export default {
+  components: {
+    Alert,
+    Error,
+    Breadcrumbs,
+    RunVideo,
+    Spinner,
+    PlayerName,
+    PlayerCard
+  },
   data: () => ({
     run: undefined,
     runError: null
   }),
-  components: { RunVideo },
+  methods: {
+    to(game, category) {
+      return {
+        name: "Game",
+        params: {
+          game: game.abbreviation,
+          category: category.hash
+        }
+      };
+    },
+    onPlayerClick(player) {
+      this.$router.push({
+        name: "Player",
+        params: {
+          id: player.name
+        }
+      });
+    },
+    onRunSuccess(run) {
+      this.run = run;
+    },
+    onRunError(error) {
+      this.runError = error;
+      return of(undefined);
+    }
+  },
   computed: {
     date() {
       let date = "";
@@ -157,7 +123,7 @@ export default {
       const array = [
         {
           text: "Leaderboards",
-          to: { name: "games" }
+          to: { name: "Games" }
         }
       ];
 
@@ -165,7 +131,7 @@ export default {
         array.push({
           text: this.run.game.name,
           to: {
-            name: "game",
+            name: "Game",
             params: {
               game: this.run.game.abbreviation
             }
@@ -176,7 +142,7 @@ export default {
         array.push({
           text: this.run.category.name,
           to: {
-            name: "game",
+            name: "Game",
             params: {
               game: this.run.game.abbreviation,
               category: this.run.category.hash
@@ -201,45 +167,23 @@ export default {
     this.$subscribeTo(
       this.$watchAsObservable("$route.params.id", { immediate: true }).pipe(
         pluck("newValue"),
-        switchMap(id =>
-          useRuns(id).pipe(
-            catchError(error => {
-              this.runError = error;
-              return of(undefined);
-            })
-          )
-        )
+        switchMap(id => useRuns(id).pipe(catchError(this.onRunError)))
       ),
-      run => (this.run = run)
+      this.onRunSuccess
     );
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.fulfilled {
-  .column {
-    &.left {
-      order: 1;
-      width: $sidebar-width;
+.player:not(:last-child) {
+  @apply mb-4;
+}
 
-      @include mobile {
-        order: 2;
-        width: 100%;
-      }
-    }
-
-    &.right {
-      order: 2;
-
-      @include mobile {
-        order: 1;
-      }
-    }
-  }
-
-  .header {
-    margin-bottom: $size-4;
+.player-names {
+  .player-name:not(:first-child)::before {
+    content: ",";
+    @apply mr-2;
   }
 }
 </style>

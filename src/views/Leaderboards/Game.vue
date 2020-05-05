@@ -1,101 +1,46 @@
 <template>
-  <div v-if="gameError" class="rejected container">
-    <div class="section">
-      <b-message
-        title="Error"
-        type="is-danger"
-        aria-close-label="Close message"
-        :closable="false"
-        >{{ gameError.message }}</b-message
-      >
-    </div>
+  <div v-if="gameError" class="min-h-screen-navbar container py-6 mx-auto">
+    <error :error="gameError" />
   </div>
-  <div v-else-if="!game" class="pending container">
-    <div class="section">
-      <ss-loading :active="true" />
-    </div>
+  <div v-else-if="!game" class="min-h-screen-navbar container py-6 mx-auto">
+    <spinner />
   </div>
-  <div v-else class="fulfilled container">
-    <button
-      @click="() => (openSidebar = !openSidebar)"
-      class="sidebar-button button is-large is-primary"
-      :class="{ '-open': openSidebar }"
-    >
-      <b-icon
-        class="sidebar-button_icon"
-        pack="fas"
-        :icon="openSidebar ? 'times' : 'list'"
-      ></b-icon>
+  <div v-else class="min-h-screen-navbar container py-6 mx-auto flex flex-row">
+    <button id="sidebar-button" @click="openSidebar = !openSidebar">
+      <font-awesome-icon
+        v-if="!openSidebar"
+        :icon="['fas', 'list']"
+        size="2x"
+      />
+      <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
     </button>
-    <div class="section">
-      <div class="columns is-mobile">
-        <div class="column left is-narrow">
-          <aside class="sidebar" :class="{ '-open': openSidebar }">
-            <Categories
-              class="categories"
-              :categories="game.categories"
-              :active="$route.params.category"
-              @CategoryClick="onCategoryClick"
-            />
-          </aside>
-        </div>
-        <div class="column right">
-          <div
-            v-if="categoryError"
-            class="section main-layout"
-            :class="{ '-open': openSidebar }"
-          >
-            <b-message
-              title="Error"
-              type="is-danger"
-              aria-close-label="Close message"
-              :closable="false"
-              >{{ categoryError.message }}</b-message
-            >
-          </div>
-          <div
-            v-else-if="!category"
-            class="section main-layout"
-            :class="{ '-open': openSidebar }"
-          >
-            <ss-loading :active="true" />
-          </div>
-          <div v-else class="main-layout" :class="{ '-open': openSidebar }">
-            <header class="header">
-              <nav class="breadcrumb" aria-label="breadcrumbs">
-                <ul>
-                  <li
-                    v-for="(b, i) in breadcrumbs"
-                    :key="i"
-                    :class="b.active ? 'is-active' : ''"
-                  >
-                    <router-link :to="b.to">{{ b.text }}</router-link>
-                  </li>
-                </ul>
-              </nav>
-            </header>
-            <div class="sub-categories">
-              <b-field v-for="variable in subCategories" :key="variable.id">
-                <b-radio-button
-                  v-for="(option, id) in variable.values.values"
-                  :key="id"
-                  :native-value="id"
-                  v-model="variable.values.default"
-                >
-                  <span>{{ option.label }}</span>
-                </b-radio-button>
-              </b-field>
-            </div>
-            <div class="leaderboard">
-              <Leaderboard
-                :game="game"
-                :category="category"
-                :variables="subCategories"
-              />
-            </div>
-          </div>
-        </div>
+    <aside :class="{ open: openSidebar }">
+      <categories
+        class="categories"
+        :categories="game.categories"
+        :active="$route.params.category"
+        @click="onCategoryClick"
+      />
+    </aside>
+    <div class="flex flex-col flex-1 ml-0 md:ml-5">
+      <breadcrumbs class="mb-4" :items="breadcrumbs" />
+      <div
+        class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
+      >
+        <ButtonGroup
+          class="mb-4"
+          v-for="variable in subCategories"
+          :key="variable.id"
+          :options="variable.values.values"
+          @change="v => (variable.values.default = v)"
+          :active="variable.values.default"
+        />
       </div>
+      <Leaderboard
+        :game="game"
+        :category="category"
+        :variables="subCategories"
+      />
     </div>
   </div>
 </template>
@@ -104,14 +49,22 @@
 import { of } from "rxjs";
 import { switchMap, pluck, catchError, skipWhile } from "rxjs/operators";
 import { useSoulsGame, useSoulsCategory } from "@/api/rx-souls";
+import Error from "@/components/Error";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Categories from "@/components/Categories.vue";
 import Leaderboard from "@/components/Leaderboard.vue";
+import ButtonGroup from "@/components/ButtonGroup";
+import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "games",
   components: {
+    Error,
+    ButtonGroup,
+    Breadcrumbs,
     Categories,
-    Leaderboard
+    Leaderboard,
+    Spinner
   },
   data: () => ({
     game: undefined,
@@ -125,7 +78,7 @@ export default {
       const array = [
         {
           text: "Leaderboards",
-          to: { name: "games" }
+          to: { name: "Games" }
         }
       ];
       if (this.game) {
@@ -157,7 +110,7 @@ export default {
 
       if (!this.$route.params.category && data.categories.length) {
         this.$router.replace({
-          name: "game",
+          name: "Game",
           params: {
             game: this.$route.params.game,
             category: data.categories[0].hash
@@ -187,7 +140,7 @@ export default {
       if (this.category === category) return;
 
       this.$router.push({
-        name: "game",
+        name: "Game",
         params: {
           game: this.$route.params.game,
           category: category.hash
@@ -199,6 +152,7 @@ export default {
     this.$subscribeTo(
       this.$watchAsObservable("$route.params.game", { immediate: true }).pipe(
         pluck("newValue"),
+        skipWhile(v => v === undefined),
         switchMap(game => useSoulsGame(game).pipe(catchError(this.onGameError)))
       ),
       this.onGameSuccess
@@ -222,79 +176,88 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.fulfilled {
-  .column {
-    &.left {
-      width: $sidebar-width;
+<style lang="scss" scoped>
+#sidebar-button {
+  @apply fixed;
+  @apply z-20;
+  @apply w-12;
+  @apply h-12;
+  @apply shadow-xl;
+  @apply rounded;
+  @apply bg-nord15;
+  @apply text-nord6;
+  @apply border;
+  @apply border-nord3;
+  right: 1.5rem;
+  bottom: 1.5rem;
 
-      @include touch {
-        width: 0;
-        padding: 0;
-      }
-    }
+  @screen md {
+    @apply hidden;
+  }
+}
 
-    &.right {
-      .breadcrumb,
-      .sub-categories {
-        margin-bottom: $size-4;
-      }
+aside {
+  @apply fixed;
+  @apply w-screen;
+  @apply left-0;
+  @apply right-0;
+  @apply bottom-0;
+  @apply z-10;
+  @apply p-6;
+  transition: transform 0.2s ease-in-out;
+  transform: translateY(100vh);
+  height: calc(100vh - var(--navbar-height));
 
-      .main-layout {
-        transition: $speed-slow;
+  .categories {
+    @apply w-full;
 
-        &.-open {
-          opacity: 0;
-        }
-      }
+    @screen md {
+      @apply flex-none;
+      @apply w-64;
     }
   }
 
-  .sidebar-button {
-    position: fixed;
-    right: $size-4;
-    bottom: $size-4;
-    cursor: pointer;
-    z-index: $navbar-z - 1;
-    display: none;
-    box-shadow: 1px 1px 15px $dark;
-
-    &.-open {
-      box-shadow: none;
-    }
-
-    @include touch {
-      display: block;
-    }
+  &.open {
+    transform: translateY(0);
   }
 
-  .sidebar {
-    width: 100%;
-    position: -webkit-sticky;
-    position: sticky;
-    top: calc(#{$navbar-height} + #{$section-padding-y});
+  @screen md {
+    @apply relative;
+    @apply w-64;
+    @apply h-auto;
+    @apply bg-transparent;
+    @apply p-0;
+    transform: translateY(0);
+  }
 
-    @include touch {
-      position: fixed;
-      top: $navbar-height;
-      left: 0;
-      right: 0;
-      z-index: $navbar-z - 2;
-      overflow-y: scroll;
-      padding: $size-1 $size-4;
-      top: navbar-height;
-      height: 100%;
-      transition: all $speed-slower;
-      transform: translateY(100%);
-      background-color: $scheme-main-ter;
+  .categories {
+    @apply sticky;
+    top: calc(var(--navbar-height) + 1.5rem);
+  }
+}
 
-      .categories {
-        padding-bottom: $size-1 * 2;
-      }
+:root.mode-dark {
+  // bg-nord5 dark:bg-nord1
+  aside {
+    @apply bg-nord1;
+  }
 
-      &.-open {
-        transform: translateY(0);
-      }
+  @screen md {
+    aside {
+      @apply bg-transparent;
+    }
+  }
+}
+
+:root:not(mode-dark) {
+  // bg-nord5 dark:bg-nord1
+  aside {
+    @apply bg-nord5;
+  }
+
+  @screen md {
+    aside {
+      @apply bg-transparent;
     }
   }
 }

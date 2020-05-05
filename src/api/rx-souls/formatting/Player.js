@@ -1,5 +1,15 @@
 export default function Player(json) {
-  let { id, name, names, location, weblink } = json;
+  let {
+    id,
+    name,
+    names,
+    location,
+    weblink,
+    signup,
+    twitch,
+    twitter,
+    youtube
+  } = json;
   let country = null;
 
   if (location) {
@@ -18,6 +28,10 @@ export default function Player(json) {
     id,
     name,
     country,
-    weblink
+    weblink,
+    signup,
+    twitch,
+    twitter,
+    youtube
   };
 }

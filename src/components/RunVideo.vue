@@ -1,11 +1,11 @@
 <template>
-  <div v-if="youtubeID" class="speedsouls-video">
+  <div v-if="youtubeID" class="speedsouls-video bg-nord4 dark:bg-nord3">
     <youtube
       :video-id="youtubeID"
       :player-vars="{ autoplay: autoPlay }"
     ></youtube>
   </div>
-  <div v-else-if="twitchID" class="speedsouls-video">
+  <div v-else-if="twitchID" class="speedsouls-video bg-nord4 dark:bg-nord3">
     <iframe
       :src="`https://player.twitch.tv/?video=${twitchID}&autoplay=${autoPlay}`"
       frameborder="0"
@@ -13,12 +13,11 @@
       allowfullscreen="true"
     ></iframe>
   </div>
-  <div v-else class="section">
-    <b-message title="Info" type="is-info" :closable="false">
+  <div v-else class="p-4">
+    <alert type="info">
       Watch at
-      <a :href="url" target="_blank">{{ url }}</a
-      >.
-    </b-message>
+      <external-link :href="url" target="_blank">{{ url }}</external-link>
+    </alert>
   </div>
 </template>
 
@@ -26,13 +25,15 @@
 /* eslint-disable-next-line */
 const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
 import { Youtube, getIdFromUrl } from "vue-youtube";
+import Alert from "@/components/Alert";
+import ExternalLink from "@/components/ExternalLink";
 
 export default {
+  components: { Alert, ExternalLink, Youtube },
   data: () => ({
     youtubeID: null,
     twitchID: null
   }),
-  components: { Youtube },
   props: {
     autoPlay: {
       type: Boolean,
@@ -59,22 +60,63 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 /**
  * Scoped CSS Doesn't work on dynamic content 
  * https://github.com/vuejs/vue-loader/issues/559
  */
+
+:root.mode-dark {
+  .speedsouls-video {
+    --skeleton-color: #434c5e;
+    @apply bg-nord1;
+  }
+}
+
+:root:not(.mode-dark) {
+  .speedsouls-video {
+    --skeleton-color: #d8dee9;
+    @apply bg-nord5;
+  }
+}
+
 .speedsouls-video {
   width: 100%;
   overflow: hidden;
   padding-top: 56.25%;
   position: relative;
-}
-.speedsouls-video iframe {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 150px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--skeleton-color) 50%,
+      transparent 100%
+    );
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+
+    @keyframes load {
+      from {
+        left: -100%;
+      }
+      to {
+        left: 100%;
+      }
+    }
+  }
 }
 </style>

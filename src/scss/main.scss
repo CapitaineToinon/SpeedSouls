@@ -1,15 +1,7 @@
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
-
-// Custom variables
-@import "./variables";
-
-// Import Bulma and Buefy styles
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
-@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 @import "~flag-icon-css/css/flag-icon.css";
-
-// custom styles
 @import "./flags";
-@import "./layout";
+@import "./table";
+@import "./vtooltip";

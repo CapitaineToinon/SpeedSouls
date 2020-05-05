@@ -1,185 +1,276 @@
 <template>
   <nav
-    class="navbar is-dark"
-    :class="{ '-transparant': isTransparant }"
-    role="navigation"
-    aria-label="main navigation"
+    class="font-sans text-center flex h-12 justify-between px-2 bg-nord6 dark:bg-nord1"
+    :class="{ transparant: isTransparant, active: !hidden, dark: dark }"
   >
-    <div class="navbar-brand">
-      <router-link class="navbar-item" :to="{ name: 'home' }">
-        <img src="@/assets/logo-white.png" alt="SpeedSouls White Logo" />
-      </router-link>
-
-      <a
-        @click="toggle"
-        role="button"
-        class="navbar-burger burger"
-        :class="{ 'is-active': active }"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="speedsoulsNavbar"
+    <router-link to="/" class="h-full flex flex-col justify-center">
+      <img
+        class="h-10 sm:h-10 p-2"
+        v-show="isWhiteLogo"
+        :src="require('@/assets/logo-white.png')"
+        alt="speedsouls logo"
+      />
+      <img
+        v-show="!isWhiteLogo"
+        class="h-10 sm:h-10 p-2"
+        :src="require('@/assets/logo-black.png')"
+        alt="speedsouls logo"
+      />
+    </router-link>
+    <div class="burger flex flex-col justify-center lg:hidden">
+      <button
+        ref="burger"
+        @click="toggleMenu"
+        class="flex items-center px-3 py-2 border rounded"
       >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+        <svg
+          class="fill-current h-3 w-3"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>Menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+        </svg>
+      </button>
     </div>
-
-    <div
-      id="speedsoulsNavbar"
-      class="navbar-menu has-text-centered"
-      :class="{ 'is-active': active }"
-    >
-      <div class="navbar-end">
-        <router-link
-          @click.native="close"
-          class="text navbar-item"
-          :to="{ name: 'home' }"
-          >Welcome</router-link
-        >
-        <router-link
-          @click.native="close"
-          class="text navbar-item"
-          :to="{ name: 'games' }"
-          >Leaderboards</router-link
-        >
-        <a class="text navbar-item" target="_blank" :href="links.wiki">Wiki</a>
-        <a class="text navbar-item" target="_blank" :href="links.forums"
-          >Forums</a
-        >
-        <router-link
-          @click.native="close"
-          class="text navbar-item"
-          :to="{ name: 'submit' }"
-          >Submit a run</router-link
-        >
-        <span class="separator"></span>
-        <a
-          v-for="(s, key) in socials"
-          :key="key"
-          class="navbar-item"
-          target="_blank"
-          :href="s.url"
-        >
-          <b-icon pack="fab" :icon="s.icon"></b-icon>
-          <span class="is-hidden-desktop">{{ s.title }}</span>
+    <ul class="menu list-none" v-click-outside="onClickOutside">
+      <li class="menu-item">
+        <router-link to="/">Home.</router-link>
+      </li>
+      <li class="menu-item">
+        <router-link :to="{ name: 'Games' }">Leaderboards.</router-link>
+      </li>
+      <li class="menu-item">
+        <a href="#">Wiki.</a>
+      </li>
+      <li class="menu-item">
+        <a href="#">Forums.</a>
+      </li>
+      <li class="menu-item separator">
+        <router-link to="/">Submit a run.</router-link>
+      </li>
+      <li
+        class="menu-item icon"
+        :class="{
+          'border-nord0': !transparant,
+          'dark:border-nord6': transparant
+        }"
+      >
+        <a href="#">
+          <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
         </a>
-      </div>
-    </div>
+      </li>
+      <li class="menu-item icon">
+        <a href="#">
+          <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
+        </a>
+      </li>
+      <li class="menu-item icon">
+        <a href="#">
+          <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
+        </a>
+      </li>
+      <li class="menu-item icon">
+        <a href="#">
+          <font-awesome-icon :icon="['fab', 'github']" size="2x" />
+        </a>
+      </li>
+    </ul>
   </nav>
 </template>
 
 <script>
-import withScroll from "../mixins/withScroll";
+import withScroll from "@/mixins/withScroll.js";
+import { mapState } from "vuex";
 
 export default {
   mixins: [withScroll],
   data: () => ({
-    active: false,
-    links: {
-      wiki: "https://wiki.speedsouls.com/Main_Page",
-      forums: "https://forums.speedsouls.com",
-      submit: "https://wiki.speedsouls.com/Run_submission"
-    },
-    socials: [
-      {
-        title: "Discord",
-        icon: "discord",
-        url: "http://discord.speedsouls.com"
-      },
-      {
-        title: "Patreon",
-        icon: "patreon",
-        url: "https://www.patreon.com/speedsouls"
-      },
-      {
-        title: "Twitter",
-        icon: "twitter",
-        url: "https://twitter.com/soulsruns"
-      },
-      {
-        title: "Github",
-        icon: "github",
-        url: "https://github.com/CapitaineToinon/buefy-souls"
-      }
-    ]
+    hidden: true
   }),
-  computed: {
-    isTransparant() {
-      return this.$route.name === "home" && this.off.y < 100;
+  props: {
+    transparant: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
-    toggle() {
-      this.active = !this.active;
+    toggleMenu() {
+      this.hidden = !this.hidden;
     },
-    close() {
-      this.active = false;
+    onClickOutside({ target }) {
+      // close the menu if clicked outside of it or the burger
+      if (target === this.$refs.burger || this.$refs.burger.contains(target))
+        return;
+      this.hidden = true;
+    }
+  },
+  computed: {
+    ...mapState(["dark"]),
+    isWhiteLogo() {
+      return this.dark || this.isTransparant;
+    },
+    isTransparant() {
+      return this.transparant && this.off.y < 100;
+    }
+  },
+  watch: {
+    "$route.name": {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.hidden = true;
+      }
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 nav {
-  transition: all $speed-slower;
+  @apply fixed;
+  @apply shadow-xs;
 
-  --opacity: 1;
-  background-color: rgba($color: $primary, $alpha: var(--opacity)) !important;
-
-  &.-transparant {
-    --opacity: 0;
+  &::before {
+    content: "";
+    @apply absolute;
+    @apply bg-black;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    transition: opacity 0.2s ease-in-out;
+    @apply opacity-0;
+    @apply pointer-events-none;
   }
 
-  .navbar-brand {
-    .router-link-active:hover {
-      background-color: inherit !important;
+  .menu {
+    top: -100vh;
+    transition: top 0.2s ease-in-out;
+    @apply max-h-screen;
+    @apply overflow-scroll;
+    @apply flex;
+    @apply absolute;
+    @apply right-0;
+    @apply left-0;
+    @apply flex-col;
+    @apply items-stretch;
+    @apply bg-nord6;
+    @apply z-50;
+    @apply shadow-lg;
+    @apply py-5;
+    @apply px-2;
+
+    @screen lg {
+      @apply flex;
+      @apply relative;
+      @apply flex-row;
+      @apply items-center;
+      @apply top-0;
+      @apply shadow-none;
+      @apply border-t-0;
+      @apply py-0;
     }
   }
 
-  .navbar-menu {
-    @include touch {
-      display: inherit;
-      position: absolute;
-      width: 100%;
-      top: 0;
-      transform: translateY(-100%);
-      transition: all $speed-slow;
+  .menu-item {
+    @apply font-bold;
+    @apply uppercase;
+    @apply inline-block;
+    @apply no-underline;
+    @apply pt-2;
+    @apply pr-2;
+    @apply pl-2;
+    @apply pb-2;
+    @apply text-nord0;
 
-      &.is-active {
-        transform: translateY($navbar-height);
+    a:hover {
+      @apply text-nord10;
+    }
+
+    &.icon {
+      @apply mt-1;
+    }
+
+    &.separator {
+      @apply border-b;
+      @apply pb-5;
+
+      & + .menu-item {
+        @apply pt-5;
+      }
+
+      @screen lg {
+        @apply border-b-0;
+        @apply border-r;
+        @apply pr-5;
+        @apply pb-2;
+
+        & + .menu-item {
+          @apply pt-2;
+          @apply pl-5;
+        }
+      }
+    }
+  }
+
+  .burger {
+    button {
+      @apply text-nord0;
+      @apply border-nord0;
+    }
+  }
+
+  &.dark {
+    .menu {
+      @apply bg-nord1;
+    }
+
+    .menu-item {
+      @apply text-gray-100;
+    }
+
+    .burger {
+      button {
+        @apply text-gray-100;
+        @apply border-gray-100;
+      }
+    }
+  }
+
+  &.active {
+    .menu {
+      top: 100%;
+    }
+
+    &::before {
+      @apply opacity-75;
+      @apply pointer-events-auto;
+    }
+  }
+
+  &.transparant {
+    @apply bg-transparent;
+    @apply shadow-none;
+
+    @screen lg {
+      .menu {
+        @apply bg-transparent;
+      }
+
+      .menu-item {
+        @apply text-gray-100;
+
+        &.separator {
+          @apply border-gray-100;
+        }
       }
     }
 
-    .router-link-exact-active {
-      // background-color: $navbar-item-active-background-color;
-    }
-
-    .navbar-end {
-      letter-spacing: 1px;
-
-      .text {
-        text-transform: uppercase;
-        font-weight: $weight-bold;
-        font-size: $small-font-size;
-
-        &::after {
-          content: ".";
-        }
-      }
-
-      .separator {
-        @include desktop {
-          border-right: 1px $grey-light solid;
-          margin: 5px 14px;
-        }
-
-        @include touch {
-          display: block;
-          padding-top: 1rem;
-          margin: 0 1rem 1rem;
-          border-bottom: 1px $grey-light solid;
-        }
+    .burger {
+      button {
+        @apply text-gray-100;
+        @apply border-gray-100;
       }
     }
   }

@@ -4,6 +4,8 @@ import { map, startWith, flatMap, find } from "rxjs/operators";
 import formatGame from "./formatting/Game";
 import formatLeaderboard from "./formatting/Leaderboard";
 import formatRun from "./formatting/Run";
+import formatPlayer from "./formatting/Player";
+import formatPlayerRun from "./formatting/PlayerRun";
 import CACHE from "./cache";
 
 export const BASE_URL = "https://www.speedrun.com";
@@ -49,6 +51,24 @@ function getRun(runId) {
     }),
     map(([game, run]) => formatRun(run, game))
   );
+}
+
+function getUser(userId) {
+  return ajax.getJSON(`${API_ENDPOINT}/users/${userId}`).pipe(
+    map(response => response.data),
+    map(raw => formatPlayer(raw))
+  );
+}
+
+function getUserPersonalBests(userId) {
+  return ajax
+    .getJSON(
+      `${API_ENDPOINT}/users/${userId}/personal-bests?series=${SERIE}&embed=game,category`
+    )
+    .pipe(
+      map(response => response.data),
+      map(raw => formatPlayerRun(raw))
+    );
 }
 
 export function useSoulsGames() {
@@ -97,4 +117,15 @@ export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
 
 export function useRuns(runId) {
   return CACHE.get(`getRun/${runId}`, getRun(runId));
+}
+
+export function useUser(userId) {
+  return CACHE.get(`getUser/${userId}`, getUser(userId));
+}
+
+export function useUserPersonalBests(userId) {
+  return CACHE.get(
+    `getUserPersonalBests/${userId}`,
+    getUserPersonalBests(userId)
+  );
 }
