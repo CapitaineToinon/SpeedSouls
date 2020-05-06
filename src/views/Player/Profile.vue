@@ -41,7 +41,7 @@
               <td class="expand" data-label="Category">
                 {{ row.category.name }}
               </td>
-              <td class="shrink" data-label="Times">
+              <td class="shrink" data-label="Time">
                 {{ row.primary_t.time }}
               </td>
 
