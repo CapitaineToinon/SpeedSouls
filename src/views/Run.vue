@@ -16,7 +16,7 @@
     </aside>
     <div class="w-full order-1 mb-5 md:mb-0 md:order-2 md:flex-1 ml-0 md:ml-5">
       <breadcrumbs class="pb-3" :items="breadcrumbs" />
-      <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-lg">
+      <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
         <div v-if="run && run.videos && run.videos.links" class="w-full">
           <run-video
             v-for="(link, i) in run.videos.links"

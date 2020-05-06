@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 div[role="alert"] {
-  @apply shadow-lg;
+  @apply shadow-md;
 
   .title:first-letter {
     @apply uppercase;

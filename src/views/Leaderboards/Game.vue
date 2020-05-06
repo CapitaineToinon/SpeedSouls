@@ -182,7 +182,7 @@ export default {
   @apply z-20;
   @apply w-12;
   @apply h-12;
-  @apply shadow-xl;
+  @apply shadow-md;
   @apply rounded;
   @apply bg-nord15;
   @apply text-nord6;

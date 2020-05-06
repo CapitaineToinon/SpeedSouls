@@ -45,7 +45,7 @@ export default {
   &:hover {
     @apply text-gray-100;
     @apply bg-nord10;
-    @apply shadow-xs;
+    @apply shadow-md;
   }
 }
 </style>

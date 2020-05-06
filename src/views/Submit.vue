@@ -8,7 +8,7 @@
       <router-link to="/">speedsouls.com</router-link>
     </alert>
     <div
-      class="my-3 shadow-lg text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded"
+      class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded"
     >
       <div
         class="tab w-full overflow-hidden"

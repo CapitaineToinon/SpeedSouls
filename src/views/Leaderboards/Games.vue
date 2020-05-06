@@ -12,7 +12,7 @@
       :key="i"
     >
       <div
-        class="cursor-pointer border-gray-100 rounded overflow-hidden shadow-lg"
+        class="cursor-pointer border-gray-100 rounded overflow-hidden shadow-md"
       >
         <div class="bg-black pb-3/5 relative">
           <img

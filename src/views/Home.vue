@@ -1,6 +1,6 @@
 <template>
   <div
-    class="home flex items-center justify-center h-screen sm:h- shadow-lg"
+    class="home flex items-center justify-center h-screen sm:h- shadow-md"
     :style="style"
   >
     <div class="py-10 px-2 max-w-lg text-center">

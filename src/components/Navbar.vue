@@ -133,7 +133,7 @@ export default {
 <style lang="scss" scoped>
 nav {
   @apply fixed;
-  @apply shadow-xs;
+  @apply shadow-md;
 
   &::before {
     content: "";
@@ -160,7 +160,7 @@ nav {
     @apply flex-col;
     @apply bg-nord6;
     @apply z-50;
-    @apply shadow-lg;
+    @apply shadow-md;
     @apply py-5;
 
     @screen lg {
