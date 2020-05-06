@@ -17,7 +17,7 @@ const routes = [
     // In case anyone links to the old wiki page
     path: "/Main_Page",
     redirect: {
-      name: "home"
+      name: "Home"
     }
   },
   {
