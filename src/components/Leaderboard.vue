@@ -9,15 +9,15 @@
     <alert type="warning">There are no runs.</alert>
   </div>
   <div v-else class="fulfilled responsive-table">
-    <table class="text-center">
+    <table class="text-center loading">
       <thead>
         <tr>
           <th class="shrink">Rank</th>
           <th class="shrink">Players</th>
           <th class="shrink">
-            <span class="block md:hidden lg:block">
-              {{ leaderboard[0].primary_t.name }}
-            </span>
+            <span class="block md:hidden lg:block">{{
+              leaderboard[0].primary_t.name
+            }}</span>
             <span class="hidden md:block lg:hidden">Time</span>
           </th>
           <th
@@ -54,9 +54,9 @@
           </td>
 
           <td class="shrink" :data-label="row.primary_t.name">
-            <span class="block md:hidden lg:block">
-              {{ row.primary_t.time }}
-            </span>
+            <span class="block md:hidden lg:block">{{
+              row.primary_t.time
+            }}</span>
             <span class="hidden md:block lg:hidden">{{ row.time.time }}</span>
           </td>
 
@@ -136,14 +136,7 @@ export default {
   },
   data: () => ({
     leaderboard: undefined,
-    leaderboardError: null,
-    isEmpty: false,
-    isBordered: false,
-    isStriped: false,
-    isNarrowed: false,
-    isHoverable: true,
-    isFocusable: false,
-    hasMobileCards: true
+    leaderboardError: null
   }),
   methods: {
     onLeaderboardSuccess(runs) {
@@ -203,4 +196,20 @@ export default {
     @apply mr-2;
   }
 }
+
+// table.loading {
+//   @apply relative;
+//   @apply pointer-events-none;
+
+//   &::after {
+//     @apply absolute;
+//     content: "";
+//     @apply top-0;
+//     @apply right-0;
+//     @apply bottom-0;
+//     @apply left-0;
+//     @apply bg-nord4;
+//     @apply opacity-50;
+//   }
+// }
 </style>
