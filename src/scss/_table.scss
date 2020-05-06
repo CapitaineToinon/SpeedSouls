@@ -1,8 +1,8 @@
 .responsive-table {
-  @apply overflow-x-scroll;
   @apply rounded;
 
   @screen md {
+    @apply overflow-x-scroll;
     @apply shadow-md;
   }
 }
