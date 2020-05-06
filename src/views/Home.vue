@@ -1,39 +1,39 @@
 <template>
   <div class="min-h-screen">
     <hero class="home h-screen md:h-auto shadow-md" :style="style">
-      <div class="max-w-screen md mx-auto text-center">
+      <div class="max-w-2xl md mx-auto text-center py-40">
         <img
-          class="mx-auto"
-          :src="require('@/assets/flame.png')"
+          class="mx-auto mb-4"
+          :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
           alt="speedsouls logo"
         />
-        <h1 class="text-5xl font-semibold text-gray-100 leading-none">
-          Welcome on SpeedSouls
-        </h1>
-        <!-- <p
-          class="text-base sm:text-lg text-gray-100 font-normal py-6"
-        ></p>-->
         <div
-          class="flex flex-col items-stretch max-w-md mx-auto items-center justify-center sm:flex-row"
+          class="flex flex-col items-stretch mx-auto items-center justify-center sm:flex-row"
         >
           <router-link
-            class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
+            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
             tag="button"
             :to="{ name: 'Games' }"
           >
             <font-awesome-icon
-              class="mr-3"
+              class="mr-1"
               :icon="['fas', 'list']"
             />Leaderboards
           </router-link>
           <a
             :href="VUE_APP_WIKI"
-            class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
+            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
           >
             <font-awesome-icon
-              class="mr-3"
+              class="mr-1"
               :icon="['fas', 'angle-double-right']"
             />SpeedSouls Wiki
+          </a>
+          <a
+            :href="VUE_APP_DISCORD"
+            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
+          >
+            <font-awesome-icon class="mr-1" :icon="['fab', 'discord']" />Discord
           </a>
         </div>
       </div>
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-const { VUE_APP_WIKI, VUE_APP_GITHUB } = process.env;
+const { VUE_APP_WIKI, VUE_APP_DISCORD, VUE_APP_GITHUB } = process.env;
 import { mapState } from "vuex";
 import Alert from "@/components/Alert";
 import Hero from "@/components/Hero";
@@ -159,6 +159,7 @@ export default {
   data: () => ({
     VUE_APP_WIKI,
     VUE_APP_GITHUB,
+    VUE_APP_DISCORD,
     assets: [
       "bloodborne",
       "darksouls",
@@ -184,11 +185,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.letter-spacing-px {
+  letter-spacing: 1px;
+}
+
 .home {
-  min-height: 75vh;
   position: relative;
   overflow: hidden;
-  padding-bottom: var(--navbar-height);
 
   &::before {
     content: "";
@@ -203,7 +206,7 @@ export default {
 
   &::after {
     content: "";
-    @apply opacity-50;
+    @apply opacity-75;
     transform: scale(1.1);
     background-image: var(--bg-url);
     background-repeat: no-repeat;
