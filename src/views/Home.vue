@@ -19,29 +19,33 @@
         class="flex flex-col items-stretch max-w-md mx-auto items-center justify-center sm:flex-row"
       >
         <router-link
-          class="btn mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
+          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
           tag="button"
           :to="{ name: 'Games' }"
         >
           <font-awesome-icon class="mr-3" :icon="['fas', 'list']" />Leaderboards
         </router-link>
-        <button
-          class="btn mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
+        <a
+          :href="VUE_APP_WIKI"
+          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
         >
           <font-awesome-icon
             class="mr-3"
             :icon="['fas', 'angle-double-right']"
           />SpeedSouls Wiki
-        </button>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+const { VUE_APP_WIKI } = process.env;
+
 export default {
   name: "Home",
   data: () => ({
+    VUE_APP_WIKI,
     assets: [
       "bloodborne",
       "darksouls",

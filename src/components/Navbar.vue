@@ -42,10 +42,10 @@
           <router-link :to="{ name: 'Games' }">Leaderboards.</router-link>
         </li>
         <li class="menu-item">
-          <a href="#">Wiki.</a>
+          <a :href="VUE_APP_WIKI">Wiki.</a>
         </li>
         <li class="menu-item">
-          <a href="#">Forums.</a>
+          <a :href="VUE_APP_FORUMS">Forums.</a>
         </li>
         <li class="menu-item">
           <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
@@ -59,22 +59,22 @@
             'dark:border-nord6': transparant
           }"
         >
-          <a href="#" class="hover:text-discord">
+          <a :href="VUE_APP_DISCORD" class="hover:text-discord">
             <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a href="#" class="hover:text-patreon">
+          <a :href="VUE_APP_PATREON" class="hover:text-patreon">
             <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a href="#" class="hover:text-twitter">
+          <a :href="VUE_APP_TWITTER" class="hover:text-twitter">
             <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a href="#" class="hover:text-nord10">
+          <a :href="VUE_APP_GITHUB" class="hover:text-nord10">
             <font-awesome-icon :icon="['fab', 'github']" size="2x" />
           </a>
         </li>
@@ -84,12 +84,27 @@
 </template>
 
 <script>
+const {
+  VUE_APP_WIKI,
+  VUE_APP_FORUMS,
+  VUE_APP_DISCORD,
+  VUE_APP_PATREON,
+  VUE_APP_TWITTER,
+  VUE_APP_GITHUB
+} = process.env;
+
 import withScroll from "@/mixins/withScroll.js";
 import { mapState } from "vuex";
 
 export default {
   mixins: [withScroll],
   data: () => ({
+    VUE_APP_WIKI,
+    VUE_APP_FORUMS,
+    VUE_APP_DISCORD,
+    VUE_APP_PATREON,
+    VUE_APP_TWITTER,
+    VUE_APP_GITHUB,
     hidden: true
   }),
   props: {

@@ -202,7 +202,6 @@ aside {
   @apply bottom-0;
   @apply z-10;
   @apply p-6;
-  @apply overflow-y-scroll;
   transition: transform 0.2s ease-in-out;
   transform: translateY(100vh);
   height: calc(100vh - var(--navbar-height));
