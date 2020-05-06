@@ -270,10 +270,10 @@ nav {
       .socials {
         @apply border-nord4;
       }
-    }
 
-    .menu-item {
-      @apply text-nord6;
+      .menu-item {
+        @apply text-nord6;
+      }
     }
 
     .burger {
