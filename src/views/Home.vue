@@ -151,12 +151,11 @@
 const { VUE_APP_WIKI, VUE_APP_GITHUB } = process.env;
 import { mapState } from "vuex";
 import Alert from "@/components/Alert";
-import GameCards from "@/components/GameCards";
 import Hero from "@/components/Hero";
 import Discord from "@/components/Discord";
 
 export default {
-  components: { Alert, GameCards, Hero, Discord },
+  components: { Alert, Hero, Discord },
   data: () => ({
     VUE_APP_WIKI,
     VUE_APP_GITHUB,

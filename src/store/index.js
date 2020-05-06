@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -15,26 +16,6 @@ function getDarkFromPrefersColorScheme() {
   );
 }
 
-/**
- * Returns if the user wants dark mode or not
- */
-function getDark() {
-  const isDark = lsDark();
-  const theme = lsTheme();
-
-  return theme === "AUTO" ? getDarkFromPrefersColorScheme() : isDark;
-}
-
-// Get current dark mode from local storage
-function lsDark() {
-  return localStorage.getItem("dark") === "true";
-}
-
-// Get current theme from local storage
-function lsTheme() {
-  return localStorage.getItem("theme") ?? "AUTO";
-}
-
 // Update the dark mode on the DOM
 function updateDocument(add) {
   add
@@ -43,9 +24,11 @@ function updateDocument(add) {
 }
 
 const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
-    dark: getDark() ?? true,
-    theme: lsTheme() ?? "DARK"
+    dark: true,
+    theme: "DARK",
+    relativeTime: true
   },
   mutations: {
     setTheme: (state, payload) => {
@@ -53,22 +36,21 @@ const store = new Vuex.Store({
         case "DARK":
           state.theme = "DARK";
           state.dark = true;
-          localStorage.setItem("dark", "true");
           break;
         case "LIGHT":
           state.theme = "LIGHT";
           state.dark = false;
-          localStorage.setItem("dark", "false");
           break;
         case "AUTO":
           state.theme = "AUTO";
           state.dark = getDarkFromPrefersColorScheme();
-          localStorage.setItem("dark", state.dark);
           break;
       }
 
-      localStorage.setItem("theme", state.theme);
       updateDocument(state.dark);
+    },
+    setRelativeTime: (state, payload) => {
+      state.relativeTime = payload;
     }
   },
   actions: {
@@ -80,11 +62,17 @@ const store = new Vuex.Store({
     },
     enableAuto({ commit }) {
       commit("setTheme", "AUTO");
+    },
+    enableRelativeTime({ commit }) {
+      commit("setRelativeTime", true);
+    },
+    disableRelativeTime({ commit }) {
+      commit("setRelativeTime", false);
     }
   }
 });
 
 // Update the document at the start
-updateDocument(getDark());
+updateDocument(store.state.dark);
 
 export default store;

@@ -78,6 +78,11 @@
             <font-awesome-icon :icon="['fab', 'github']" size="2x" />
           </a>
         </li>
+        <li class="menu-item icon">
+          <router-link :to="{ name: 'Settings' }" class="hover:text-nord10">
+            <font-awesome-icon :icon="['fas', 'cog']" size="2x" />
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>

@@ -83,10 +83,18 @@
           </td>
 
           <td
+            v-if="relativeTime"
             class="shrink table-cell md:hidden xl:table-cell"
             data-label="Date"
           >
             {{ row.date | relativeDate }} ago
+          </td>
+          <td
+            v-else
+            class="shrink table-cell md:hidden xl:table-cell"
+            data-label="Date"
+          >
+            {{ row.date | date }}
           </td>
 
           <td class="shrink hidden xl:table-cell">
@@ -117,6 +125,7 @@ import { useLeaderboard } from "@/api/rx-souls";
 import Alert from "@/components/Alert";
 import Spinner from "@/components/Spinner";
 import PlayerName from "@/components/PlayerName";
+import { mapState } from "vuex";
 
 export default {
   components: { Alert, Spinner, PlayerName },
@@ -138,6 +147,9 @@ export default {
     leaderboard: undefined,
     leaderboardError: null
   }),
+  computed: {
+    ...mapState(["relativeTime"])
+  },
   methods: {
     onLeaderboardSuccess(runs) {
       this.leaderboard = runs;
