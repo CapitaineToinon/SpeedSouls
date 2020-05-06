@@ -196,12 +196,13 @@ export default {
 
 aside {
   @apply fixed;
-  @apply max-w-sm;
+  @apply w-screen;
   @apply left-0;
   @apply right-0;
   @apply bottom-0;
   @apply z-10;
   @apply p-6;
+  @apply overflow-y-scroll;
   transition: transform 0.2s ease-in-out;
   transform: translateY(100vh);
   height: calc(100vh - var(--navbar-height));

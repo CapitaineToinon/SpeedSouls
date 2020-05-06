@@ -28,13 +28,25 @@ const routes = [
   },
   {
     path: "/run/:id",
-    name: "Run",
-    component: () => import("@/views/Run.vue")
+    component: () => import("@/views/Player/Index.vue"),
+    children: [
+      {
+        path: "",
+        name: "Run",
+        component: () => import("@/views/Player/Run.vue")
+      }
+    ]
   },
   {
     path: "/player/:id",
-    name: "Player",
-    component: () => import("@/views/Player.vue")
+    component: () => import("@/views/Player/Index.vue"),
+    children: [
+      {
+        path: "",
+        name: "Player",
+        component: () => import("@/views/Player/Profile.vue")
+      }
+    ]
   },
   {
     path: "/submit",

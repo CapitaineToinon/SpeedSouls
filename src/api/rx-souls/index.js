@@ -12,8 +12,6 @@ export const BASE_URL = "https://www.speedrun.com";
 export const API_ENDPOINT = `${BASE_URL}/api/v1`;
 const SERIE = "souls";
 
-// use distinctUntilChanged() ?
-
 function getSoulsGames() {
   return ajax
     .getJSON(`${API_ENDPOINT}/series/${SERIE}/games?embed=categories,variables`)

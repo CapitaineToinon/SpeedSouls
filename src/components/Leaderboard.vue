@@ -15,9 +15,9 @@
           <th class="shrink">Rank</th>
           <th class="shrink">Players</th>
           <th class="shrink">
-            <span class="block md:hidden lg:block">{{
-              leaderboard[0].primary_t.name
-            }}</span>
+            <span class="block md:hidden lg:block">
+              {{ leaderboard[0].primary_t.name }}
+            </span>
             <span class="hidden md:block lg:hidden">Time</span>
           </th>
           <th
@@ -44,8 +44,9 @@
         <tr v-for="row in leaderboard" :key="row.id" @click="onRowClick(row)">
           <td class="shrink" data-label="Rank">{{ row.place }}</td>
 
-          <td class="expand" data-label="Players">
+          <td class="expand player-names" data-label="Players">
             <player-name
+              class="player-name"
               v-for="(player, i) in row.players"
               :key="`${row.id}-player-${i}`"
               :player="player"
@@ -53,9 +54,9 @@
           </td>
 
           <td class="shrink" :data-label="row.primary_t.name">
-            <span class="block md:hidden lg:block">{{
-              row.primary_t.time
-            }}</span>
+            <span class="block md:hidden lg:block">
+              {{ row.primary_t.time }}
+            </span>
             <span class="hidden md:block lg:hidden">{{ row.time.time }}</span>
           </td>
 
@@ -196,10 +197,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-  tr {
-    td {
-    }
+.player-names {
+  .player-name:not(:first-child)::before {
+    content: ",";
+    @apply mr-2;
   }
 }
 </style>

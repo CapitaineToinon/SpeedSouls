@@ -18,7 +18,7 @@ export default {
   computed: {
     message() {
       return (
-        (this.error.response && this.error.response.message) ||
+        (this.error && this.error.response && this.error.response.message) ||
         (this.error && this.error.message) ||
         this.error ||
         "Something broke..."

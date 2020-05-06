@@ -19,8 +19,7 @@
         <span
           class="whitespace-no-wrap"
           :class="`flag-icon flag-icon-${player.country.code} mr-1`"
-        />
-        {{ player.country.name }}
+        />{{ player.country.name }}
       </p>
       <p class="text-nord3 dark:text-nord4 text-base" v-if="player.signup">
         {{ player.signup | date }}

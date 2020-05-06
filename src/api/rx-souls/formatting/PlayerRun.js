@@ -3,22 +3,25 @@ import formatCategory from "./Category";
 import { getPrimaryTime } from "./TimingMethod";
 
 export default function PlayerRun(json) {
-  const runs = json.map(raw => {
-    let { game, category, run, place } = raw;
-    let { times, videos, date, id } = run;
+  const runs = json
+    /* intentionally removing IL runs */
+    .filter(raw => raw.category.data.type === "per-game")
+    .map(raw => {
+      let { game, category, run, place } = raw;
+      let { times, videos, date, id } = run;
 
-    const formattedGame = formatGame(game.data);
+      const formattedGame = formatGame(game.data);
 
-    return {
-      place,
-      date,
-      id,
-      game: formattedGame,
-      category: formatCategory(category.data),
-      primary_t: getPrimaryTime(times, formattedGame.ruleset),
-      showicon: videos !== null
-    };
-  });
+      return {
+        place,
+        date,
+        id,
+        game: formattedGame,
+        category: formatCategory(category.data),
+        primary_t: getPrimaryTime(times, formattedGame.ruleset),
+        showicon: videos !== null
+      };
+    });
 
   let grouped = [];
 

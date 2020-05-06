@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs flex flex-row flex-wrap">
     <div
-      class="item text-nord0 dark:text-nord6 flex flex-row flex-no-wrap items-center whitespace-no-wrap"
+      class="item text-nord0 dark:text-nord6 flex flex-row flex-no-wrap items-center"
       v-for="(item, i) in items"
       :key="i"
     >

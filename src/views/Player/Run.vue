@@ -1,58 +1,48 @@
 <template>
-  <div v-if="runError" class="container">
+  <div v-if="runError">
     <error :error="runError" />
   </div>
-  <div v-else-if="!run" class="container">
+  <div v-else-if="!run">
     <spinner />
   </div>
-  <div v-else class="container flex flex-row flex-wrap">
-    <aside class="w-full order-2 md:order-1 md:w-64 md:flex-none">
-      <player-card
-        v-for="(player, i) in run.players"
-        :key="`player-card-${i}`"
-        class="player"
-        :player="player"
-      />
-    </aside>
-    <div class="w-full order-1 mb-5 md:mb-0 md:order-2 md:flex-1 ml-0 md:ml-5">
-      <breadcrumbs class="pb-3" :items="breadcrumbs" />
-      <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
-        <div v-if="run && run.videos && run.videos.links" class="w-full">
-          <run-video
-            v-for="(link, i) in run.videos.links"
-            :key="i"
-            :url="link.uri"
-          ></run-video>
+  <div v-else>
+    <breadcrumbs class="pb-3" :items="breadcrumbs" />
+    <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
+      <div v-if="run && run.videos && run.videos.links" class="w-full">
+        <run-video
+          v-for="(link, i) in run.videos.links"
+          :key="i"
+          :url="link.uri"
+        ></run-video>
+      </div>
+      <div v-else class="p-4">
+        <alert type="warning">No video.</alert>
+      </div>
+      <div class="px-6 py-4">
+        <div class="font-bold text-nord0 dark:text-nord6 text-xl">
+          <router-link :to="to(run.game, run.category)">{{
+            run.category.name
+          }}</router-link>
+          in {{ run.primary_t.time }} by
+          <span class="player-names">
+            <player-name
+              class="player-name cursor-pointer"
+              v-for="(player, i) in run.players"
+              :key="`player-${i}`"
+              :player="player"
+              @click="onPlayerClick"
+            />
+          </span>
         </div>
-        <div v-else class="p-4">
-          <alert type="warning">No video.</alert>
-        </div>
-        <div class="px-6 py-4">
-          <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-            <router-link :to="to(run.game, run.category)">
-              {{ run.category.name }}
-            </router-link>
-            in {{ run.primary_t.time }} by
-            <span class="player-names">
-              <player-name
-                class="player-name cursor-pointer"
-                v-for="(player, i) in run.players"
-                :key="`player-${i}`"
-                :player="player"
-                @click="onPlayerClick"
-              />
-            </span>
-          </div>
-          <p class="text-nord1 dark:text-nord4 text-base">
-            {{ run.date | date }}
-          </p>
-          <p
-            v-if="run.comment"
-            class="text-nord1 dark:text-nord4 text-base mt-5 italic"
-          >
-            {{ run.comment }}
-          </p>
-        </div>
+        <p class="text-nord1 dark:text-nord4 text-base">
+          {{ run.date | date }}
+        </p>
+        <p
+          v-if="run.comment"
+          class="text-nord1 dark:text-nord4 text-base mt-5 italic"
+        >
+          {{ run.comment }}
+        </p>
       </div>
     </div>
   </div>
@@ -67,7 +57,6 @@ import Error from "@/components/Error";
 import RunVideo from "@/components/RunVideo";
 import Spinner from "@/components/Spinner";
 import PlayerName from "@/components/PlayerName";
-import PlayerCard from "@/components/PlayerCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default {
@@ -77,8 +66,7 @@ export default {
     Breadcrumbs,
     RunVideo,
     Spinner,
-    PlayerName,
-    PlayerCard
+    PlayerName
   },
   data: () => ({
     run: undefined,
