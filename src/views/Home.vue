@@ -1,18 +1,18 @@
 <template>
   <div class="min-h-screen">
-    <hero class="home shadow-md" :style="style">
-      <div class="max-w-xl mx-auto text-center">
+    <hero class="home h-screen md:h-auto shadow-md" :style="style">
+      <div class="max-w-screen md mx-auto text-center">
         <img
           class="mx-auto"
           :src="require('@/assets/flame.png')"
           alt="speedsouls logo"
         />
         <h1 class="text-5xl font-semibold text-gray-100 leading-none">
-          Welcome!
+          Welcome on SpeedSouls
         </h1>
-        <p class="text-base sm:text-lg text-gray-100 font-normal py-6">
-          SpeedSouls is an awesome community bla bla bla
-        </p>
+        <!-- <p
+          class="text-base sm:text-lg text-gray-100 font-normal py-6"
+        ></p>-->
         <div
           class="flex flex-col items-stretch max-w-md mx-auto items-center justify-center sm:flex-row"
         >
@@ -39,36 +39,45 @@
       </div>
     </hero>
     <hero class="bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
+      <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">About us</h1>
-        <p class="text-base py-4 text-center">More about us here...</p>
+        <p class="text-base py-6 text-center">
+          SpeedSouls was established in September 2014 as an information hub for
+          people seeking information about speedrunning the various FromSoftware
+          Souls games. With the availability of Discord about a year later, we
+          have formed a community for everyone interested. Nowadays, SpeedSouls
+          is one of the largest groups focused on speedrunning a single game
+          series.
+        </p>
+        <a
+          class="border border-nord0 py-2 px-4 rounded"
+          :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
+          >More</a
+        >
       </div>
     </hero>
     <hero class="bg-nord4 text-nord0 dark:bg-nord1 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
-        <h1 class="text-4xl text-center py-0">Looking for help?</h1>
-        <p class="text-base py-4 text-center">
-          Join discord to ask some help where more than 4'000 members are
-          waiting for you!
-        </p>
+      <div
+        class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly"
+      >
+        <div class="px-4 text-center">
+          <h1 class="text-4xl text-center py-0">Join the community</h1>
+          <p class="text-base py-4 text-center">
+            Join discord to ask some help where more than 5000 members are
+            waiting for you!
+          </p>
 
-        <alert type="warning" class="text-left mb-4"
-          >Please note that it is not a Discord server to request co-op in or
-          for extensive talk about casual Souls topics. This Discord is used to
-          discuss Souls speedrunning only.</alert
-        >
+          <alert type="warning" headless class="text-left mb-4">
+            Please note that it is not a Discord server to request co-op in or
+            for extensive talk about casual Souls topics. This Discord is used
+            to discuss Souls speedrunning only.
+          </alert>
 
-        <router-link
-          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
-          tag="button"
-          :to="{ name: 'Submit' }"
-        >
-          <font-awesome-icon class="mr-3" :icon="['fab', 'discord']" />Open
-          Discord
-        </router-link>
+          <discord class="max-w-md mx-auto" />
+        </div>
       </div>
     </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
+    <hero class="bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
       <div class="max-w-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">Help us financially</h1>
         <p class="text-base py-4 text-center">
@@ -85,7 +94,7 @@
         </router-link>
       </div>
     </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
+    <hero class="bg-nord4 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
       <div class="max-w-md text-center mx-auto">
         <h1 class="text-4xl py-0">Looking for a guide</h1>
         <p class="text-base py-4">
@@ -117,23 +126,40 @@
         >
       </div>
     </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
-      <h1 class="text-4xl">Leaderboards</h1>
-      <game-cards />
+    <hero class="bg-nord4 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
+      <div class="max-w-md text-center mx-auto">
+        <h1 class="text-4xl py-0">Found a bug</h1>
+        <p class="text-base py-4">
+          If you found a bug with the website, please open an issue about it on
+          our github page.
+        </p>
+        <a
+          :href="`${VUE_APP_GITHUB}/issues`"
+          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
+          tag="button"
+          :to="{ name: 'Submit' }"
+        >
+          <font-awesome-icon class="mr-3" :icon="['fab', 'github']" />Open in
+          issue
+        </a>
+      </div>
     </hero>
   </div>
 </template>
 
 <script>
-const { VUE_APP_WIKI } = process.env;
+const { VUE_APP_WIKI, VUE_APP_GITHUB } = process.env;
+import { mapState } from "vuex";
 import Alert from "@/components/Alert";
 import GameCards from "@/components/GameCards";
 import Hero from "@/components/Hero";
+import Discord from "@/components/Discord";
 
 export default {
-  components: { Alert, GameCards, Hero },
+  components: { Alert, GameCards, Hero, Discord },
   data: () => ({
     VUE_APP_WIKI,
+    VUE_APP_GITHUB,
     assets: [
       "bloodborne",
       "darksouls",
@@ -145,6 +171,7 @@ export default {
     ]
   }),
   computed: {
+    ...mapState(["dark"]),
     style() {
       const image = this.assets[Math.floor(Math.random() * this.assets.length)];
       const url = require(`@/assets/backgrounds/${image}-1280.jpg`);

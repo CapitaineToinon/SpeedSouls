@@ -1,9 +1,12 @@
 <template>
-  <div role="alert" :class="type">
-    <div class="title font-bold rounded-t px-4 py-2">
+  <div role="alert" class="overflow-hidden" :class="type">
+    <div v-if="!headless" class="title font-bold rounded-t px-4 py-2">
       <slot name="header">{{ type }}</slot>
     </div>
-    <div class="content border border-t-0 rounded-b px-4 py-3">
+    <div
+      class="content border px-4 py-3"
+      :class="{ 'border-t-0 rounded-b': !headless, rounded: headless }"
+    >
       <p>
         <slot></slot>
       </p>
@@ -18,6 +21,10 @@ export default {
       type: String,
       default: () => "information",
       required: false
+    },
+    headless: {
+      type: Boolean,
+      default: () => false
     }
   }
 };
