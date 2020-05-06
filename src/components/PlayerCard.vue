@@ -1,26 +1,30 @@
 <template>
   <div
-    class="bg-nord6 dark:bg-nord1 rounded overflow-hidden shadow-lg py-5 flex flex-col justify-evenly"
+    class="bg-nord6 text-center dark:bg-nord1 rounded overflow-hidden shadow-lg py-5 flex flex-col justify-evenly"
   >
     <div class="flex-1 flex flex-col justify-center mx-2">
+      <p
+        class="player-name max-w-full overflow-hidden text-base text-nord0 dark:text-nord4 mb-4"
+      >
+        {{ player.name }}
+      </p>
       <img
         class="pp w-auto object-fit mx-auto mb-4"
-        :class="{ invisible: !playerImage }"
+        :class="{ hidden: !playerImage }"
         :src="`https://www.speedrun.com/themes/user/${player.name}/image.png`"
         @error="onImageError"
         :alt="`${player.name}'s profile picture`"
       />
-      <div class="px-6 pb-3">
-        <div class="font-bold text-xl text-center text-nord0 dark:text-nord6">
-          <player-name :player="player" />
-        </div>
-        <p
-          v-if="player.signup"
-          class="text-nord3 dark:text-nord4 text-center text-base"
-        >
-          {{ player.signup | date }}
-        </p>
-      </div>
+      <p class="text-base text-nord3 dark:text-nord6" v-if="player.country">
+        <span
+          class="whitespace-no-wrap"
+          :class="`flag-icon flag-icon-${player.country.code} mr-1`"
+        />
+        {{ player.country.name }}
+      </p>
+      <p class="text-nord3 dark:text-nord4 text-base" v-if="player.signup">
+        {{ player.signup | date }}
+      </p>
       <div class="links flex flex-row justify-center px-6">
         <a
           v-if="player['twitch']"
@@ -93,10 +97,7 @@
 </template>
 
 <script>
-import PlayerName from "@/components/PlayerName";
-
 export default {
-  components: { PlayerName },
   data: () => ({
     playerImage: true
   }),
@@ -134,5 +135,9 @@ export default {
   max-width: 80%;
   height: 5rem;
   max-height: 5rem;
+}
+
+.player-name {
+  text-overflow: ellipsis;
 }
 </style>
