@@ -12,16 +12,24 @@
     <div
       v-for="(group, i) in pbs"
       :key="i"
-      class="flex flex-col w-full justify-center mb-6"
+      class="flex flex-col w-full justify-center mb-4"
     >
-      <router-link
-        :to="{ name: 'Game', params: { game: group.game.abbreviation } }"
-        class="w-full text-nord0 dark:text-nord6 w-full mb-3 text-2xl"
-        >{{ group.game.name }}</router-link
-      >
+      <breadcrumbs
+        class="pb-3"
+        :items="[
+          {
+            text: 'Leaderboards',
+            to: { name: 'Games' }
+          },
+          {
+            text: group.game.name,
+            to: { name: 'Games' }
+          }
+        ]"
+      />
 
-      <div class="responsive-table">
-        <table class="text-center">
+      <div class="responsive-table rounded-none">
+        <table class="text-center rounded-none">
           <thead>
             <tr>
               <th class="shrink">Rank</th>
@@ -41,9 +49,7 @@
               <td class="expand" data-label="Category">
                 {{ row.category.name }}
               </td>
-              <td class="shrink" data-label="Time">
-                {{ row.primary_t.time }}
-              </td>
+              <td class="shrink" data-label="Time">{{ row.primary_t.time }}</td>
 
               <td class="shrink" data-label="Date">
                 {{ row.date | relativeDate }} ago
@@ -74,9 +80,10 @@ import { useUserPersonalBests } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import Spinner from '@/components/Spinner';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default {
-  components: { Alert, Error, Spinner },
+  components: { Alert, Error, Spinner, Breadcrumbs },
   data: () => ({
     pbs: undefined,
     pbsError: null
