@@ -1,82 +1,82 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: Home,
     meta: {
-      title: "SpeedSouls"
+      title: 'SpeedSouls'
     }
   },
   {
     // In case anyone links to the old wiki page
-    path: "/Main_Page",
+    path: '/Main_Page',
     redirect: {
-      name: "Home"
+      name: 'Home'
     }
   },
   {
-    path: "/leaderboards",
-    component: () => import("@/views/Leaderboards/Index.vue"),
+    path: '/leaderboards',
+    component: () => import('@/views/Leaderboards/Index.vue'),
     children: [
       {
-        path: "",
-        name: "Games",
-        component: () => import("@/views/Leaderboards/Games.vue")
+        path: '',
+        name: 'Games',
+        component: () => import('@/views/Leaderboards/Games.vue')
       },
       {
-        path: ":game/:category?",
-        name: "Game",
-        component: () => import("@/views/Leaderboards/Game.vue")
+        path: ':game/:category?',
+        name: 'Game',
+        component: () => import('@/views/Leaderboards/Game.vue')
       }
     ]
   },
   {
-    path: "/run/:id",
-    component: () => import("@/views/Player/Index.vue"),
+    path: '/run/:id',
+    component: () => import('@/views/Player/Index.vue'),
     children: [
       {
-        path: "",
-        name: "Run",
-        component: () => import("@/views/Player/Run.vue")
+        path: '',
+        name: 'Run',
+        component: () => import('@/views/Player/Run.vue')
       }
     ]
   },
   {
-    path: "/player/:id",
-    component: () => import("@/views/Player/Index.vue"),
+    path: '/player/:id',
+    component: () => import('@/views/Player/Index.vue'),
     children: [
       {
-        path: "",
-        name: "Player",
-        component: () => import("@/views/Player/Profile.vue")
+        path: '',
+        name: 'Player',
+        component: () => import('@/views/Player/Profile.vue')
       }
     ]
   },
   {
-    path: "/submit",
-    name: "Submit",
-    component: () => import("@/views/Submit.vue"),
+    path: '/submit',
+    name: 'Submit',
+    component: () => import('@/views/Submit.vue'),
     meta: {
-      title: "SpeedSouls - Submit a run"
+      title: 'SpeedSouls - Submit a run'
     }
   },
   {
-    path: "/settings",
-    name: "Settings",
-    component: () => import("@/views/Settings.vue"),
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/Settings.vue'),
     meta: {
-      title: "SpeedSouls - Settings"
+      title: 'SpeedSouls - Settings'
     }
   },
   {
-    path: "**",
-    name: "redirect",
+    path: '**',
+    name: 'redirect',
     beforeEnter(to) {
       window.location.replace(`${process.env.VUE_APP_WIKI}${to.fullPath}`);
     }
@@ -84,7 +84,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 });

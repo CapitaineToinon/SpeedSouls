@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { of, iif } from "rxjs";
-import { skipWhile, pluck, switchMap, catchError } from "rxjs/operators";
-import { useUser, useRuns } from "@/api/rx-souls";
-import Error from "@/components/Error";
-import PlayerCard from "@/components/PlayerCard";
+import { of, iif } from 'rxjs';
+import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
+import { useUser, useRuns } from '@/api/rx-souls';
+import Error from '@/components/Error';
+import PlayerCard from '@/components/PlayerCard';
 
 export default {
   components: { Error, PlayerCard },
@@ -37,10 +37,10 @@ export default {
   }),
   computed: {
     isRunPage() {
-      return this.$route.name === "Run";
+      return this.$route.name === 'Run';
     },
     isPlayerPage() {
-      return this.$route.name === "Player";
+      return this.$route.name === 'Player';
     }
   },
   methods: {
@@ -71,8 +71,8 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable("$route.params.id", { immediate: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(() =>
           iif(() => this.isRunPage, this.getFromRun(), this.getFromUser()).pipe(

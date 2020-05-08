@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import TimeReference from "@/components/TimeReference";
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import TimeReference from '@/components/TimeReference';
 
 export default {
   components: { ThemeSwitcher, TimeReference }

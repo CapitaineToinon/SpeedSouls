@@ -5,32 +5,44 @@
         class="socials text-nord0 dark:text-nord6 py-12 grid grid-cols-4 gap-4 text-center"
       >
         <div class="discord">
-          <font-awesome-icon
-            class="mb-2"
-            :icon="['fab', 'discord']"
-            size="3x"
-          />
-          <p>Discord</p>
+          <a :href="VUE_APP_DISCORD" class="hover:text-discord" target="_blank">
+            <font-awesome-icon
+              class="mb-2"
+              :icon="['fab', 'discord']"
+              size="3x"
+            />
+            <p>Discord</p>
+          </a>
         </div>
         <div class="twitter">
-          <font-awesome-icon
-            class="mb-2"
-            :icon="['fab', 'twitter']"
-            size="3x"
-          />
-          <p>Twitter</p>
+          <a :href="VUE_APP_TWITTER" class="hover:text-twitter" target="_blank">
+            <font-awesome-icon
+              class="mb-2"
+              :icon="['fab', 'twitter']"
+              size="3x"
+            />
+            <p>Twitter</p>
+          </a>
         </div>
         <div class="patreon">
-          <font-awesome-icon
-            class="mb-2"
-            :icon="['fab', 'patreon']"
-            size="3x"
-          />
-          <p>Patreon</p>
+          <a :href="VUE_APP_PATREON" class="hover:text-patreon" target="_blank">
+            <font-awesome-icon
+              class="mb-2"
+              :icon="['fab', 'patreon']"
+              size="3x"
+            />
+            <p>Patreon</p>
+          </a>
         </div>
         <div class="github">
-          <font-awesome-icon class="mb-2" :icon="['fab', 'github']" size="3x" />
-          <p>Github</p>
+          <a :href="VUE_APP_GITHUB" class="hover:text-nord10" target="_blank">
+            <font-awesome-icon
+              class="mb-2"
+              :icon="['fab', 'github']"
+              size="3x"
+            />
+            <p>Github</p>
+          </a>
         </div>
       </div>
       <div class="flex flex-col md:flex-row justify-evenly pb-4">
@@ -46,9 +58,21 @@
 </template>
 
 <script>
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+const {
+  VUE_APP_DISCORD,
+  VUE_APP_PATREON,
+  VUE_APP_TWITTER,
+  VUE_APP_GITHUB
+} = process.env;
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 export default {
-  components: { ThemeSwitcher }
+  components: { ThemeSwitcher },
+  data: () => ({
+    VUE_APP_DISCORD,
+    VUE_APP_PATREON,
+    VUE_APP_TWITTER,
+    VUE_APP_GITHUB
+  })
 };
 </script>

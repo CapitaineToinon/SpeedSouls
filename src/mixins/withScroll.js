@@ -15,12 +15,12 @@ export default {
         w = window;
       let x, y, docEl;
 
-      if (typeof w.pageYOffset === "number") {
+      if (typeof w.pageYOffset === 'number') {
         x = w.pageXOffset;
         y = w.pageYOffset;
       } else {
         docEl =
-          doc.compatMode && doc.compatMode === "CSS1Compat"
+          doc.compatMode && doc.compatMode === 'CSS1Compat'
             ? doc.documentElement
             : doc.body;
         x = docEl.scrollLeft;
@@ -30,9 +30,9 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener("scroll", this.updateOffets.bind(this));
+    document.addEventListener('scroll', this.updateOffets.bind(this));
   },
   unmounted() {
-    document.removeEventListener("scroll", this.updateOffets.bind(this));
+    document.removeEventListener('scroll', this.updateOffets.bind(this));
   }
 };

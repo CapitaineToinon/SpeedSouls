@@ -1,16 +1,16 @@
-import { forkJoin, from } from "rxjs";
-import { ajax } from "rxjs/ajax";
-import { map, startWith, flatMap, find } from "rxjs/operators";
-import formatGame from "./formatting/Game";
-import formatLeaderboard from "./formatting/Leaderboard";
-import formatRun from "./formatting/Run";
-import formatPlayer from "./formatting/Player";
-import formatPlayerRun from "./formatting/PlayerRun";
-import CACHE from "./cache";
+import { forkJoin, from } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { map, startWith, flatMap, find } from 'rxjs/operators';
+import formatGame from './formatting/Game';
+import formatLeaderboard from './formatting/Leaderboard';
+import formatRun from './formatting/Run';
+import formatPlayer from './formatting/Player';
+import formatPlayerRun from './formatting/PlayerRun';
+import CACHE from './cache';
 
-export const BASE_URL = "https://www.speedrun.com";
+export const BASE_URL = 'https://www.speedrun.com';
 export const API_ENDPOINT = `${BASE_URL}/api/v1`;
-const SERIE = "souls";
+const SERIE = 'souls';
 
 function getSoulsGames() {
   return ajax
@@ -18,7 +18,7 @@ function getSoulsGames() {
     .pipe(map(response => response.data.map(formatGame)));
 }
 
-function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = "") {
+function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = '') {
   return ajax
     .getJSON(
       `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
@@ -42,7 +42,7 @@ function getRun(runId) {
       const game = games.find(g => g.id === run.game);
 
       if (!game) {
-        throw new Error("Run not found");
+        throw new Error('Run not found');
       }
 
       return [game, run];
@@ -70,7 +70,7 @@ function getUserPersonalBests(userId) {
 }
 
 export function useSoulsGames() {
-  return CACHE.get("getSoulsGames", getSoulsGames());
+  return CACHE.get('getSoulsGames', getSoulsGames());
 }
 
 export function useSoulsGame(lookFor) {
@@ -80,7 +80,7 @@ export function useSoulsGame(lookFor) {
     find(game => game.abbreviation === lookFor),
     map(game => {
       if (!game) {
-        throw new Error("Game not found");
+        throw new Error('Game not found');
       }
 
       return game;
@@ -94,7 +94,7 @@ export function useSoulsCategory(gameLookFor, categoryLookFor) {
     find(category => category.hash === categoryLookFor),
     map(category => {
       if (!category) {
-        throw new Error("Category not found");
+        throw new Error('Category not found');
       }
 
       return category;
@@ -105,7 +105,7 @@ export function useSoulsCategory(gameLookFor, categoryLookFor) {
 export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
   const variablesQuery = variables.reduce((previous, current) => {
     return `${previous}&var-${current.id}=${current.values.default}`;
-  }, "");
+  }, '');
 
   return CACHE.get(
     `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}/${variablesQuery}`,

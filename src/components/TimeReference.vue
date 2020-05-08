@@ -9,32 +9,32 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   data: () => ({
     selected: 0
   }),
   computed: {
-    ...mapState(["relativeTime"])
+    ...mapState(['relativeTime'])
   },
   watch: {
     selected(val) {
       switch (val) {
-        case "0":
+        case '0':
           this.enableRelativeTime();
           break;
-        case "1":
+        case '1':
           this.disableRelativeTime();
           break;
       }
     }
   },
   methods: {
-    ...mapActions(["enableRelativeTime", "disableRelativeTime"])
+    ...mapActions(['enableRelativeTime', 'disableRelativeTime'])
   },
   mounted() {
-    this.selected = this.relativeTime ? "0" : "1";
+    this.selected = this.relativeTime ? '0' : '1';
   }
 };
 </script>

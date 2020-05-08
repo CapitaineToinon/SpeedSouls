@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { of } from "rxjs";
-import { catchError } from "rxjs/operators";
-import { useSoulsGames } from "@/api/rx-souls";
-import GameCard from "@/components/GameCard";
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { useSoulsGames } from '@/api/rx-souls';
+import GameCard from '@/components/GameCard';
 
 export default {
   components: { GameCard },
@@ -37,7 +37,7 @@ export default {
     },
     to(game) {
       return {
-        name: "Game",
+        name: 'Game',
         params: {
           game
         }

@@ -1,5 +1,5 @@
-import formatPlayer from "./Player";
-import { getPrimaryTime, getOtherTimes } from "./TimingMethod";
+import formatPlayer from './Player';
+import { getPrimaryTime, getOtherTimes } from './TimingMethod';
 
 function formatLeaderboardRun(json, players, fullGame, fullCategory) {
   const { place, run } = json;
@@ -35,7 +35,7 @@ export default function formatLeaderboard(json, game) {
     runs: runs.map(run => {
       const formattedPlayers = run.run.players
         .map(player => {
-          const isGuest = !Object.prototype.hasOwnProperty.call(player, "id");
+          const isGuest = !Object.prototype.hasOwnProperty.call(player, 'id');
           return isGuest ? player : players.data.find(p => p.id === player.id);
         })
         .map(formatPlayer);

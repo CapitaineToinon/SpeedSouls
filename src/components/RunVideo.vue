@@ -24,9 +24,9 @@
 <script>
 /* eslint-disable-next-line */
 const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
-import { Youtube, getIdFromUrl } from "vue-youtube";
-import Alert from "@/components/Alert";
-import ExternalLink from "@/components/ExternalLink";
+import { Youtube, getIdFromUrl } from 'vue-youtube';
+import Alert from '@/components/Alert';
+import ExternalLink from '@/components/ExternalLink';
 
 export default {
   components: { Alert, ExternalLink, Youtube },
@@ -95,7 +95,7 @@ export default {
   }
 
   &::before {
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
     position: absolute;

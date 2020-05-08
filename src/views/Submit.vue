@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import { of } from "rxjs";
-import { catchError } from "rxjs/operators";
-import { useSoulsGames } from "@/api/rx-souls";
-import Alert from "@/components/Alert";
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { useSoulsGames } from '@/api/rx-souls';
+import Alert from '@/components/Alert';
 
 export default {
   components: { Alert },

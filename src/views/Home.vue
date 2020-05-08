@@ -149,10 +149,10 @@
 
 <script>
 const { VUE_APP_WIKI, VUE_APP_DISCORD, VUE_APP_GITHUB } = process.env;
-import { mapState } from "vuex";
-import Alert from "@/components/Alert";
-import Hero from "@/components/Hero";
-import Discord from "@/components/Discord";
+import { mapState } from 'vuex';
+import Alert from '@/components/Alert';
+import Hero from '@/components/Hero';
+import Discord from '@/components/Discord';
 
 export default {
   components: { Alert, Hero, Discord },
@@ -161,23 +161,23 @@ export default {
     VUE_APP_GITHUB,
     VUE_APP_DISCORD,
     assets: [
-      "bloodborne",
-      "darksouls",
-      "darksouls2",
-      "darksouls3",
-      "darksoulsremastered",
-      "darksouls2sotfs",
-      "demonssouls"
+      'bloodborne',
+      'darksouls',
+      'darksouls2',
+      'darksouls3',
+      'darksoulsremastered',
+      'darksouls2sotfs',
+      'demonssouls'
     ]
   }),
   computed: {
-    ...mapState(["dark"]),
+    ...mapState(['dark']),
     style() {
       const image = this.assets[Math.floor(Math.random() * this.assets.length)];
       const url = require(`@/assets/backgrounds/${image}-1280.jpg`);
 
       return {
-        "--bg-url": `url(${url})`
+        '--bg-url': `url(${url})`
       };
     }
   }
@@ -194,7 +194,7 @@ export default {
   overflow: hidden;
 
   &::before {
-    content: "";
+    content: '';
     background-color: black;
     position: absolute;
     top: 0;
@@ -205,7 +205,7 @@ export default {
   }
 
   &::after {
-    content: "";
+    content: '';
     @apply opacity-75;
     transform: scale(1.1);
     background-image: var(--bg-url);

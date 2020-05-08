@@ -1,14 +1,14 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import VueRx from "vue-rx";
-import VTooltip from "v-tooltip";
-import "./directives/clickOutside";
-import "./filters/relativeDate";
-import "./filters/date";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import VueRx from 'vue-rx';
+import VTooltip from 'v-tooltip';
+import './directives/clickOutside';
+import './filters/relativeDate';
+import './filters/date';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faDiscord,
   faPatreon,
@@ -16,7 +16,7 @@ import {
   faTwitch,
   faGithub,
   faYoutube
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 import {
   faList,
   faAngleDoubleRight,
@@ -27,7 +27,7 @@ import {
   faChevronRight,
   faLink,
   faCog
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faDiscord,
@@ -47,7 +47,7 @@ library.add(
   faCog
 );
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueRx);
 Vue.use(VTooltip);
 
@@ -57,4 +57,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app');

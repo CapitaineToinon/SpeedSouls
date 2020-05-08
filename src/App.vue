@@ -18,40 +18,40 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import MyFooter from "./components/MyFooter";
-import { mapState, mapActions } from "vuex";
+import Navbar from './components/Navbar';
+import MyFooter from './components/MyFooter';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   components: { Navbar, MyFooter },
   computed: {
-    ...mapState(["dark", "theme"]),
+    ...mapState(['dark', 'theme']),
     isHome() {
-      return this.$route.name === "Home";
+      return this.$route.name === 'Home';
     },
     transparant() {
       return this.isHome;
     }
   },
   methods: {
-    ...mapActions(["enableAuto"]),
+    ...mapActions(['enableAuto']),
     onFocus() {
-      if (this.theme === "AUTO") {
+      if (this.theme === 'AUTO') {
         this.enableAuto();
       }
     }
   },
   created() {
-    window.addEventListener("focus", this.onFocus, false);
+    window.addEventListener('focus', this.onFocus, false);
   },
   destroyed() {
-    window.removeEventListener("focus", this.onFocus, false);
+    window.removeEventListener('focus', this.onFocus, false);
   }
 };
 </script>
 
 <style lang="scss">
-@import "@/scss/main.scss";
+@import '@/scss/main.scss';
 
 html,
 body {

@@ -1,4 +1,4 @@
-import formatCategory from "./Category";
+import formatCategory from './Category';
 
 export default function Game(json) {
   const {
@@ -20,18 +20,18 @@ export default function Game(json) {
     assets,
     variables: variables && variables.data ? variables.data : [],
     background:
-      assets.background && assets.background.uri ? assets.background.uri : "",
+      assets.background && assets.background.uri ? assets.background.uri : '',
     coverLarge:
-      assets["cover-large"] && assets["cover-large"].uri
-        ? assets["cover-large"].uri
-        : "",
+      assets['cover-large'] && assets['cover-large'].uri
+        ? assets['cover-large'].uri
+        : '',
     ruleset,
     weblink
   };
 
   if (categories) {
     formatted.categories = categories.data
-      .filter(category => category.type === "per-game")
+      .filter(category => category.type === 'per-game')
       .map(formatCategory);
   }
 

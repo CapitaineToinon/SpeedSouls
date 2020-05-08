@@ -1,6 +1,6 @@
-import formatCategory from "./Category";
-import formatPlayer from "./Player";
-import { getPrimaryTime, getOtherTimes } from "./TimingMethod";
+import formatCategory from './Category';
+import formatPlayer from './Player';
+import { getPrimaryTime, getOtherTimes } from './TimingMethod';
 
 export default function Run(json, game) {
   const { players, category, times } = json;

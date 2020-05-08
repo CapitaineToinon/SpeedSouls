@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { of } from "rxjs";
+import { of } from 'rxjs';
 import {
   startWith,
   skipWhile,
@@ -120,12 +120,12 @@ import {
   switchMap,
   map,
   catchError
-} from "rxjs/operators";
-import { useLeaderboard } from "@/api/rx-souls";
-import Alert from "@/components/Alert";
-import Spinner from "@/components/Spinner";
-import PlayerName from "@/components/PlayerName";
-import { mapState } from "vuex";
+} from 'rxjs/operators';
+import { useLeaderboard } from '@/api/rx-souls';
+import Alert from '@/components/Alert';
+import Spinner from '@/components/Spinner';
+import PlayerName from '@/components/PlayerName';
+import { mapState } from 'vuex';
 
 export default {
   components: { Alert, Spinner, PlayerName },
@@ -148,7 +148,7 @@ export default {
     leaderboardError: null
   }),
   computed: {
-    ...mapState(["relativeTime"])
+    ...mapState(['relativeTime'])
   },
   methods: {
     onLeaderboardSuccess(runs) {
@@ -160,7 +160,7 @@ export default {
     },
     onRowClick(row) {
       this.$router.push({
-        name: "Run",
+        name: 'Run',
         params: {
           id: row.id
         }
@@ -169,8 +169,8 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable("game", { immediate: true, deep: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('game', { immediate: true, deep: true }).pipe(
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(() =>
           useLeaderboard(this.game, this.category, this.variables).pipe(
@@ -184,8 +184,8 @@ export default {
     );
 
     this.$subscribeTo(
-      this.$watchAsObservable("category.id", { immediate: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('category.id', { immediate: true }).pipe(
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(() =>
           useLeaderboard(this.game, this.category, this.variables).pipe(
@@ -204,7 +204,7 @@ export default {
 <style lang="scss" scoped>
 .player-names {
   .player-name:not(:first-child)::before {
-    content: ",";
+    content: ',';
     @apply mr-2;
   }
 }

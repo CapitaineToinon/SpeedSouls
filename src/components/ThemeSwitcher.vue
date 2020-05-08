@@ -7,39 +7,39 @@
 </template>
 
 <script>
-import ButtonGroup from "@/components/ButtonGroup";
-import { mapState, mapActions } from "vuex";
+import ButtonGroup from '@/components/ButtonGroup';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   components: { ButtonGroup },
   data: () => ({
     themes: [
-      { id: "DARK", label: "Dark" },
-      { id: "LIGHT", label: "Light" },
-      { id: "AUTO", label: "Auto" }
+      { id: 'DARK', label: 'Dark' },
+      { id: 'LIGHT', label: 'Light' },
+      { id: 'AUTO', label: 'Auto' }
     ]
   }),
   methods: {
-    ...mapActions(["enableDark", "enableLight", "enableAuto"]),
+    ...mapActions(['enableDark', 'enableLight', 'enableAuto']),
     onChange(index) {
       this.enable(this.themes[index].id);
     },
     enable(theme) {
       switch (theme) {
-        case "DARK":
+        case 'DARK':
           this.enableDark();
           break;
-        case "LIGHT":
+        case 'LIGHT':
           this.enableLight();
           break;
-        case "AUTO":
+        case 'AUTO':
           this.enableAuto();
           break;
       }
     }
   },
   computed: {
-    ...mapState(["theme"])
+    ...mapState(['theme'])
   }
 };
 </script>

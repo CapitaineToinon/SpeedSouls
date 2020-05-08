@@ -46,18 +46,18 @@
 </template>
 
 <script>
-import { of } from "rxjs";
-import { switchMap, pluck, catchError, skipWhile } from "rxjs/operators";
-import { useSoulsGame, useSoulsCategory } from "@/api/rx-souls";
-import Error from "@/components/Error";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import Categories from "@/components/Categories.vue";
-import Leaderboard from "@/components/Leaderboard.vue";
-import ButtonGroup from "@/components/ButtonGroup";
-import Spinner from "@/components/Spinner.vue";
+import { of } from 'rxjs';
+import { switchMap, pluck, catchError, skipWhile } from 'rxjs/operators';
+import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
+import Error from '@/components/Error';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Categories from '@/components/Categories.vue';
+import Leaderboard from '@/components/Leaderboard.vue';
+import ButtonGroup from '@/components/ButtonGroup';
+import Spinner from '@/components/Spinner.vue';
 
 export default {
-  name: "games",
+  name: 'games',
   components: {
     Error,
     ButtonGroup,
@@ -77,8 +77,8 @@ export default {
     breadcrumbs() {
       const array = [
         {
-          text: "Leaderboards",
-          to: { name: "Games" }
+          text: 'Leaderboards',
+          to: { name: 'Games' }
         }
       ];
       if (this.game) {
@@ -101,7 +101,7 @@ export default {
       return this.game.variables.filter(v => v.category === this.category.id);
     },
     subCategories() {
-      return this.categoryVariables.filter(v => v["is-subcategory"]);
+      return this.categoryVariables.filter(v => v['is-subcategory']);
     }
   },
   methods: {
@@ -110,7 +110,7 @@ export default {
 
       if (!this.$route.params.category && data.categories.length) {
         this.$router.replace({
-          name: "Game",
+          name: 'Game',
           params: {
             game: this.$route.params.game,
             category: data.categories[0].hash
@@ -140,7 +140,7 @@ export default {
       if (this.category === category) return;
 
       this.$router.push({
-        name: "Game",
+        name: 'Game',
         params: {
           game: this.$route.params.game,
           category: category.hash
@@ -150,8 +150,8 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable("$route.params.game", { immediate: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('$route.params.game', { immediate: true }).pipe(
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(game => useSoulsGame(game).pipe(catchError(this.onGameError)))
       ),
@@ -159,10 +159,10 @@ export default {
     );
 
     this.$subscribeTo(
-      this.$watchAsObservable("$route.params.category", {
+      this.$watchAsObservable('$route.params.category', {
         immediate: true
       }).pipe(
-        pluck("newValue"),
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(category =>
           useSoulsCategory(this.$route.params.game, category).pipe(

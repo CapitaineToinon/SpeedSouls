@@ -1,10 +1,10 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
-const DARK_CLASS = "mode-dark";
+const DARK_CLASS = 'mode-dark';
 
 /**
  * Get the current theme from the user prefers color scheme
@@ -12,7 +12,7 @@ const DARK_CLASS = "mode-dark";
 function getDarkFromPrefersColorScheme() {
   return (
     window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+    window.matchMedia('(prefers-color-scheme: dark)').matches
   );
 }
 
@@ -27,22 +27,22 @@ const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     dark: true,
-    theme: "DARK",
+    theme: 'DARK',
     relativeTime: true
   },
   mutations: {
     setTheme: (state, payload) => {
       switch (payload) {
-        case "DARK":
-          state.theme = "DARK";
+        case 'DARK':
+          state.theme = 'DARK';
           state.dark = true;
           break;
-        case "LIGHT":
-          state.theme = "LIGHT";
+        case 'LIGHT':
+          state.theme = 'LIGHT';
           state.dark = false;
           break;
-        case "AUTO":
-          state.theme = "AUTO";
+        case 'AUTO':
+          state.theme = 'AUTO';
           state.dark = getDarkFromPrefersColorScheme();
           break;
       }
@@ -55,19 +55,19 @@ const store = new Vuex.Store({
   },
   actions: {
     enableDark({ commit }) {
-      commit("setTheme", "DARK");
+      commit('setTheme', 'DARK');
     },
     enableLight({ commit }) {
-      commit("setTheme", "LIGHT");
+      commit('setTheme', 'LIGHT');
     },
     enableAuto({ commit }) {
-      commit("setTheme", "AUTO");
+      commit('setTheme', 'AUTO');
     },
     enableRelativeTime({ commit }) {
-      commit("setRelativeTime", true);
+      commit('setRelativeTime', true);
     },
     disableRelativeTime({ commit }) {
-      commit("setRelativeTime", false);
+      commit('setRelativeTime', false);
     }
   }
 });

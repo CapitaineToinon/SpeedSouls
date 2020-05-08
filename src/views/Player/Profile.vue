@@ -68,12 +68,12 @@
 </template>
 
 <script>
-import { of } from "rxjs";
-import { skipWhile, pluck, switchMap, catchError } from "rxjs/operators";
-import { useUserPersonalBests } from "@/api/rx-souls";
-import Alert from "@/components/Alert";
-import Error from "@/components/Error";
-import Spinner from "@/components/Spinner";
+import { of } from 'rxjs';
+import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
+import { useUserPersonalBests } from '@/api/rx-souls';
+import Alert from '@/components/Alert';
+import Error from '@/components/Error';
+import Spinner from '@/components/Spinner';
 
 export default {
   components: { Alert, Error, Spinner },
@@ -98,7 +98,7 @@ export default {
     },
     onRowClick(row) {
       this.$router.push({
-        name: "Run",
+        name: 'Run',
         params: {
           id: row.id
         }
@@ -107,8 +107,8 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable("$route.params.id", { immediate: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
+        pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(() =>
           useUserPersonalBests(this.$route.params.id).pipe(

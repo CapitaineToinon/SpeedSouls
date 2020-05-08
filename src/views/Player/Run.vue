@@ -49,15 +49,15 @@
 </template>
 
 <script>
-import { of } from "rxjs";
-import { pluck, switchMap, catchError } from "rxjs/operators";
-import { useRuns } from "@/api/rx-souls";
-import Alert from "@/components/Alert";
-import Error from "@/components/Error";
-import RunVideo from "@/components/RunVideo";
-import Spinner from "@/components/Spinner";
-import PlayerName from "@/components/PlayerName";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import { of } from 'rxjs';
+import { pluck, switchMap, catchError } from 'rxjs/operators';
+import { useRuns } from '@/api/rx-souls';
+import Alert from '@/components/Alert';
+import Error from '@/components/Error';
+import RunVideo from '@/components/RunVideo';
+import Spinner from '@/components/Spinner';
+import PlayerName from '@/components/PlayerName';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default {
   components: {
@@ -75,7 +75,7 @@ export default {
   methods: {
     to(game, category) {
       return {
-        name: "Game",
+        name: 'Game',
         params: {
           game: game.abbreviation,
           category: category.hash
@@ -84,7 +84,7 @@ export default {
     },
     onPlayerClick(player) {
       this.$router.push({
-        name: "Player",
+        name: 'Player',
         params: {
           id: player.name
         }
@@ -102,8 +102,8 @@ export default {
     breadcrumbs() {
       const array = [
         {
-          text: "Leaderboards",
-          to: { name: "Games" }
+          text: 'Leaderboards',
+          to: { name: 'Games' }
         }
       ];
 
@@ -111,7 +111,7 @@ export default {
         array.push({
           text: this.run.game.name,
           to: {
-            name: "Game",
+            name: 'Game',
             params: {
               game: this.run.game.abbreviation
             }
@@ -122,7 +122,7 @@ export default {
         array.push({
           text: this.run.category.name,
           to: {
-            name: "Game",
+            name: 'Game',
             params: {
               game: this.run.game.abbreviation,
               category: this.run.category.hash
@@ -134,7 +134,7 @@ export default {
         array.push({
           text: `${this.run.primary_t.time} by ${this.run.players
             .map(p => p.name)
-            .join(", ")}`,
+            .join(', ')}`,
           to: {},
           active: true
         });
@@ -145,8 +145,8 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable("$route.params.id", { immediate: true }).pipe(
-        pluck("newValue"),
+      this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
+        pluck('newValue'),
         switchMap(id => useRuns(id).pipe(catchError(this.onRunError)))
       ),
       this.onRunSuccess
@@ -162,7 +162,7 @@ export default {
 
 .player-names {
   .player-name:not(:first-child)::before {
-    content: ",";
+    content: ',';
     @apply mr-2;
   }
 }

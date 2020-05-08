@@ -1,15 +1,15 @@
 const timingMethodsNames = {
-  ingame: "In-Game Time",
-  realtime: "Real Time",
-  realtime_noloads: "Time without loads"
+  ingame: 'In-Game Time',
+  realtime: 'Real Time',
+  realtime_noloads: 'Time without loads'
 };
 
 function toDigits(value, count = 2) {
-  return `${"0".repeat(count)}${value}`.slice(count * -1);
+  return `${'0'.repeat(count)}${value}`.slice(count * -1);
 }
 
 function formatTime(value = 0) {
-  if (value === 0) return "";
+  if (value === 0) return '';
 
   let hours = Math.floor(value / 3600);
   value %= 3600;
@@ -17,7 +17,7 @@ function formatTime(value = 0) {
   let seconds = value % 60;
   let ms = value % 1;
 
-  let output = "";
+  let output = '';
 
   if (hours) {
     output = `${hours}:${toDigits(minutes)}:${toDigits(seconds)}`;
@@ -57,13 +57,13 @@ export function getPrimaryTime(times, ruleset) {
    *
    * See : https://github.com/speedruncomorg/api/issues/69
    */
-  if (ruleset["default-time"] === "realtime_noloads") {
-    return formatTimingMethod("realtime_noloads", times["primary_t"]);
+  if (ruleset['default-time'] === 'realtime_noloads') {
+    return formatTimingMethod('realtime_noloads', times['primary_t']);
   }
 
   return formatTimingMethod(
-    ruleset["default-time"],
-    times[ruleset["default-time"] + "_t"]
+    ruleset['default-time'],
+    times[ruleset['default-time'] + '_t']
   );
 }
 
@@ -86,15 +86,15 @@ export function getOtherTimes(times, ruleset) {
    * See : https://github.com/speedruncomorg/api/issues/69
    */
   if (
-    ruleset["default-time"] === "realtime_noloads" &&
-    times[ruleset["default-time"] + "_t"] === 0
+    ruleset['default-time'] === 'realtime_noloads' &&
+    times[ruleset['default-time'] + '_t'] === 0
   ) {
-    return ruleset["run-times"]
-      .filter(t => t !== ruleset["default-time"])
+    return ruleset['run-times']
+      .filter(t => t !== ruleset['default-time'])
       .map(t => formatTimingMethod(t, 0));
   }
 
-  return ruleset["run-times"]
-    .filter(t => t !== ruleset["default-time"])
-    .map(t => formatTimingMethod(t, times[t + "_t"]));
+  return ruleset['run-times']
+    .filter(t => t !== ruleset['default-time'])
+    .map(t => formatTimingMethod(t, times[t + '_t']));
 }

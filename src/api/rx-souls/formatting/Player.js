@@ -15,7 +15,7 @@ export default function Player(json) {
   if (location) {
     const { code, names } = location.country;
     country = {
-      code: code.split("/")[0], // some countries on speedrun.com have region support
+      code: code.split('/')[0], // some countries on speedrun.com have region support
       name: names.international
     };
   }

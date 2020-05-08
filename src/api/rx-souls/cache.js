@@ -1,4 +1,4 @@
-import { shareReplay } from "rxjs/operators";
+import { shareReplay } from 'rxjs/operators';
 
 const CACHE_SIZE = 1;
 const DEFAULT_OPTIONS = {

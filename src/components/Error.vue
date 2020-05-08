@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Alert from "@/components/Alert";
+import Alert from '@/components/Alert';
 
 export default {
   components: { Alert },
@@ -19,7 +19,7 @@ export default {
         this.error?.response?.message ||
         this.error?.message ||
         this.error ||
-        "Something broke..."
+        'Something broke...'
       );
     }
   }

@@ -1,11 +1,11 @@
-import formatGame from "./Game";
-import formatCategory from "./Category";
-import { getPrimaryTime } from "./TimingMethod";
+import formatGame from './Game';
+import formatCategory from './Category';
+import { getPrimaryTime } from './TimingMethod';
 
 export default function PlayerRun(json) {
   const runs = json
     /* intentionally removing IL runs */
-    .filter(raw => raw.category.data.type === "per-game")
+    .filter(raw => raw.category.data.type === 'per-game')
     .map(raw => {
       let { game, category, run, place } = raw;
       let { times, videos, date, id } = run;

@@ -98,8 +98,8 @@ const {
   VUE_APP_GITHUB
 } = process.env;
 
-import withScroll from "@/mixins/withScroll.js";
-import { mapState } from "vuex";
+import withScroll from '@/mixins/withScroll.js';
+import { mapState } from 'vuex';
 
 export default {
   mixins: [withScroll],
@@ -130,7 +130,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["dark"]),
+    ...mapState(['dark']),
     isWhiteLogo() {
       return this.dark || this.isTransparant;
     },
@@ -139,7 +139,7 @@ export default {
     }
   },
   watch: {
-    "$route.name": {
+    '$route.name': {
       deep: true,
       immediate: true,
       handler() {
@@ -156,7 +156,7 @@ nav {
   @apply shadow-md;
 
   &::before {
-    content: "";
+    content: '';
     @apply absolute;
     @apply bg-black;
     top: 100%;

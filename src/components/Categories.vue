@@ -22,7 +22,7 @@ export default {
   props: {
     active: {
       type: String,
-      default: () => ""
+      default: () => ''
     },
     categories: {
       type: Array,

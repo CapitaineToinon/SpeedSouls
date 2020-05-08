@@ -118,7 +118,7 @@ export default {
   computed: {
     profile() {
       return {
-        name: "Player",
+        name: 'Player',
         params: {
           id: this.player.name
         }
