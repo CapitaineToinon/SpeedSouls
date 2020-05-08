@@ -3,21 +3,21 @@
     <alert type="danger">{{ leaderboardError.message }}</alert>
   </div>
   <div v-else-if="!leaderboard" class="pending">
-    <spinner />
+    <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else-if="leaderboard && !leaderboard.length" class="rejected">
     <alert type="warning">There are no runs.</alert>
   </div>
   <div v-else class="fulfilled responsive-table">
-    <table class="text-center loading">
+    <table class="text-center">
       <thead>
         <tr>
           <th class="shrink">Rank</th>
           <th class="shrink">Players</th>
           <th class="shrink">
-            <span class="block md:hidden lg:block">{{
-              leaderboard[0].primary_t.name
-            }}</span>
+            <span class="block md:hidden lg:block">
+              {{ leaderboard[0].primary_t.name }}
+            </span>
             <span class="hidden md:block lg:hidden">Time</span>
           </th>
           <th
@@ -54,9 +54,9 @@
           </td>
 
           <td class="shrink" :data-label="row.primary_t.name">
-            <span class="block md:hidden lg:block">{{
-              row.primary_t.time
-            }}</span>
+            <span class="block md:hidden lg:block">
+              {{ row.primary_t.time }}
+            </span>
             <span class="hidden md:block lg:hidden">{{ row.time.time }}</span>
           </td>
 
@@ -123,12 +123,11 @@ import {
 } from 'rxjs/operators';
 import { useLeaderboard } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
-import Spinner from '@/components/Spinner';
 import PlayerName from '@/components/PlayerName';
 import { mapState } from 'vuex';
 
 export default {
-  components: { Alert, Spinner, PlayerName },
+  components: { Alert, PlayerName },
   props: {
     game: {
       type: Object,
@@ -165,6 +164,13 @@ export default {
           id: row.id
         }
       });
+    },
+    getLeaderboard() {
+      return useLeaderboard(this.game, this.category, this.variables).pipe(
+        map(leaderboard => leaderboard.runs),
+        startWith(undefined),
+        catchError(this.onLeaderboardError)
+      );
     }
   },
   mounted() {
@@ -172,13 +178,7 @@ export default {
       this.$watchAsObservable('game', { immediate: true, deep: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
-        switchMap(() =>
-          useLeaderboard(this.game, this.category, this.variables).pipe(
-            map(leaderboard => leaderboard.runs),
-            startWith(undefined),
-            catchError(this.onLeaderboardError)
-          )
-        )
+        switchMap(() => this.getLeaderboard())
       ),
       this.onLeaderboardSuccess
     );
@@ -187,13 +187,7 @@ export default {
       this.$watchAsObservable('category.id', { immediate: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
-        switchMap(() =>
-          useLeaderboard(this.game, this.category, this.variables).pipe(
-            map(leaderboard => leaderboard.runs),
-            startWith(undefined),
-            catchError(this.onLeaderboardError)
-          )
-        )
+        switchMap(() => this.getLeaderboard())
       ),
       this.onLeaderboardSuccess
     );

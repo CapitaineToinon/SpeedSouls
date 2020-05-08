@@ -3,7 +3,7 @@
     <error :error="runError" />
   </div>
   <div v-else-if="!run">
-    <spinner />
+    <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else>
     <breadcrumbs class="pb-3" :items="breadcrumbs" />
@@ -20,9 +20,9 @@
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-          <router-link :to="to(run.game, run.category)">{{
-            run.category.name
-          }}</router-link>
+          <router-link :to="to(run.game, run.category)">
+            {{ run.category.name }}
+          </router-link>
           in {{ run.primary_t.time }} by
           <span class="player-names">
             <player-name
@@ -55,7 +55,6 @@ import { useRuns } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import RunVideo from '@/components/RunVideo';
-import Spinner from '@/components/Spinner';
 import PlayerName from '@/components/PlayerName';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -65,7 +64,6 @@ export default {
     Error,
     Breadcrumbs,
     RunVideo,
-    Spinner,
     PlayerName
   },
   data: () => ({

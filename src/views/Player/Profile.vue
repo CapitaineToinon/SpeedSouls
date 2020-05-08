@@ -3,7 +3,7 @@
     <error :error="pbsError" />
   </div>
   <div v-else-if="!pbs">
-    <spinner />
+    <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else>
     <alert v-if="pbs.length === 0" type="info" class="w-full mb-6"
@@ -79,11 +79,11 @@ import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
 import { useUserPersonalBests } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
-import Spinner from '@/components/Spinner';
+// import Spinner from '@/components/Spinner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default {
-  components: { Alert, Error, Spinner, Breadcrumbs },
+  components: { Alert, Error, Breadcrumbs },
   data: () => ({
     pbs: undefined,
     pbsError: null

@@ -3,7 +3,7 @@
     <error :error="gameError" />
   </div>
   <div v-else-if="!game" class="min-h-screen-navbar container">
-    <spinner />
+    <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else class="min-h-screen-navbar container flex flex-row">
     <button id="sidebar-button" @click="openSidebar = !openSidebar">
@@ -54,7 +54,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
 import ButtonGroup from '@/components/ButtonGroup';
-import Spinner from '@/components/Spinner.vue';
+// import Spinner from '@/components/Spinner.vue';
 
 export default {
   name: 'games',
@@ -63,8 +63,8 @@ export default {
     ButtonGroup,
     Breadcrumbs,
     Categories,
-    Leaderboard,
-    Spinner
+    Leaderboard
+    // Spinner
   },
   data: () => ({
     game: undefined,
