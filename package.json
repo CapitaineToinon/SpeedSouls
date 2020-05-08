@@ -35,6 +35,7 @@
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-plugin-router": "~4.3.0",

@@ -1,7 +1,5 @@
 <template>
-  <alert type="danger">
-    {{ message }}
-  </alert>
+  <alert type="danger">{{ message }}</alert>
 </template>
 
 <script>
@@ -18,8 +16,8 @@ export default {
   computed: {
     message() {
       return (
-        (this.error && this.error.response && this.error.response.message) ||
-        (this.error && this.error.message) ||
+        this.error?.response?.message ||
+        this.error?.message ||
         this.error ||
         "Something broke..."
       );
