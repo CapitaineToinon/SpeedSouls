@@ -1,5 +1,12 @@
 <template>
+  <div v-if="error" class="rejected">
+    <error :error="error" />
+  </div>
+  <div v-else-if="!games" class="pending">
+    <div class="progress h-2 flex flex-row"></div>
+  </div>
   <div
+    v-else
     class="games grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
   >
     <router-link
@@ -16,10 +23,11 @@
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
+import Error from '@/components/Error';
 import GameCard from '@/components/GameCard';
 
 export default {
-  components: { GameCard },
+  components: { Error, GameCard },
   data: () => ({
     games: undefined,
     error: null
