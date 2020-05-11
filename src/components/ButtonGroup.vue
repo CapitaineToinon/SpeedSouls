@@ -38,6 +38,7 @@ export default {
   @apply rounded-sm;
   @apply flex;
   @apply flex-row;
+  @apply flex-wrap;
   @apply justify-center;
   @apply items-stretch;
 
