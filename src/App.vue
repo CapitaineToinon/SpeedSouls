@@ -23,6 +23,10 @@ import MyFooter from './components/MyFooter';
 import { mapState, mapActions } from 'vuex';
 
 export default {
+  metaInfo: {
+    title: 'SpeedSouls',
+    titleTemplate: '%s - SpeedSouls'
+  },
   components: { Navbar, MyFooter },
   computed: {
     ...mapState(['dark', 'theme']),

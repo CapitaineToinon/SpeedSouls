@@ -54,17 +54,19 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
 import ButtonGroup from '@/components/ButtonGroup';
-// import Spinner from '@/components/Spinner.vue';
 
 export default {
-  name: 'games',
+  metaInfo() {
+    return {
+      title: this.metaTitle
+    };
+  },
   components: {
     Error,
     ButtonGroup,
     Breadcrumbs,
     Categories,
     Leaderboard
-    // Spinner
   },
   data: () => ({
     game: undefined,
@@ -74,6 +76,17 @@ export default {
     openSidebar: false
   }),
   computed: {
+    metaTitle() {
+      if (this.game && this.category) {
+        return `${this.game.name} ${this.category.name} Leaderboards`;
+      }
+
+      if (this.game) {
+        return `${this.game.name} Leaderboards`;
+      }
+
+      return undefined;
+    },
     breadcrumbs() {
       const array = [
         {

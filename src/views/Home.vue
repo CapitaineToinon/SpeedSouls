@@ -155,6 +155,10 @@ import Hero from '@/components/Hero';
 import Discord from '@/components/Discord';
 
 export default {
+  metaInfo: {
+    title: 'SpeedSouls',
+    titleTemplate: null
+  },
   components: { Alert, Hero, Discord },
   data: () => ({
     VUE_APP_WIKI,

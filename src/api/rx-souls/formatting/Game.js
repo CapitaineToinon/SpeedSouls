@@ -15,7 +15,6 @@ export default function Game(json) {
   let formatted = {
     id,
     abbreviation,
-    names,
     name: names.international,
     assets,
     variables: variables && variables.data ? variables.data : [],

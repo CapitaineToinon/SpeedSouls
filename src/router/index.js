@@ -8,10 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta: {
-      title: 'SpeedSouls'
-    }
+    component: Home
   },
   {
     // In case anyone links to the old wiki page
@@ -61,18 +58,12 @@ const routes = [
   {
     path: '/submit',
     name: 'Submit',
-    component: () => import('@/views/Submit.vue'),
-    meta: {
-      title: 'SpeedSouls - Submit a run'
-    }
+    component: () => import('@/views/Submit.vue')
   },
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('@/views/Settings.vue'),
-    meta: {
-      title: 'SpeedSouls - Settings'
-    }
+    component: () => import('@/views/Settings.vue')
   },
   {
     path: '**',
@@ -87,22 +78,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
-
-// from https://alligator.io/vuejs/vue-router-modify-head/
-// This callback runs before every route change, including on page load.
-router.beforeEach((to, from, next) => {
-  // This goes through the matched routes from last to first, finding the closest route with a title.
-  // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
-  const nearestWithTitle = to.matched
-    .slice()
-    .reverse()
-    .find(r => r.meta && r.meta.title);
-
-  // If a route with a title was found, set the document (page) title to that value.
-  if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
-
-  next();
 });
 
 // Scroll back on top of route change

@@ -54,6 +54,9 @@ import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 
 export default {
+  metaInfo: {
+    title: 'Submit a run'
+  },
   components: { Alert },
   data: () => ({
     games: undefined,

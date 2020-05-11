@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import VueRx from 'vue-rx';
 import VTooltip from 'v-tooltip';
+import VueMeta from 'vue-meta';
 import './directives/clickOutside';
 import './filters/relativeDate';
 import './filters/date';
@@ -50,6 +51,7 @@ library.add(
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueRx);
 Vue.use(VTooltip);
+Vue.use(VueMeta);
 
 Vue.config.productionTip = false;
 

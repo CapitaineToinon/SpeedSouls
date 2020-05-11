@@ -23,7 +23,12 @@
           },
           {
             text: group.game.name,
-            to: { name: 'Games' }
+            to: {
+              name: 'Game',
+              params: {
+                game: group.game.abbreviation
+              }
+            }
           }
         ]"
       />
@@ -76,18 +81,33 @@
 <script>
 import { of } from 'rxjs';
 import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
-import { useUserPersonalBests } from '@/api/rx-souls';
+import { useUserPersonalBests, useUser } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
-// import Spinner from '@/components/Spinner';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default {
+  metaInfo() {
+    return {
+      title: this.metaTitle
+    };
+  },
   components: { Alert, Error, Breadcrumbs },
   data: () => ({
+    player: undefined,
+    playerError: null,
     pbs: undefined,
     pbsError: null
   }),
+  computed: {
+    metaTitle() {
+      if (this.player) {
+        return this.player.name;
+      }
+
+      return undefined;
+    }
+  },
   methods: {
     onPlayerSuccess(player) {
       this.player = player;
@@ -113,6 +133,17 @@ export default {
     }
   },
   mounted() {
+    this.$subscribeTo(
+      this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
+        pluck('newValue'),
+        skipWhile(v => v === undefined),
+        switchMap(() =>
+          useUser(this.$route.params.id).pipe(catchError(this.onPlayerError))
+        )
+      ),
+      this.onPlayerSuccess
+    );
+
     this.$subscribeTo(
       this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
         pluck('newValue'),

@@ -10,7 +10,7 @@
         class="absolute h-full w-full flex items-center justify-center text-center p-2"
       >
         <div class="text-gray-100 font-bold">
-          {{ game.names.international }}
+          {{ game.name }}
         </div>
       </div>
     </div>

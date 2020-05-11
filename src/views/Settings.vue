@@ -28,6 +28,9 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 import TimeReference from '@/components/TimeReference';
 
 export default {
+  metaInfo: {
+    title: 'Settings'
+  },
   components: { ThemeSwitcher, TimeReference }
 };
 </script>

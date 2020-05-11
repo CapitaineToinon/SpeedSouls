@@ -20,9 +20,9 @@
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-          <router-link :to="to(run.game, run.category)">
-            {{ run.category.name }}
-          </router-link>
+          <router-link :to="to(run.game, run.category)">{{
+            run.category.name
+          }}</router-link>
           in {{ run.primary_t.time }} by
           <span class="player-names">
             <player-name
@@ -59,6 +59,11 @@ import PlayerName from '@/components/PlayerName';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default {
+  metaInfo() {
+    return {
+      title: this.metaTitle
+    };
+  },
   components: {
     Alert,
     Error,
@@ -97,6 +102,18 @@ export default {
     }
   },
   computed: {
+    metaTitle() {
+      if (this.run) {
+        const game = this.run.game.name;
+        const category = this.run.category.name;
+        const time = this.run.primary_t.time;
+        const players = this.run.players.map(p => p.name).join(', ');
+
+        return `${game} ${category} in ${time} by ${players}`;
+      }
+
+      return undefined;
+    },
     breadcrumbs() {
       const array = [
         {

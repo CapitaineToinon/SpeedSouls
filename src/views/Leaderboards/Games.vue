@@ -13,6 +13,9 @@
 import GameCards from '@/components/GameCards';
 
 export default {
+  metaInfo: {
+    title: 'Leaderboards'
+  },
   components: { GameCards }
 };
 </script>
