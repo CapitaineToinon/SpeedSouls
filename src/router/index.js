@@ -19,51 +19,64 @@ const routes = [
   },
   {
     path: '/leaderboards',
-    component: () => import('@/views/Leaderboards/Index.vue'),
+    component: () =>
+      import(
+        /* webpackChunkName: "leaderboards" */ '@/views/Leaderboards/Index.vue'
+      ),
     children: [
       {
         path: '',
         name: 'Games',
-        component: () => import('@/views/Leaderboards/Games.vue')
+        component: () =>
+          import(
+            /* webpackChunkName: "games" */ '@/views/Leaderboards/Games.vue'
+          )
       },
       {
         path: ':game/:category?',
         name: 'Game',
-        component: () => import('@/views/Leaderboards/Game.vue')
+        component: () =>
+          import(/* webpackChunkName: "game" */ '@/views/Leaderboards/Game.vue')
       }
     ]
   },
   {
     path: '/run/:id',
-    component: () => import('@/views/Player/Index.vue'),
+    component: () =>
+      import(/* webpackChunkName: "user" */ '@/views/Player/Index.vue'),
     children: [
       {
         path: '',
         name: 'Run',
-        component: () => import('@/views/Player/Run.vue')
+        component: () =>
+          import(/* webpackChunkName: "run" */ '@/views/Player/Run.vue')
       }
     ]
   },
   {
     path: '/player/:id',
-    component: () => import('@/views/Player/Index.vue'),
+    component: () =>
+      import(/* webpackChunkName: "user" */ '@/views/Player/Index.vue'),
     children: [
       {
         path: '',
         name: 'Player',
-        component: () => import('@/views/Player/Profile.vue')
+        component: () =>
+          import(/* webpackChunkName: "profile" */ '@/views/Player/Profile.vue')
       }
     ]
   },
   {
     path: '/submit',
     name: 'Submit',
-    component: () => import('@/views/Submit.vue')
+    component: () =>
+      import(/* webpackChunkName: "submit" */ '@/views/Submit.vue')
   },
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('@/views/Settings.vue')
+    component: () =>
+      import(/* webpackChunkName: "settings" */ '@/views/Settings.vue')
   },
   {
     path: '**',

@@ -1,9 +1,11 @@
 <template>
   <div v-if="youtubeID" class="speedsouls-video bg-nord4 dark:bg-nord3">
-    <youtube
-      :video-id="youtubeID"
-      :player-vars="{ autoplay: autoPlay }"
-    ></youtube>
+    <iframe
+      :src="`https://www.youtube.com/embed/${youtubeID}`"
+      frameborder="0"
+      scrolling="no"
+      allowfullscreen="true"
+    ></iframe>
   </div>
   <div v-else-if="twitchID" class="speedsouls-video bg-nord4 dark:bg-nord3">
     <iframe
@@ -24,12 +26,15 @@
 <script>
 /* eslint-disable-next-line */
 const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
-import { Youtube, getIdFromUrl } from 'vue-youtube';
+import getIdFromUrl from 'get-youtube-id';
 import Alert from '@/components/Alert';
 import ExternalLink from '@/components/ExternalLink';
 
 export default {
-  components: { Alert, ExternalLink, Youtube },
+  components: {
+    Alert,
+    ExternalLink
+  },
   data: () => ({
     youtubeID: null,
     twitchID: null
