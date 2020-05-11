@@ -95,5 +95,5 @@ module.exports = {
       'dark-placeholder'
     ]
   },
-  plugins: [require('tailwindcss-dark-mode')(), require('tailwindcss-tables')()]
+  plugins: [require('tailwindcss-dark-mode')()]
 };

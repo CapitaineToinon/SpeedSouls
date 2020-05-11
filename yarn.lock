@@ -8196,11 +8196,6 @@ tailwindcss-dark-mode@^1.1.4:
   dependencies:
     tailwindcss "^1.2.0"
 
-tailwindcss-tables@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/tailwindcss-tables/-/tailwindcss-tables-0.4.0.tgz#1cbe26448251fd6f92ab142bfb165d7b7d0c07e8"
-  integrity sha512-GB25r/03oJln729LcstrPyI53Y5k3X5WWxzAkj+9Zqrw3jB6CXwZm54zIwnQU93dkmXOGGrneldHsIt9Z2YTYQ==
-
 tailwindcss@^1.2.0, tailwindcss@^1.4.1:
   version "1.4.6"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.4.6.tgz#17b37166ccda08d7e7f9ca995ea48ce1e0089700"
