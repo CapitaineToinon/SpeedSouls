@@ -53,6 +53,10 @@ export default {
 <style lang="scss">
 @import '@/scss/main.scss';
 
+body {
+  @apply overflow-y-scroll;
+}
+
 html,
 body {
   min-height: 100vh;

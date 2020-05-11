@@ -172,7 +172,7 @@ nav {
     top: -100vh;
     transition: top 0.2s ease-in-out;
     @apply max-h-screen;
-    @apply overflow-scroll;
+    @apply overflow-y-scroll;
     @apply flex;
     @apply absolute;
     @apply right-0;
@@ -192,6 +192,7 @@ nav {
       @apply shadow-none;
       @apply border-t-0;
       @apply py-0;
+      @apply overflow-y-hidden;
     }
   }
 
@@ -225,10 +226,6 @@ nav {
     @apply no-underline;
     @apply text-nord0;
     @apply p-2;
-
-    &.icon {
-      @apply mt-1;
-    }
   }
 
   .burger {
