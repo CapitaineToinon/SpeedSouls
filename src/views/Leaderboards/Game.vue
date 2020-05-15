@@ -2,7 +2,10 @@
   <div v-if="gameError" class="min-h-screen-navbar container">
     <error :error="gameError" />
   </div>
-  <div v-else-if="!game" class="min-h-screen-navbar container">
+  <div v-else-if="categoryError" class="min-h-screen-navbar container">
+    <error :error="categoryError" />
+  </div>
+  <div v-else-if="!game || !category" class="min-h-screen-navbar container">
     <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else class="min-h-screen-navbar container flex flex-row">
