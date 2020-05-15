@@ -1,6 +1,8 @@
 <template>
-  <div class="container flex flex-col lg:flex-row flex-wrap">
-    <error class="w-full mb-4" :error="playerError" v-if="playerError" />
+  <div v-if="playerError" class="container flex flex-col lg:flex-row flex-wrap">
+    <error class="w-full mb-4" :error="playerError" />
+  </div>
+  <div v-else class="container flex flex-col lg:flex-row flex-wrap">
     <aside
       v-if="players"
       class="w-full mb-5 gap-4 md:mb-0 lg:w-64"
