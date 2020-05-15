@@ -19,64 +19,49 @@
         <span
           class="whitespace-no-wrap"
           :class="`flag-icon flag-icon-${player.country.code} mr-1`"
-        />{{ player.country.name }}
+        />
+        {{ player.country.name }}
       </p>
       <p class="text-nord3 dark:text-nord4 text-base" v-if="player.signup">
         {{ player.signup | date }}
       </p>
       <div class="links flex flex-row justify-center px-6">
-        <a
-          v-if="player['twitch']"
-          :href="player['twitch'].uri"
-          target="_blank"
-          v-tooltip.top-center="`Twitch`"
-          class="mx-1"
-        >
-          <font-awesome-icon
-            class="text-twitch"
-            :icon="['fab', 'twitch']"
-            size="1x"
-          />
-        </a>
-        <a
-          v-if="player['twitter']"
-          :href="player['twitter'].uri"
-          target="_blank"
-          v-tooltip.top-center="`Twitter`"
-          class="mx-1"
-        >
-          <font-awesome-icon
-            class="text-twitter"
-            :icon="['fab', 'twitter']"
-            size="1x"
-          />
-        </a>
-        <a
-          v-if="player['youtube']"
-          :href="player['youtube'].uri"
-          target="_blank"
-          v-tooltip.top-center="`Youtube`"
-          class="mx-1"
-        >
-          <font-awesome-icon
-            class="text-youtube"
-            :icon="['fab', 'youtube']"
-            size="1x"
-          />
-        </a>
-        <a
-          v-if="player.weblink"
-          :href="player.weblink"
-          v-tooltip.top-center="`speedrun.com`"
-          class="mx-1"
-          target="_blank"
-        >
-          <font-awesome-icon
-            class="text-nord0 dark:text-nord4"
-            :icon="['fas', 'link']"
-            size="1x"
-          />
-        </a>
+        <tooltip v-if="player['twitch']" text="Twitch">
+          <a :href="player['twitch'].uri" target="_blank" class="mx-1">
+            <font-awesome-icon
+              class="text-twitch"
+              :icon="['fab', 'twitch']"
+              size="1x"
+            />
+          </a>
+        </tooltip>
+        <tooltip v-if="player['twitter']" text="Twitter">
+          <a :href="player['twitter'].uri" target="_blank" class="mx-1">
+            <font-awesome-icon
+              class="text-twitter"
+              :icon="['fab', 'twitter']"
+              size="1x"
+            />
+          </a>
+        </tooltip>
+        <tooltip v-if="player['youtube']" text="Youtube">
+          <a :href="player['youtube'].uri" target="_blank" class="mx-1">
+            <font-awesome-icon
+              class="text-youtube"
+              :icon="['fab', 'youtube']"
+              size="1x"
+            />
+          </a>
+        </tooltip>
+        <tooltip v-if="player.weblink" text="speedrun.com">
+          <a :href="player.weblink" class="mx-1" target="_blank">
+            <font-awesome-icon
+              class="text-nord0 dark:text-nord4"
+              :icon="['fas', 'link']"
+              size="1x"
+            />
+          </a>
+        </tooltip>
       </div>
     </div>
     <div
@@ -96,7 +81,10 @@
 </template>
 
 <script>
+import Tooltip from '@/components/Tooltip';
+
 export default {
+  components: { Tooltip },
   data: () => ({
     playerImage: true
   }),
