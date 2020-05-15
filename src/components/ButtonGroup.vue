@@ -35,7 +35,7 @@ export default {
 <style lang="scss" scoped>
 .btn-group {
   @apply border;
-  @apply rounded-sm;
+  @apply rounded;
   @apply flex;
   @apply flex-row;
   @apply flex-wrap;

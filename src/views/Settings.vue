@@ -3,15 +3,15 @@
     <h1 class="text-4xl text-center mb-6">Settings</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
+      <div class="flex flex-col justify-between">
         <label
           class="block uppercase tracking-wide text-xs font-bold mb-2"
           for="theme"
           >Theme</label
         >
-        <theme-switcher id="theme" class="h-10" />
+        <theme-switcher id="theme" />
       </div>
-      <div>
+      <div class="flex flex-col justify-between">
         <label
           class="block uppercase tracking-wide text-xs font-bold mb-2"
           for="time"

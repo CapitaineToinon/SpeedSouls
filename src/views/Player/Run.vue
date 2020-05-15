@@ -20,13 +20,14 @@
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-          <router-link :to="to(run.game, run.category)">{{
-            run.category.name
-          }}</router-link>
+          <router-link :to="to(run.game, run.category)">
+            {{ run.category.name }}
+          </router-link>
           in {{ run.primary_t.time }} by
           <span class="player-names">
             <player-name
-              class="player-name cursor-pointer"
+              class="player-name"
+              :class="{ 'cursor-pointer': !!player.id }"
               v-for="(player, i) in run.players"
               :key="`player-${i}`"
               :player="player"
@@ -86,6 +87,7 @@ export default {
       };
     },
     onPlayerClick(player) {
+      if (!player.id) return;
       this.$router.push({
         name: 'Player',
         params: {

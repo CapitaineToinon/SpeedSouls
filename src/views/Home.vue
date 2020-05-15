@@ -11,7 +11,7 @@
           class="flex flex-col items-stretch mx-auto items-center justify-center sm:flex-row"
         >
           <router-link
-            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
+            class="btn -primary"
             tag="button"
             :to="{ name: 'Games' }"
           >
@@ -20,19 +20,13 @@
               :icon="['fas', 'list']"
             />Leaderboards
           </router-link>
-          <a
-            :href="VUE_APP_WIKI"
-            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
-          >
+          <a :href="VUE_APP_WIKI" class="btn -primary">
             <font-awesome-icon
               class="mr-1"
               :icon="['fas', 'angle-double-right']"
             />SpeedSouls Wiki
           </a>
-          <a
-            :href="VUE_APP_DISCORD"
-            class="btn border border-nord6 flex-1 shadow-md mb-1 bg-nord0 mx-1 text-nord6 font-bold py-2 px-4 rounded"
-          >
+          <a :href="VUE_APP_DISCORD" class="btn -primary">
             <font-awesome-icon class="mr-1" :icon="['fab', 'discord']" />Discord
           </a>
         </div>
@@ -49,9 +43,7 @@
           is one of the largest groups focused on speedrunning a single game
           series.
         </p>
-        <a
-          class="border border-nord0 py-2 px-4 rounded"
-          :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
+        <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
           >More</a
         >
       </div>
@@ -84,14 +76,10 @@
           Give us money on patreon and get your own role on our Discord server!
         </p>
 
-        <router-link
-          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
-          tag="button"
-          :to="{ name: 'Submit' }"
-        >
+        <a :href="VUE_APP_PATREON" class="btn -primary">
           <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
           Patreon
-        </router-link>
+        </a>
       </div>
     </hero>
     <hero class="bg-nord4 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
@@ -100,16 +88,12 @@
         <p class="text-base py-4">
           What you're looking for is problably on the wiki
         </p>
-        <router-link
-          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
-          tag="button"
-          :to="{ name: 'Submit' }"
-        >
+        <a :href="VUE_APP_WIKI" class="btn -primary">
           <font-awesome-icon
             class="mr-3"
             :icon="['fas', 'angle-double-right']"
           />SpeedSouls Wiki
-        </router-link>
+        </a>
       </div>
     </hero>
     <hero class="bg-nord5 text-nord0 dark:bg-nord1 dark:text-nord6 py-24">
@@ -118,10 +102,7 @@
         <p class="text-base py-4">
           Want to have your own speedrun on the site?
         </p>
-        <router-link
-          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
-          tag="button"
-          :to="{ name: 'Submit' }"
+        <router-link class="btn -primary" tag="button" :to="{ name: 'Submit' }"
           >Submit a run</router-link
         >
       </div>
@@ -133,12 +114,7 @@
           If you found a bug with the website, please open an issue about it on
           our github page.
         </p>
-        <a
-          :href="`${VUE_APP_GITHUB}/issues`"
-          class="btn shadow-md mb-1 bg-nord0 mx-1 border-nord13 border text-nord13 font-bold py-2 px-4 rounded"
-          tag="button"
-          :to="{ name: 'Submit' }"
-        >
+        <a :href="`${VUE_APP_GITHUB}/issues`" class="btn -primary">
           <font-awesome-icon class="mr-3" :icon="['fab', 'github']" />Open in
           issue
         </a>
@@ -148,7 +124,12 @@
 </template>
 
 <script>
-const { VUE_APP_WIKI, VUE_APP_DISCORD, VUE_APP_GITHUB } = process.env;
+const {
+  VUE_APP_WIKI,
+  VUE_APP_DISCORD,
+  VUE_APP_GITHUB,
+  VUE_APP_PATREON
+} = process.env;
 import { mapState } from 'vuex';
 import Alert from '@/components/Alert';
 import Hero from '@/components/Hero';
@@ -164,6 +145,7 @@ export default {
     VUE_APP_WIKI,
     VUE_APP_GITHUB,
     VUE_APP_DISCORD,
+    VUE_APP_PATREON,
     assets: [
       'bloodborne',
       'darksouls',
