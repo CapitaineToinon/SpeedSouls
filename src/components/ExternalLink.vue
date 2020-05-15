@@ -1,5 +1,5 @@
 <template>
-  <a :href="href" target="_blank">
+  <a :href="href" class="border-b border-dotted border-nord0" target="_blank">
     <slot></slot>
     <font-awesome-icon
       v-if="icon"
