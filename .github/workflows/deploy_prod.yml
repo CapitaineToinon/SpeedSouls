@@ -32,5 +32,5 @@ jobs:
         FTP_PASSWORD: ${{ secrets.PROD_PASSWORD }}
         METHOD: sftp
         LOCAL_DIR: dist
-        REMOTE_DIR: /lib/var/vue
+        REMOTE_DIR: /var/lib/vue
         ARGS: --delete
