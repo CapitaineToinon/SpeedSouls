@@ -55,12 +55,9 @@
         <div class="px-4 text-center">
           <h1 class="text-4xl text-center py-0">Join The Community</h1>
           <p class="text-base py-4 text-center">
-            Join our Discord server where nearly 5000 members are waiting for
-            you! Ask questions and receive answers from veteran runners, and
-            share your accomplishments and ideas with the community! Note
-            however, that co-op requests and extensive casual discussions do not
-            belong there. Do please choose a different Discord server for those
-            topics.
+            Join our Discord server where nearly 5000 members are waiting for you!
+			Ask questions and receive answers from veteran runners, and share your accomplishments and ideas with the community!
+			Note however, that co-op requests and extensive casual discussions do not belong there. Do please choose a different Discord server for those topics.
           </p>
 
           <discord class="max-w-md mx-auto" />
@@ -69,52 +66,15 @@
     </hero>
     <hero class="bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
       <div class="max-w-md text-center mx-auto">
-        <h1 class="text-4xl text-center py-0">Help us financially</h1>
+        <h1 class="text-4xl text-center py-0">Patreon</h1>
         <p class="text-base py-4 text-center">
-          Give us money on patreon and get your own role on our Discord server!
+          If you'd like to give back a bit for the upkeep and work put into the site, then feel free to visit our Patreon.
+		  Patreon Supporters receive their own special role on our Discord server. 
         </p>
 
         <a :href="VUE_APP_PATREON" class="btn -primary">
           <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
           Patreon
-        </a>
-      </div>
-    </hero>
-    <hero class="bg-nord4 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
-        <h1 class="text-4xl py-0">Looking for a guide</h1>
-        <p class="text-base py-4">
-          What you're looking for is problably on the wiki
-        </p>
-        <a :href="VUE_APP_WIKI" class="btn -primary">
-          <font-awesome-icon
-            class="mr-3"
-            :icon="['fas', 'angle-double-right']"
-          />SpeedSouls Wiki
-        </a>
-      </div>
-    </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord1 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
-        <h1 class="text-4xl">Submit a run</h1>
-        <p class="text-base py-4">
-          Want to have your own speedrun on the site?
-        </p>
-        <router-link class="btn -primary" tag="button" :to="{ name: 'Submit' }"
-          >Submit a run</router-link
-        >
-      </div>
-    </hero>
-    <hero class="bg-nord4 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
-        <h1 class="text-4xl py-0">Found a bug</h1>
-        <p class="text-base py-4">
-          If you found a bug with the website, please open an issue about it on
-          our github page.
-        </p>
-        <a :href="`${VUE_APP_GITHUB}/issues`" class="btn -primary">
-          <font-awesome-icon class="mr-3" :icon="['fab', 'github']" />Open in
-          issue
         </a>
       </div>
     </hero>
