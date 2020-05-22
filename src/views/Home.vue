@@ -36,8 +36,12 @@
       <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">About Us</h1>
         <p class="text-base py-6 text-center">
-          SpeedSouls was established in September 2014 as a community hub for people seeking information about speedrunning the various FROMSoftware Souls games.
-		  With the availability of Discord about a year later, we have formed a community for everyone interested. Nowadays, SpeedSouls is one of the largest groups focused on speedrunning a single game series.
+          SpeedSouls was established in September 2014 as a community hub for
+          people seeking information about speedrunning the various FROMSoftware
+          Souls games. With the availability of Discord about a year later, we
+          have formed a community for everyone interested. Nowadays, SpeedSouls
+          is one of the largest groups focused on speedrunning a single game
+          series.
         </p>
         <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
           >More</a
@@ -51,9 +55,12 @@
         <div class="px-4 text-center">
           <h1 class="text-4xl text-center py-0">Join The Community</h1>
           <p class="text-base py-4 text-center">
-            Join our Discord server where nearly 5000 members are waiting for you!
-			Ask questions and receive answers from veteran runners, and share your accomplishments and ideas with the community!
-			Note however, that co-op requests and extensive casual discussions do not belong there. Do please choose a different Discord server for those topics.
+            Join our Discord server where nearly 5000 members are waiting for
+            you! Ask questions and receive answers from veteran runners, and
+            share your accomplishments and ideas with the community! Note
+            however, that co-op requests and extensive casual discussions do not
+            belong there. Do please choose a different Discord server for those
+            topics.
           </p>
 
           <discord class="max-w-md mx-auto" />
@@ -122,7 +129,6 @@ const {
   VUE_APP_PATREON
 } = process.env;
 import { mapState } from 'vuex';
-import Alert from '@/components/Alert';
 import Hero from '@/components/Hero';
 import Discord from '@/components/Discord';
 
@@ -131,7 +137,7 @@ export default {
     title: 'SpeedSouls',
     titleTemplate: null
   },
-  components: { Alert, Hero, Discord },
+  components: { Hero, Discord },
   data: () => ({
     VUE_APP_WIKI,
     VUE_APP_GITHUB,
