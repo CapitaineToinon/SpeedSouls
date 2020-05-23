@@ -42,22 +42,23 @@
           have formed a community for everyone interested. Nowadays, SpeedSouls
           is one of the largest groups focused on speedrunning a single game
           series.
+		  
         </p>
+		
         <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
           >More</a
         >
       </div>
     </hero>
     <hero class="bg-nord4 text-nord0 dark:bg-nord1 dark:text-nord6 py-24">
-      <div
-        class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly"
-      >
+      <div class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly">
         <div class="px-4 text-center">
           <h1 class="text-4xl text-center py-0">Join The Community</h1>
           <p class="text-base py-4 text-center">
             Join our Discord server where nearly 5000 members are waiting for you!
 			Ask questions and receive answers from veteran runners, and share your accomplishments and ideas with the community!
 			Note however, that co-op requests and extensive casual discussions do not belong there. Do please choose a different Discord server for those topics.
+			
           </p>
 
           <discord class="max-w-md mx-auto" />
@@ -65,11 +66,12 @@
       </div>
     </hero>
     <hero class="bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
-      <div class="max-w-md text-center mx-auto">
+      <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">Patreon</h1>
         <p class="text-base py-4 text-center">
           If you'd like to give back a bit for the upkeep and work put into the site, then feel free to visit our Patreon.
 		  Patreon Supporters receive their own special role on our Discord server. 
+		  
         </p>
 
         <a :href="VUE_APP_PATREON" class="btn -primary">
