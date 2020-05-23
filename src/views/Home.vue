@@ -42,7 +42,7 @@
           have formed a community for everyone interested. Nowadays, SpeedSouls
           is one of the largest groups focused on speedrunning a single game
           series.
-		  
+		  <br />
         </p>
 		
         <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
@@ -58,7 +58,7 @@
             Join our Discord server where nearly 5000 members are waiting for you!
 			Ask questions and receive answers from veteran runners, and share your accomplishments and ideas with the community!
 			Note however, that co-op requests and extensive casual discussions do not belong there. Do please choose a different Discord server for those topics.
-			
+			<br />
           </p>
 
           <discord class="max-w-md mx-auto" />
@@ -71,7 +71,7 @@
         <p class="text-base py-4 text-center">
           If you'd like to give back a bit for the upkeep and work put into the site, then feel free to visit our Patreon.
 		  Patreon Supporters receive their own special role on our Discord server. 
-		  
+		  <br />
         </p>
 
         <a :href="VUE_APP_PATREON" class="btn -primary">
