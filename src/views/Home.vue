@@ -7,7 +7,7 @@
           :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
           alt="speedsouls logo"
         />
-        <div class="links">
+        <div class="links py-5">
           <router-link
             class="btn -primary"
             tag="button"
