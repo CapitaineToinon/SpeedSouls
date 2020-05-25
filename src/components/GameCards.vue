@@ -5,17 +5,19 @@
   <div v-else-if="!games" class="pending">
     <div class="progress h-2 flex flex-row"></div>
   </div>
-  <div
-    v-else
-    class="games grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-  >
-    <router-link
-      :to="to(game.abbreviation)"
-      v-for="(game, i) in games"
-      :key="i"
+  <div v-else class="flex flex-col justify-center w-full">
+    <div
+      class="games grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
     >
-      <game-card :game="game" />
-    </router-link>
+      <router-link
+        :to="to(game.abbreviation)"
+        v-for="(game, i) in games"
+        :key="i"
+      >
+        <game-card :game="game" />
+      </router-link>
+    </div>
+    <by-speedrun-com class="my-4 text-center" />
   </div>
 </template>
 
@@ -25,9 +27,10 @@ import { catchError } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
 import Error from '@/components/Error';
 import GameCard from '@/components/GameCard';
+import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
-  components: { Error, GameCard },
+  components: { Error, GameCard, BySpeedrunCom },
   data: () => ({
     games: undefined,
     error: null

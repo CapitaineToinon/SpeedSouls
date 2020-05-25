@@ -20,9 +20,9 @@
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-nord0 dark:text-nord6 text-xl">
-          <router-link :to="to(run.game, run.category)">
-            {{ run.category.name }}
-          </router-link>
+          <router-link :to="to(run.game, run.category)">{{
+            run.category.name
+          }}</router-link>
           in {{ run.primary_t.time }} by
           <span class="player-names">
             <player-name
@@ -46,6 +46,9 @@
         </p>
       </div>
     </div>
+    <div class="flex flex-col w-full">
+      <by-speedrun-com class="my-4 text-center" />
+    </div>
   </div>
 </template>
 
@@ -58,6 +61,7 @@ import Error from '@/components/Error';
 import RunVideo from '@/components/RunVideo';
 import PlayerName from '@/components/PlayerName';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
   metaInfo() {
@@ -70,7 +74,8 @@ export default {
     Error,
     Breadcrumbs,
     RunVideo,
-    PlayerName
+    PlayerName,
+    BySpeedrunCom
   },
   data: () => ({
     run: undefined,

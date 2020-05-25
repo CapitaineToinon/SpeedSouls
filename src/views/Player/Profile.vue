@@ -75,6 +75,9 @@
         </table>
       </div>
     </div>
+    <div class="flex flex-col w-full">
+      <by-speedrun-com class="my-4 text-center" />
+    </div>
   </div>
 </template>
 
@@ -85,6 +88,7 @@ import { useUserPersonalBests, useUser } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
   metaInfo() {
@@ -92,7 +96,7 @@ export default {
       title: this.metaTitle
     };
   },
-  components: { Alert, Error, Breadcrumbs },
+  components: { Alert, Error, Breadcrumbs, BySpeedrunCom },
   data: () => ({
     player: undefined,
     playerError: null,

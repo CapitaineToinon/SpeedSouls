@@ -26,7 +26,8 @@ import {
   faExternalLinkAlt,
   faChevronRight,
   faLink,
-  faCog
+  faCog,
+  faHourglassEnd
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -44,7 +45,8 @@ library.add(
   faExternalLinkAlt,
   faChevronRight,
   faLink,
-  faCog
+  faCog,
+  faHourglassEnd
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -7,77 +7,92 @@
           :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
           alt="speedsouls logo"
         />
-        <div
-          class="flex flex-col items-stretch mx-auto items-center justify-center sm:flex-row"
-        >
+        <div class="links">
           <router-link
             class="btn -primary"
             tag="button"
             :to="{ name: 'Games' }"
           >
-            <font-awesome-icon
-              class="mr-1"
-              :icon="['fas', 'list']"
-            />Leaderboards
+            <font-awesome-icon :icon="['fas', 'list']" />Leaderboards
           </router-link>
           <a :href="VUE_APP_WIKI" class="btn -primary">
             <font-awesome-icon
-              class="mr-1"
               :icon="['fas', 'angle-double-right']"
             />SpeedSouls Wiki
           </a>
           <a :href="VUE_APP_DISCORD" class="btn -primary">
-            <font-awesome-icon class="mr-1" :icon="['fab', 'discord']" />Discord
+            <font-awesome-icon :icon="['fab', 'discord']" />Discord
           </a>
+          <router-link
+            class="btn -primary"
+            tag="button"
+            :to="{ name: 'Submit' }"
+          >
+            <font-awesome-icon :icon="['fas', 'hourglass-end']" />Submit a Run
+          </router-link>
         </div>
       </div>
     </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6 py-24">
+    <hero class="hero bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">About Us</h1>
-        <p class="text-base py-6 text-center">
+        <p class="text-base py-10 text-center">
           SpeedSouls was established in September 2014 as a community hub for
           people seeking information about speedrunning the various FROMSoftware
           Souls games. With the availability of Discord about a year later, we
           have formed a community for everyone interested. Nowadays, SpeedSouls
           is one of the largest groups focused on speedrunning a single game
           series.
-		  <br />
         </p>
-		
-        <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
-          >More</a
-        >
-      </div>
-    </hero>
-    <hero class="bg-nord4 text-nord0 dark:bg-nord1 dark:text-nord6 py-24">
-      <div class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly">
-        <div class="px-4 text-center">
-          <h1 class="text-4xl text-center py-0">Join The Community</h1>
-          <p class="text-base py-4 text-center">
-            Join our Discord server where nearly 5000 members are waiting for you!
-			Ask questions and receive answers from veteran runners, and share your accomplishments and ideas with the community!
-			Note however, that co-op requests and extensive casual discussions do not belong there. Do please choose a different Discord server for those topics.
-			<br />
-          </p>
 
-          <discord class="max-w-md mx-auto" />
+        <div class="flex flex-row px-2 py-2 justify-center">
+          <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
+            >Read More</a
+          >
         </div>
       </div>
     </hero>
-    <hero class="bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6 py-24">
+    <hero class="hero bg-nord4 text-nord0 dark:bg-nord1 dark:text-nord6">
+      <div
+        class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly"
+      >
+        <div class="px-4 text-center">
+          <h1 class="text-4xl text-center leading-none">Join The Community</h1>
+          <p class="text-center py-10">
+            Join our Discord server where nearly 5000 members are waiting for
+            you! Ask questions and receive answers from veteran runners, and
+            share your accomplishments and ideas with the community! Note
+            however, that co-op requests and extensive casual discussions do not
+            belong there. Do please choose a different Discord server for those
+            topics.
+          </p>
+
+          <div class="flex flex-row px-2 py-2 justify-center">
+            <a :href="VUE_APP_DISCORD" class="btn -primary">
+              <font-awesome-icon
+                class="mr-3"
+                :icon="['fab', 'discord']"
+              />Discord
+            </a>
+          </div>
+        </div>
+      </div>
+    </hero>
+    <hero class="hero bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">Patreon</h1>
-        <p class="text-base py-4 text-center">
-          If you'd like to give back a bit for the upkeep and work put into the site, then feel free to visit our Patreon.
-		  Patreon Supporters receive their own special role on our Discord server. 
-		  <br />
+        <p class="text-base py-10 text-center">
+          If you'd like to give back a bit for the upkeep and work put into the
+          site, then feel free to visit our Patreon. Patreon Supporters receive
+          their own special role on our Discord server.
         </p>
 
-        <a :href="VUE_APP_PATREON" class="btn -primary">
-          <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
-          Patreon
-        </a>
+        <div class="flex flex-row px-2 py-2 justify-center">
+          <a :href="VUE_APP_PATREON" class="btn -primary">
+            <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
+            Patreon
+          </a>
+        </div>
       </div>
     </hero>
   </div>
@@ -92,14 +107,13 @@ const {
 } = process.env;
 import { mapState } from 'vuex';
 import Hero from '@/components/Hero';
-import Discord from '@/components/Discord';
 
 export default {
   metaInfo: {
     title: 'SpeedSouls',
     titleTemplate: null
   },
-  components: { Hero, Discord },
+  components: { Hero },
   data: () => ({
     VUE_APP_WIKI,
     VUE_APP_GITHUB,
@@ -134,9 +148,37 @@ export default {
   letter-spacing: 1px;
 }
 
+.hero {
+  @apply py-24;
+
+  h1 {
+  }
+}
+
 .home {
   position: relative;
   overflow: hidden;
+
+  .links {
+    @apply flex;
+    @apply flex-wrap;
+    @apply flex-row;
+    @apply justify-between;
+    --gap: 10px;
+
+    .btn {
+      width: 100%;
+      margin-bottom: var(--gap);
+
+      svg {
+        @apply mr-1;
+      }
+
+      @screen sm {
+        width: calc(50% - (var(--gap) / 2));
+      }
+    }
+  }
 
   &::before {
     content: '';

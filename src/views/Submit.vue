@@ -2,9 +2,11 @@
   <div v-if="games" class="container max-w-screen-md">
     <alert type="warning" class="mb-3">
       You will need a
-      <a href="#" target="_blank">speedrun.com</a> account to submit a run. Runs
-      submitted on speedrun.com will both apear on
-      <a href="#" target="_blank">speedrun.com</a> and
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> account to
+      submit a run. Runs submitted on
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> will both
+      apear on
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> and
       <router-link to="/">speedsouls.com</router-link>
     </alert>
     <div
@@ -37,28 +39,33 @@
               :key="i"
               :href="`${game.weblink}/editrun#${category.uglyHash}`"
               target="_blank"
-            >
-              {{ category.name }}</a
+              >{{ category.name }}</a
             >
           </div>
         </div>
       </div>
     </div>
+    <div class="flex flex-col w-full">
+      <by-speedrun-com class="my-4 text-center" />
+    </div>
   </div>
 </template>
 
 <script>
+const { VUE_APP_SPEEDRUNCOM } = process.env;
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
+import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
   metaInfo: {
     title: 'Submit a run'
   },
-  components: { Alert },
+  components: { Alert, BySpeedrunCom },
   data: () => ({
+    VUE_APP_SPEEDRUNCOM,
     games: undefined,
     error: null
   }),

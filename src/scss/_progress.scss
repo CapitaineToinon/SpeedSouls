@@ -6,7 +6,7 @@
 
   &::before {
     content: '';
-    animation: loop linear 5s infinite;
+    animation: loop linear 1s infinite;
 
     @apply absolute;
     @apply top-0;
