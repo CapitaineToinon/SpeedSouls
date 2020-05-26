@@ -35,7 +35,7 @@
     </hero>
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
-        <h1 class="text-4xl text-center py-0">About Us</h1>
+        <h1 class="text-4xl font-bold text-center py-0">About Us</h1>
         <p class="text-base py-8 text-center">
           SpeedSouls was established in September 2014 as a community hub for
           people seeking information about speedrunning the various FROMSoftware
@@ -57,7 +57,9 @@
         class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly"
       >
         <div class="px-4 text-center">
-          <h1 class="text-4xl text-center leading-none">Join The Community</h1>
+          <h1 class="text-4xl font-bold text-center leading-none">
+            Join The Community
+          </h1>
           <p class="text-center py-8">
             Join our Discord server where nearly 5000 members are waiting for
             you! Ask questions and receive answers from veteran runners, and
@@ -75,7 +77,7 @@
     </hero>
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
-        <h1 class="text-4xl text-center py-0">Patreon</h1>
+        <h1 class="text-4xl font-bold text-center py-0">Patreon</h1>
         <p class="text-base py-8 text-center">
           If you'd like to give back a bit for the upkeep and work put into the
           site, then feel free to visit our Patreon. Patreon Supporters receive

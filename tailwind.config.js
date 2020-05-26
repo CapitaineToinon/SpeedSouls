@@ -12,6 +12,9 @@ module.exports = {
         default: '0.75rem'
       }
     },
+    fontFamily: {
+      sans: 'Robot, Helvetica, Arial, sans-serif'
+    },
     extend: {
       colors: {
         twitch: '#772ce8',

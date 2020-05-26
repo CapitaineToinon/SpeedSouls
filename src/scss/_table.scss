@@ -96,10 +96,10 @@ table {
 :root:not(.mode-dark) {
   table {
     @apply text-nord0;
-    
+
     @screen md {
       @apply bg-nord5;
-    }  
+    }
 
     thead {
       @apply border-nord3;
@@ -114,7 +114,7 @@ table {
           &:nth-of-type(odd) {
             @apply bg-nord6;
           }
-  
+
           &:nth-of-type(even) {
             @apply bg-nord5;
           }
@@ -125,7 +125,7 @@ table {
             &:nth-of-type(odd) {
               @apply bg-transparent;
             }
-    
+
             &:nth-of-type(even) {
               @apply bg-transparent;
             }
@@ -134,7 +134,7 @@ table {
           &:nth-of-type(odd) {
             @apply bg-nord6;
           }
-  
+
           &:nth-of-type(even) {
             @apply bg-nord5;
           }
@@ -165,7 +165,7 @@ table {
           &:nth-of-type(odd) {
             @apply bg-nord3;
           }
-  
+
           &:nth-of-type(even) {
             @apply bg-nord2;
           }
@@ -176,7 +176,7 @@ table {
             &:nth-of-type(odd) {
               @apply bg-transparent;
             }
-    
+
             &:nth-of-type(even) {
               @apply bg-transparent;
             }
@@ -185,7 +185,7 @@ table {
           &:nth-of-type(odd) {
             @apply bg-nord3;
           }
-  
+
           &:nth-of-type(even) {
             @apply bg-nord2;
           }

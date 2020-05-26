@@ -2,7 +2,7 @@
   <div class="container">
     <div class="title w-full">
       <h1
-        class="font-black text-4xl text-bold leading-none mb-4 text-nord0 dark:text-nord6"
+        class="text-4xl font-bold leading-none mb-4 text-nord0 dark:text-nord6"
       >
         Leaderboards
       </h1>
