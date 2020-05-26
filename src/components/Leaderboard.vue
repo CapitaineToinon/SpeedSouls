@@ -9,7 +9,7 @@
     <alert type="warning">There are no runs.</alert>
   </div>
   <div v-else class="fulfilled flex flex-col">
-    <div class="responsive-table">
+    <div class="responsive-table mb-4">
       <table class="text-center">
         <thead>
           <tr>
@@ -110,7 +110,7 @@
         </tbody>
       </table>
     </div>
-    <by-speedrun-com class="my-4 text-center" />
+    <by-speedrun-com class="text-center" />
   </div>
 </template>
 

@@ -33,7 +33,7 @@
     </div>
     <div v-else>
       <div
-        class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded"
+        class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
       >
         <div
           class="tab w-full overflow-hidden"
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="flex flex-col w-full">
-        <by-speedrun-com class="mt-4 text-center" />
+        <by-speedrun-com class="text-center" />
       </div>
     </div>
   </div>

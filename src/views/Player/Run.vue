@@ -7,7 +7,7 @@
   </div>
   <div v-else>
     <breadcrumbs class="pb-3" :items="breadcrumbs" />
-    <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
+    <div class="overflow-hidden rounded mb-4 bg-nord5 dark:bg-nord1 shadow-md">
       <div v-if="run && run.videos && run.videos.links" class="w-full">
         <run-video
           v-for="(link, i) in run.videos.links"
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="flex flex-col w-full">
-      <by-speedrun-com class="my-4 text-center" />
+      <by-speedrun-com class="text-center" />
     </div>
   </div>
 </template>

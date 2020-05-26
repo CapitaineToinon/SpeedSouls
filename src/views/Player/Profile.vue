@@ -79,7 +79,7 @@
       </div>
     </div>
     <div class="flex flex-col w-full">
-      <by-speedrun-com class="my-4 text-center" />
+      <by-speedrun-com class="text-center" />
     </div>
   </div>
 </template>
