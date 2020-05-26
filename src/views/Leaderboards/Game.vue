@@ -266,8 +266,9 @@ aside {
     @screen md {
       @apply flex-none;
       @apply w-64;
-      @apply overflow-y-auto;
+      overflow: initial;
       @apply shadow-none;
+      @apply p-0;
     }
   }
 
