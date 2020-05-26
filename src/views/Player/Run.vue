@@ -19,7 +19,7 @@
         <alert type="warning">No video.</alert>
       </div>
       <div class="px-6 py-4">
-        <div class="font-bold text-nord0 dark:text-nord6 text-xl">
+        <div class="text-nord0 dark:text-nord6 text-xl">
           <router-link :to="to(run.game, run.category)">{{
             run.category.name
           }}</router-link>
