@@ -9,7 +9,12 @@
     <div class="progress h-2 flex flex-row"></div>
   </div>
   <div v-else class="min-h-screen-navbar container flex flex-row">
-    <button id="sidebar-button" @click="openSidebar = !openSidebar">
+    <button
+      id="sidebar-button"
+      ref="sidebarButton"
+      @click="openSidebar = !openSidebar"
+      :class="{ open: openSidebar }"
+    >
       <font-awesome-icon
         v-if="!openSidebar"
         :icon="['fas', 'list']"
@@ -23,9 +28,13 @@
         :categories="game.categories"
         :active="$route.params.category"
         @click="onCategoryClick"
+        v-click-outside="closeAside"
       />
     </aside>
-    <div class="flex flex-col flex-grow ml-0 md:ml-5">
+    <div
+      class="content flex flex-col flex-grow ml-0 md:ml-5"
+      :class="{ open: openSidebar }"
+    >
       <breadcrumbs class="mb-4" :items="breadcrumbs" />
       <div
         class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
@@ -52,6 +61,7 @@
 import { of } from 'rxjs';
 import { switchMap, pluck, catchError, skipWhile } from 'rxjs/operators';
 import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
+import clickOutside from '@/directives/clickOutside';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
@@ -63,6 +73,9 @@ export default {
     return {
       title: this.metaTitle
     };
+  },
+  directives: {
+    clickOutside
   },
   components: {
     Error,
@@ -162,6 +175,14 @@ export default {
           category: category.hash
         }
       });
+    },
+    closeAside({ target }) {
+      if (
+        target === this.$refs.sidebarButton ||
+        this.$refs.sidebarButton.contains(target)
+      )
+        return;
+      this.openSidebar = false;
     }
   },
   mounted() {
@@ -205,6 +226,12 @@ export default {
   right: 0.75rem;
   bottom: 0.75rem;
 
+  &.open {
+    @apply bg-transparent;
+    @apply shadow-none;
+    @apply text-nord15;
+  }
+
   @screen md {
     @apply hidden;
   }
@@ -217,17 +244,30 @@ aside {
   @apply right-0;
   @apply bottom-0;
   @apply z-10;
-  @apply p-6;
+  @apply flex;
+  @apply flex-row;
+  @apply justify-end;
+  @apply items-end;
   transition: transform 0.2s ease-in-out;
   transform: translateY(100vh);
   height: calc(100vh - var(--navbar-height));
 
+  @screen md {
+    @apply block;
+  }
+
   .categories {
     @apply w-full;
+    @apply p-3;
+    @apply shadow-2xl;
+    @apply overflow-y-scroll;
+    @apply max-h-full;
 
     @screen md {
       @apply flex-none;
       @apply w-64;
+      @apply overflow-y-auto;
+      @apply shadow-none;
     }
   }
 
@@ -250,25 +290,54 @@ aside {
   }
 }
 
+.content {
+  @apply z-0;
+
+  &::after {
+    content: '';
+    @apply fixed;
+    @apply top-0;
+    @apply right-0;
+    @apply bottom-0;
+    @apply left-0;
+    @apply z-10;
+    @apply pointer-events-none;
+    @apply bg-black;
+    @apply opacity-0;
+    transition: opacity 0.2s ease-in-out;
+
+    @screen md {
+      @apply hidden;
+    }
+  }
+
+  &.open {
+    &::after {
+      @apply opacity-75;
+      @apply pointer-events-auto;
+    }
+  }
+}
+
 :root.mode-dark {
-  aside {
+  .categories {
     @apply bg-nord1;
   }
 
   @screen md {
-    aside {
+    .categories {
       @apply bg-transparent;
     }
   }
 }
 
 :root:not(mode-dark) {
-  aside {
+  .categories {
     @apply bg-nord5;
   }
 
   @screen md {
-    aside {
+    .categories {
       @apply bg-transparent;
     }
   }
