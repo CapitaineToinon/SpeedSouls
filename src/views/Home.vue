@@ -68,12 +68,7 @@
           </p>
 
           <div class="flex flex-row px-2 py-2 justify-center">
-            <a :href="VUE_APP_DISCORD" class="btn -primary">
-              <font-awesome-icon
-                class="mr-3"
-                :icon="['fab', 'discord']"
-              />Discord
-            </a>
+            <discord />
           </div>
         </div>
       </div>
@@ -107,13 +102,14 @@ const {
 } = process.env;
 import { mapState } from 'vuex';
 import Hero from '@/components/Hero';
+import Discord from '@/components/Discord';
 
 export default {
   metaInfo: {
     title: 'SpeedSouls',
     titleTemplate: null
   },
-  components: { Hero },
+  components: { Hero, Discord },
   data: () => ({
     VUE_APP_WIKI,
     VUE_APP_GITHUB,
