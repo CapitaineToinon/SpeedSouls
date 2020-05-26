@@ -7,7 +7,7 @@
           :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
           alt="speedsouls logo"
         />
-        <div class="links">
+        <div class="links py-5">
           <router-link
             class="btn -primary"
             tag="button"
@@ -36,7 +36,7 @@
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">About Us</h1>
-        <p class="text-base py-10 text-center">
+        <p class="text-base py-8 text-center">
           SpeedSouls was established in September 2014 as a community hub for
           people seeking information about speedrunning the various FROMSoftware
           Souls games. With the availability of Discord about a year later, we
@@ -58,7 +58,7 @@
       >
         <div class="px-4 text-center">
           <h1 class="text-4xl text-center leading-none">Join The Community</h1>
-          <p class="text-center py-10">
+          <p class="text-center py-8">
             Join our Discord server where nearly 5000 members are waiting for
             you! Ask questions and receive answers from veteran runners, and
             share your accomplishments and ideas with the community! Note
@@ -76,7 +76,7 @@
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6">
       <div class="max-w-screen-md text-center mx-auto">
         <h1 class="text-4xl text-center py-0">Patreon</h1>
-        <p class="text-base py-10 text-center">
+        <p class="text-base py-8 text-center">
           If you'd like to give back a bit for the upkeep and work put into the
           site, then feel free to visit our Patreon. Patreon Supporters receive
           their own special role on our Discord server.
