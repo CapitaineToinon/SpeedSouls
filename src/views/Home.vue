@@ -20,9 +20,6 @@
               :icon="['fas', 'angle-double-right']"
             />SpeedSouls Wiki
           </a>
-          <a :href="VUE_APP_DISCORD" class="btn -primary">
-            <font-awesome-icon :icon="['fab', 'discord']" />Discord
-          </a>
           <router-link
             class="btn -primary"
             tag="button"
@@ -30,6 +27,9 @@
           >
             <font-awesome-icon :icon="['fas', 'hourglass-end']" />Submit a Run
           </router-link>
+          <a :href="VUE_APP_DISCORD" class="btn -primary">
+            <font-awesome-icon :icon="['fab', 'discord']" />Discord
+          </a>
         </div>
       </div>
     </hero>
