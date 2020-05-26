@@ -59,27 +59,47 @@
             'dark:border-nord6': transparant
           }"
         >
-          <a :href="VUE_APP_DISCORD" class="hover:text-discord">
+          <a
+            :href="VUE_APP_DISCORD"
+            aria-label="Discord"
+            class="hover:text-discord"
+          >
             <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a :href="VUE_APP_PATREON" class="hover:text-patreon">
+          <a
+            :href="VUE_APP_PATREON"
+            aria-label="Patreon"
+            class="hover:text-patreon"
+          >
             <font-awesome-icon :icon="['fab', 'patreon']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a :href="VUE_APP_TWITTER" class="hover:text-twitter">
+          <a
+            :href="VUE_APP_TWITTER"
+            aria-label="Twitter"
+            class="hover:text-twitter"
+          >
             <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <a :href="VUE_APP_GITHUB" class="hover:text-nord10">
+          <a
+            :href="VUE_APP_GITHUB"
+            aria-label="Github"
+            class="hover:text-nord10"
+          >
             <font-awesome-icon :icon="['fab', 'github']" size="2x" />
           </a>
         </li>
         <li class="menu-item icon">
-          <router-link :to="{ name: 'Settings' }" class="hover:text-nord10">
+          <router-link
+            :to="{ name: 'Settings' }"
+            aria-label="Settings"
+            class="hover:text-nord10"
+          >
             <font-awesome-icon :icon="['fas', 'cog']" size="2x" />
           </router-link>
         </li>
