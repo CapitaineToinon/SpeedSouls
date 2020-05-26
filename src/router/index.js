@@ -81,9 +81,8 @@ const routes = [
   {
     path: '**',
     name: 'redirect',
-    beforeEnter(to) {
-      window.location.replace(`${process.env.VUE_APP_WIKI}${to.fullPath}`);
-    }
+    component: () =>
+      import(/* webpackChunkName: "redirect" */ '@/views/Redirect.vue')
   }
 ];
 
