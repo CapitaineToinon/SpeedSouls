@@ -25,7 +25,14 @@ import { mapState, mapActions } from 'vuex';
 export default {
   metaInfo: {
     title: 'SpeedSouls',
-    titleTemplate: '%s - SpeedSouls'
+    titleTemplate: '%s - SpeedSouls',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'SpeedSouls was established in September 2014 as a community hub for people seeking information about speedrunning the various FROMSoftware Souls games. With the availability of Discord about a year later, we have formed a community for everyone interested. Nowadays, SpeedSouls is one of the largest groups focused on speedrunning a single game series.'
+      }
+    ]
   },
   components: { Navbar, MyFooter },
   computed: {
