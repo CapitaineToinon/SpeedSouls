@@ -1,6 +1,15 @@
 <template>
-  <div v-if="games" class="container max-w-screen-md">
-    <alert type="warning" class="mb-3">
+  <div class="container max-w-screen-md">
+    <h1 class="text-4xl font-bold leading-none mb-4 text-nord0 dark:text-nord6">
+      Submit a Run
+    </h1>
+    <p class="text-base mb-4 text-nord0 dark:text-nord6">
+      This is some explaination about the submission process. Lorem ipsum dolor
+      sit, amet consectetur adipisicing elit. Quaerat veritatis ad laudantium
+      facere natus ducimus maxime voluptate ut debitis, in sit, rem facilis
+      doloremque sint rerum molestiae magnam, aperiam ipsum?
+    </p>
+    <alert type="info" class="mb-3">
       You will need a
       <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
@@ -16,45 +25,54 @@
       and
       <router-link to="/">speedsouls.com</router-link>
     </alert>
-    <div
-      class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded"
-    >
+    <div v-if="error">
+      <error :error="error" />
+    </div>
+    <div v-else-if="!games">
+      <div class="progress h-2 flex flex-row"></div>
+    </div>
+    <div v-else>
       <div
-        class="tab w-full overflow-hidden"
-        :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
-        v-for="(game, i) in games"
-        :key="game.id"
+        class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded"
       >
-        <input
-          class="absolute opacity-0"
-          :id="`tab-${game.id}`"
-          type="checkbox"
-          name="tabs2"
-        />
-        <label
-          class="block p-5 leading-normal cursor-pointer"
-          :for="`tab-${game.id}`"
-          >{{ game.name }}</label
-        >
         <div
-          class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+          class="tab w-full overflow-hidden"
+          :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
+          v-for="(game, i) in games"
+          :key="game.id"
         >
-          <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
-            <a
-              class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
-              v-for="(category, i) in game.categories"
-              :key="i"
-              :href="`${game.weblink}/editrun#${category.uglyHash}`"
-              target="_blank"
-              rel="noopener"
-              >{{ category.name }}</a
-            >
+          <input
+            class="absolute opacity-0"
+            :id="`tab-${game.id}`"
+            type="checkbox"
+            name="tabs2"
+          />
+          <label
+            class="block p-5 leading-normal cursor-pointer"
+            :for="`tab-${game.id}`"
+            >{{ game.name }}</label
+          >
+          <div
+            :ref="`section-${game.id}`"
+            class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+          >
+            <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
+              <a
+                class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
+                v-for="(category, i) in game.categories"
+                :key="i"
+                :href="`${game.weblink}/editrun#${category.uglyHash}`"
+                target="_blank"
+                rel="noopener"
+                >{{ category.name }}</a
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="flex flex-col w-full">
-      <by-speedrun-com class="my-4 text-center" />
+      <div class="flex flex-col w-full">
+        <by-speedrun-com class="mt-4 text-center" />
+      </div>
     </div>
   </div>
 </template>
@@ -65,13 +83,14 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
+import Error from '@/components/Error';
 import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
   metaInfo: {
     title: 'Submit a run'
   },
-  components: { Alert, BySpeedrunCom },
+  components: { Alert, BySpeedrunCom, Error },
   data: () => ({
     VUE_APP_SPEEDRUNCOM,
     games: undefined,
@@ -102,12 +121,12 @@ export default {
 .tab {
   /* Tab content - closed */
   .tab-content {
-    max-height: 0;
-    transition: max-height 0.1s;
+    height: 0;
+    transition: all 0.6s;
   }
   /* :checked - resize to full height */
   input:checked ~ .tab-content {
-    max-height: 100vh;
+    height: auto;
   }
 }
 </style>
