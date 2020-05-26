@@ -1,5 +1,5 @@
-import { formatDistanceStrict, subDays } from 'date-fns';
+import { formatDistanceStrict } from 'date-fns';
 
 export default function relativeDate(value) {
-  return formatDistanceStrict(subDays(new Date(value), 3), new Date());
+  return formatDistanceStrict(new Date(value), new Date());
 }

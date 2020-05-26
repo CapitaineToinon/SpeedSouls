@@ -56,8 +56,11 @@
               </td>
               <td class="shrink" data-label="Time">{{ row.primary_t.time }}</td>
 
-              <td class="shrink" data-label="Date">
+              <td v-if="relativeTime" class="shrink" data-label="Date">
                 {{ row.date | relativeDate }} ago
+              </td>
+              <td v-else class="shrink" data-label="Date">
+                {{ row.date | date }}
               </td>
               <td class="shrink hidden lg:table-cell">
                 <font-awesome-icon
@@ -85,11 +88,13 @@
 import { of } from 'rxjs';
 import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
 import { useUserPersonalBests, useUser } from '@/api/rx-souls';
+import { mapState } from 'vuex';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BySpeedrunCom from '@/components/BySpeedrunCom';
 import relativeDate from '@/filters/relativeDate';
+import date from '@/filters/date';
 
 export default {
   metaInfo() {
@@ -105,6 +110,7 @@ export default {
     pbsError: null
   }),
   computed: {
+    ...mapState(['relativeTime']),
     metaTitle() {
       if (this.player) {
         return this.player.name;
@@ -114,6 +120,7 @@ export default {
     }
   },
   filters: {
+    date,
     relativeDate
   },
   methods: {

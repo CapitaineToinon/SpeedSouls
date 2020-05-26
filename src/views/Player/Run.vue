@@ -82,8 +82,10 @@ export default {
     run: undefined,
     runError: null
   }),
+  filters: {
+    date
+  },
   methods: {
-    date,
     to(game, category) {
       return {
         name: 'Game',
