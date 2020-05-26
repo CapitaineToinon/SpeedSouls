@@ -2,6 +2,7 @@
   <a
     :href="VUE_APP_DISCORD"
     target="_blank"
+    rel="noopener"
     class="bg-discord shadow-md rounded py-4 px-4 flex flex-col flex-wrap items-center justify-between"
   >
     <svg

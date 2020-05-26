@@ -1,5 +1,10 @@
 <template>
-  <a :href="href" class="border-b border-dotted border-nord0" target="_blank">
+  <a
+    :href="href"
+    class="border-b border-dotted border-nord0"
+    target="_blank"
+    rel="noopener"
+  >
     <slot></slot>
     <font-awesome-icon
       v-if="icon"

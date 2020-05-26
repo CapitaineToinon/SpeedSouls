@@ -5,7 +5,12 @@
         class="socials text-nord0 dark:text-nord6 py-12 grid grid-cols-4 gap-4 text-center"
       >
         <div class="discord">
-          <a :href="VUE_APP_DISCORD" class="hover:text-discord" target="_blank">
+          <a
+            :href="VUE_APP_DISCORD"
+            class="hover:text-discord"
+            target="_blank"
+            rel="noopener"
+          >
             <font-awesome-icon
               class="mb-2"
               :icon="['fab', 'discord']"
@@ -15,7 +20,12 @@
           </a>
         </div>
         <div class="twitter">
-          <a :href="VUE_APP_TWITTER" class="hover:text-twitter" target="_blank">
+          <a
+            :href="VUE_APP_TWITTER"
+            class="hover:text-twitter"
+            target="_blank"
+            rel="noopener"
+          >
             <font-awesome-icon
               class="mb-2"
               :icon="['fab', 'twitter']"
@@ -25,7 +35,12 @@
           </a>
         </div>
         <div class="patreon">
-          <a :href="VUE_APP_PATREON" class="hover:text-patreon" target="_blank">
+          <a
+            :href="VUE_APP_PATREON"
+            class="hover:text-patreon"
+            target="_blank"
+            rel="noopener"
+          >
             <font-awesome-icon
               class="mb-2"
               :icon="['fab', 'patreon']"
@@ -35,7 +50,12 @@
           </a>
         </div>
         <div class="github">
-          <a :href="VUE_APP_GITHUB" class="hover:text-nord10" target="_blank">
+          <a
+            :href="VUE_APP_GITHUB"
+            class="hover:text-nord10"
+            target="_blank"
+            rel="noopener"
+          >
             <font-awesome-icon
               class="mb-2"
               :icon="['fab', 'github']"

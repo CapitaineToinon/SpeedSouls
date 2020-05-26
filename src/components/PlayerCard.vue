@@ -27,7 +27,12 @@
       </p>
       <div class="links flex flex-row justify-center px-6">
         <tooltip v-if="player['twitch']" text="Twitch">
-          <a :href="player['twitch'].uri" target="_blank" class="mx-1">
+          <a
+            :href="player['twitch'].uri"
+            target="_blank"
+            rel="noopener"
+            class="mx-1"
+          >
             <font-awesome-icon
               class="text-twitch"
               :icon="['fab', 'twitch']"
@@ -36,7 +41,12 @@
           </a>
         </tooltip>
         <tooltip v-if="player['twitter']" text="Twitter">
-          <a :href="player['twitter'].uri" target="_blank" class="mx-1">
+          <a
+            :href="player['twitter'].uri"
+            target="_blank"
+            rel="noopener"
+            class="mx-1"
+          >
             <font-awesome-icon
               class="text-twitter"
               :icon="['fab', 'twitter']"
@@ -45,7 +55,12 @@
           </a>
         </tooltip>
         <tooltip v-if="player['youtube']" text="Youtube">
-          <a :href="player['youtube'].uri" target="_blank" class="mx-1">
+          <a
+            :href="player['youtube'].uri"
+            target="_blank"
+            rel="noopener"
+            class="mx-1"
+          >
             <font-awesome-icon
               class="text-youtube"
               :icon="['fab', 'youtube']"
@@ -54,7 +69,7 @@
           </a>
         </tooltip>
         <tooltip v-if="player.weblink" text="speedrun.com">
-          <a :href="player.weblink" class="mx-1" target="_blank">
+          <a :href="player.weblink" class="mx-1" target="_blank" rel="noopener">
             <font-awesome-icon
               class="text-nord0 dark:text-nord4"
               :icon="['fas', 'link']"

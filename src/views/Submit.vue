@@ -2,11 +2,18 @@
   <div v-if="games" class="container max-w-screen-md">
     <alert type="warning" class="mb-3">
       You will need a
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> account to
-      submit a run. Runs submitted on
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> will both
-      apear on
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank">speedrun.com</a> and
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+        >speedrun.com</a
+      >
+      account to submit a run. Runs submitted on
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+        >speedrun.com</a
+      >
+      will both apear on
+      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+        >speedrun.com</a
+      >
+      and
       <router-link to="/">speedsouls.com</router-link>
     </alert>
     <div
@@ -39,6 +46,7 @@
               :key="i"
               :href="`${game.weblink}/editrun#${category.uglyHash}`"
               target="_blank"
+              rel="noopener"
               >{{ category.name }}</a
             >
           </div>

@@ -18,7 +18,9 @@
   <div v-else class="p-4">
     <alert type="info">
       Watch at
-      <external-link :href="url" target="_blank">{{ url }}</external-link>
+      <external-link :href="url" target="_blank" rel="noopener">{{
+        url
+      }}</external-link>
     </alert>
   </div>
 </template>
