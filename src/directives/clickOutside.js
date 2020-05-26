@@ -1,7 +1,5 @@
-import Vue from 'vue';
-
 /* from https://stackoverflow.com/questions/52154917/vue-stoppropagation-not-working-child-to-parent */
-Vue.directive('click-outside', {
+export default {
   bind(el, { value }) {
     el._handler = e => {
       if (!el.contains(e.target)) {
@@ -15,4 +13,4 @@ Vue.directive('click-outside', {
   unbind(el) {
     document.removeEventListener('click', el._handler);
   }
-});
+};

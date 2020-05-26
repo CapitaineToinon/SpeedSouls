@@ -62,6 +62,7 @@ import RunVideo from '@/components/RunVideo';
 import PlayerName from '@/components/PlayerName';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BySpeedrunCom from '@/components/BySpeedrunCom';
+import date from '@/filters/date';
 
 export default {
   metaInfo() {
@@ -82,6 +83,7 @@ export default {
     runError: null
   }),
   methods: {
+    date,
     to(game, category) {
       return {
         name: 'Game',

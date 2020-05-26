@@ -89,6 +89,7 @@ import Alert from '@/components/Alert';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BySpeedrunCom from '@/components/BySpeedrunCom';
+import relativeDate from '@/filters/relativeDate';
 
 export default {
   metaInfo() {
@@ -111,6 +112,9 @@ export default {
 
       return undefined;
     }
+  },
+  filters: {
+    relativeDate
   },
   methods: {
     onPlayerSuccess(player) {

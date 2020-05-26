@@ -4,9 +4,6 @@ import router from './router';
 import store from './store';
 import VueRx from 'vue-rx';
 import VueMeta from 'vue-meta';
-import './directives/clickOutside';
-import './filters/relativeDate';
-import './filters/date';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -53,7 +50,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueRx);
 Vue.use(VueMeta);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 new Vue({
   router,

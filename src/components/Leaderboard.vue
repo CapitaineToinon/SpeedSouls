@@ -129,6 +129,8 @@ import { mapState } from 'vuex';
 import Alert from '@/components/Alert';
 import PlayerName from '@/components/PlayerName';
 import BySpeedrunCom from '@/components/BySpeedrunCom';
+import relativeDate from '@/filters/relativeDate';
+import date from '@/filters/date';
 
 export default {
   components: { Alert, PlayerName, BySpeedrunCom },
@@ -152,6 +154,10 @@ export default {
   }),
   computed: {
     ...mapState(['relativeTime'])
+  },
+  filters: {
+    date,
+    relativeDate
   },
   methods: {
     onLeaderboardSuccess(runs) {

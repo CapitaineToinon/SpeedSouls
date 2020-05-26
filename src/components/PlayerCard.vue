@@ -97,6 +97,7 @@
 
 <script>
 import Tooltip from '@/components/Tooltip';
+import date from '@/filters/date';
 
 export default {
   components: { Tooltip },
@@ -112,6 +113,9 @@ export default {
       type: Boolean,
       default: () => true
     }
+  },
+  filters: {
+    date
   },
   methods: {
     onImageError() {

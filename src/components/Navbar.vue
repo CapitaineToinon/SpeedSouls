@@ -120,6 +120,7 @@ const {
 
 import withScroll from '@/mixins/withScroll.js';
 import { mapState } from 'vuex';
+import clickOutside from '@/directives/clickOutside';
 
 export default {
   mixins: [withScroll],
@@ -137,6 +138,9 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  directives: {
+    clickOutside
   },
   methods: {
     toggleMenu() {
