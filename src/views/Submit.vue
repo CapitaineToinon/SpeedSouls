@@ -1,29 +1,22 @@
 <template>
   <div class="container max-w-screen-md">
     <h1 class="text-4xl font-bold leading-none mb-4 text-nord0 dark:text-nord6">
-      Submit a Run
+      Submit a Run.
     </h1>
-    <p class="text-base mb-4 text-nord0 dark:text-nord6">
-      This is some explaination about the submission process. Lorem ipsum dolor
-      sit, amet consectetur adipisicing elit. Quaerat veritatis ad laudantium
-      facere natus ducimus maxime voluptate ut debitis, in sit, rem facilis
-      doloremque sint rerum molestiae magnam, aperiam ipsum?
-    </p>
     <alert type="info" class="mb-3">
       You will need a
       <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
-      account to submit a run. Runs submitted on
+      account to be able to submit a run. Runs submitted on
       <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
-      will both apear on
+      will appear both on
       <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
-      and
-      <router-link to="/">speedsouls.com</router-link>
+      and here on SpeedSouls.
     </alert>
     <div v-if="error">
       <error :error="error" />
