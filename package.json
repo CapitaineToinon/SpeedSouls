@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "yarn client:serve",
-    "build": "yarn client:build",
+    "serve": "vue-cli-service serve",
+    "build": "yarn download:backgrounds && vue-cli-service build",
+    "functions": "vercel dev",
     "lint": "vue-cli-service lint ./src ./scripts ./*.js",
-    "client:serve": "vue-cli-service serve",
-    "client:build": "yarn download:backgrounds && vue-cli-service build",
     "download:backgrounds": "node ./scripts/downloadBackgrounds.js"
   },
   "pre-commit": [
@@ -25,6 +24,7 @@
     "rxjs": "^6.5.5",
     "tailwindcss": "^1.4.1",
     "tailwindcss-dark-mode": "^1.1.4",
+    "vercel": "^19.0.1",
     "vue": "^2.6.11",
     "vue-meta": "^2.3.3",
     "vue-router": "^3.1.6",
