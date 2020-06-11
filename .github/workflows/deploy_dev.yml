@@ -2,36 +2,36 @@ name: deploy_dev
 
 on:
   push:
-    branches: 
-      - master
+    branches:
+      - dev
 
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-        
-    - name: Build Project
-      run: |
-        yarn install
-        yarn build
-        
-    - name: List output files
-      run: ls
-      
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@2.0.0
-      env:
-        FTP_SERVER: ${{ secrets.DEV_HOST }}
-        FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
-        FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
-        METHOD: sftp
-        LOCAL_DIR: dist
-        REMOTE_DIR: /var/www/html
-        ARGS: --delete
+      - uses: actions/checkout@master
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Build Project
+        run: |
+          yarn install
+          yarn build
+
+      - name: List output files
+        run: ls
+
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.DEV_HOST }}
+          FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
+          METHOD: sftp
+          LOCAL_DIR: dist
+          REMOTE_DIR: /var/www/html
+          ARGS: --delete
