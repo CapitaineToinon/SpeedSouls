@@ -1,36 +1,37 @@
 name: deploy_prod
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
 
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-        
-    - name: Build Project
-      run: |
-        yarn install
-        yarn build
-        
-    - name: List output files
-      run: ls
-      
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@2.0.0
-      env:
-        FTP_SERVER: ${{ secrets.PROD_HOST }}
-        FTP_USERNAME: ${{ secrets.PROD_USERNAME }}
-        FTP_PASSWORD: ${{ secrets.PROD_PASSWORD }}
-        METHOD: sftp
-        LOCAL_DIR: dist
-        REMOTE_DIR: /var/lib/vue
-        ARGS: --delete
+      - uses: actions/checkout@master
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Build Project
+        run: |
+          yarn install
+          yarn build
+
+      - name: List output files
+        run: ls
+
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        env:
+          FTP_SERVER: ${{ secrets.PROD_HOST }}
+          FTP_USERNAME: ${{ secrets.PROD_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.PROD_PASSWORD }}
+          METHOD: sftp
+          LOCAL_DIR: dist
+          REMOTE_DIR: /var/lib/vue
+          ARGS: --delete

@@ -9,7 +9,9 @@
   </div>
   <div v-else-if="twitchID" class="speedsouls-video bg-nord4 dark:bg-nord3">
     <iframe
-      :src="`https://player.twitch.tv/?video=${twitchID}&autoplay=${autoPlay}`"
+      :src="
+        `https://player.twitch.tv/?video=${twitchID}&autoplay=${autoPlay}&parent=${parent}`
+      "
       frameborder="0"
       scrolling="no"
       allowfullscreen="true"
@@ -39,7 +41,8 @@ export default {
   },
   data: () => ({
     youtubeID: null,
-    twitchID: null
+    twitchID: null,
+    parent: window.location.hostname
   }),
   props: {
     autoPlay: {
