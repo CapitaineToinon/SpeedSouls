@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "yarn download:backgrounds && vue-cli-service build",
     "lint": "vue-cli-service lint ./src ./scripts ./*.js",
-    "download:backgrounds": "node ./scripts/downloadBackgrounds.js",
-    "vercel": "vercel"
+    "download:backgrounds": "node ./scripts/downloadBackgrounds.js"
   },
   "pre-commit": [
     "lint"
@@ -34,7 +33,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@vercel/node": "^1.7.2",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-plugin-router": "~4.3.0",
