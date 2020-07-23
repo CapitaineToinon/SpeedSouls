@@ -65,13 +65,27 @@
           </a>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row justify-evenly pb-4">
-        <theme-switcher />
-      </div>
       <div
         class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs border-t border-nord5 dark:border-nord3 text-center"
       >
-        ©2019 Hyperyolo. All rights reserved.
+        Site created by the SpeedSouls team. Please visit our
+        <a :href="VUE_APP_GITHUB">Github</a> to report any issues. This work is
+        licensed under a
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+          >CC BY-NC-ND 4.0 Int'l License</a
+        >.
+      </div>
+      <div
+        v-if="VUE_APP_GITHUB_SHA"
+        class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs dark:border-nord3 text-center"
+      >
+        Site deployed by commit
+        <a
+          :href="
+            `${VUE_APP_GITHUB_SERVER_URL}/${VUE_APP_GITHUB_REPOSITORY}/commit/${VUE_APP_GITHUB_SHA}`
+          "
+          >{{ VUE_APP_GITHUB_SHA }}</a
+        >
       </div>
     </div>
   </footer>
@@ -82,20 +96,21 @@ const {
   VUE_APP_DISCORD,
   VUE_APP_PATREON,
   VUE_APP_TWITTER,
-  VUE_APP_GITHUB
+  VUE_APP_GITHUB,
+  VUE_APP_GITHUB_SHA,
+  VUE_APP_GITHUB_REPOSITORY,
+  VUE_APP_GITHUB_SERVER_URL
 } = process.env;
-import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 export default {
-  components: { ThemeSwitcher },
   data: () => ({
     VUE_APP_DISCORD,
     VUE_APP_PATREON,
     VUE_APP_TWITTER,
-    VUE_APP_GITHUB
-  }),
-  mounted() {
-    console.log(process.env.VUE_APP_GITHUB_SHA); // eslint-disable-line 
-  }
+    VUE_APP_GITHUB,
+    VUE_APP_GITHUB_SHA,
+    VUE_APP_GITHUB_REPOSITORY,
+    VUE_APP_GITHUB_SERVER_URL
+  })
 };
 </script>
