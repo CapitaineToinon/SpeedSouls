@@ -95,7 +95,7 @@ export default {
     VUE_APP_GITHUB
   }),
   mounted() {
-    console.log(process.env.GITHUB_SHA)
+    console.log(process.env.GITHUB_SHA); // eslint-disable-line 
   }
 };
 </script>
