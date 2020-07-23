@@ -85,7 +85,7 @@
             `${VUE_APP_GITHUB_SERVER_URL}/${VUE_APP_GITHUB_REPOSITORY}/commit/${VUE_APP_GITHUB_SHA}`
           "
           >{{ VUE_APP_GITHUB_SHA }}</a
-        >
+        >.
       </div>
     </div>
   </footer>
