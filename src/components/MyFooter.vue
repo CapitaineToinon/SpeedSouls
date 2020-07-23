@@ -93,6 +93,9 @@ export default {
     VUE_APP_PATREON,
     VUE_APP_TWITTER,
     VUE_APP_GITHUB
-  })
+  }),
+  mounted() {
+    console.log(process.env.GITHUB_SHA)
+  }
 };
 </script>
