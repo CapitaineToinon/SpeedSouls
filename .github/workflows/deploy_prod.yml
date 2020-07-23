@@ -7,7 +7,6 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    if: false
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
