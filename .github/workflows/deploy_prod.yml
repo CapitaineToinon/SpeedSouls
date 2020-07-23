@@ -20,6 +20,9 @@ jobs:
       - name: Build Project
         run: |
           yarn install
+          VUE_APP_GITHUB_SHA=$GITHUB_SHA \
+          VUE_APP_GITHUB_REPOSITORY=$GITHUB_REPOSITORY \
+          VUE_APP_GITHUB_SERVER_URL=$GITHUB_SERVER_URL \
           yarn build
 
       - name: List output files
