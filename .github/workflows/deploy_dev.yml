@@ -20,6 +20,7 @@ jobs:
       - name: Build Project
         run: |
           yarn install
+          VUE_APP_GITHUB_SHA=$GITHUB_SHA \
           yarn build
 
       - name: List output files
