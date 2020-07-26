@@ -26,7 +26,7 @@
 
 <script>
 import { of, iif } from 'rxjs';
-import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
+import { skipWhile, pluck, switchMap, catchError, tap } from 'rxjs/operators';
 import { useUser, useRuns } from '@/api/rx-souls';
 import Error from '@/components/Error';
 import PlayerCard from '@/components/PlayerCard';
@@ -76,6 +76,7 @@ export default {
       this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
+        tap(() => (this.playerError = null)),
         switchMap(() =>
           iif(() => this.isRunPage, this.getFromRun(), this.getFromUser()).pipe(
             catchError(this.onPlayersError)

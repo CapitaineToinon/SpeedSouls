@@ -73,7 +73,7 @@
 <script>
 const { VUE_APP_SPEEDRUNCOM } = process.env;
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
@@ -103,7 +103,10 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      useSoulsGames().pipe(catchError(this.onError)),
+      useSoulsGames().pipe(
+        tap(() => (this.error = null)),
+        catchError(this.onError)
+      ),
       this.onSuccess
     );
   }

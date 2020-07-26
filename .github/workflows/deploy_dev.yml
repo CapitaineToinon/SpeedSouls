@@ -36,5 +36,5 @@ jobs:
           FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
           METHOD: sftp
           LOCAL_DIR: dist
-          REMOTE_DIR: /var/www/html
+          REMOTE_DIR: /home/soulsdev/SpeedSouls
           ARGS: --delete

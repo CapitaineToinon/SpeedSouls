@@ -23,7 +23,7 @@
 
 <script>
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { useSoulsGames } from '@/api/rx-souls';
 import Error from '@/components/Error';
 import GameCard from '@/components/GameCard';
@@ -57,7 +57,10 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      useSoulsGames().pipe(catchError(this.onError)),
+      useSoulsGames().pipe(
+        tap(() => (this.error = null)),
+        catchError(this.onError)
+      ),
       this.onSuccess
     );
   }

@@ -54,7 +54,7 @@
 
 <script>
 import { of } from 'rxjs';
-import { pluck, switchMap, catchError } from 'rxjs/operators';
+import { pluck, switchMap, catchError, tap } from 'rxjs/operators';
 import { useRuns } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
@@ -173,6 +173,7 @@ export default {
     this.$subscribeTo(
       this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
         pluck('newValue'),
+        tap(() => (this.runError = null)),
         switchMap(id => useRuns(id).pipe(catchError(this.onRunError)))
       ),
       this.onRunSuccess

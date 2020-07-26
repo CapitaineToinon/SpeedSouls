@@ -86,7 +86,7 @@
 
 <script>
 import { of } from 'rxjs';
-import { skipWhile, pluck, switchMap, catchError } from 'rxjs/operators';
+import { skipWhile, pluck, switchMap, catchError, tap } from 'rxjs/operators';
 import { useUserPersonalBests, useUser } from '@/api/rx-souls';
 import { mapState } from 'vuex';
 import Alert from '@/components/Alert';
@@ -152,6 +152,7 @@ export default {
       this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
+        tap(() => (this.playerError = null)),
         switchMap(() =>
           useUser(this.$route.params.id).pipe(catchError(this.onPlayerError))
         )
@@ -163,6 +164,7 @@ export default {
       this.$watchAsObservable('$route.params.id', { immediate: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
+        tap(() => (this.pbsError = null)),
         switchMap(() =>
           useUserPersonalBests(this.$route.params.id).pipe(
             catchError(this.onPbsError)

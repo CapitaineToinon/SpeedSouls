@@ -59,7 +59,7 @@
 
 <script>
 import { of } from 'rxjs';
-import { switchMap, pluck, catchError, skipWhile } from 'rxjs/operators';
+import { switchMap, pluck, catchError, skipWhile, tap } from 'rxjs/operators';
 import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import clickOutside from '@/directives/clickOutside';
 import Error from '@/components/Error';
@@ -190,6 +190,7 @@ export default {
       this.$watchAsObservable('$route.params.game', { immediate: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
+        tap(() => (this.gameError = null)),
         switchMap(game => useSoulsGame(game).pipe(catchError(this.onGameError)))
       ),
       this.onGameSuccess
@@ -201,6 +202,7 @@ export default {
       }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
+        tap(() => (this.categoryError = null)),
         switchMap(category =>
           useSoulsCategory(this.$route.params.game, category).pipe(
             catchError(this.onCategoryError)

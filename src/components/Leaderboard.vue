@@ -122,7 +122,8 @@ import {
   pluck,
   switchMap,
   map,
-  catchError
+  catchError,
+  tap
 } from 'rxjs/operators';
 import { useLeaderboard } from '@/api/rx-souls';
 import { mapState } from 'vuex';
@@ -177,6 +178,7 @@ export default {
     },
     getLeaderboard() {
       return useLeaderboard(this.game, this.category, this.variables).pipe(
+        tap(() => (this.leaderboardError = null)),
         map(leaderboard => leaderboard.runs),
         startWith(undefined),
         catchError(this.onLeaderboardError)
