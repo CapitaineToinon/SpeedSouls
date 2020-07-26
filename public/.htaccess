@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteRule ^(css|img|js|robots\.txt|favicon\.ico) - [L]
+  RewriteRule ^(leaderboards|run|player|submit|settings) /index.html [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ https://wiki.speedsouls.com/$1 [L,R=308]
+</IfModule>
