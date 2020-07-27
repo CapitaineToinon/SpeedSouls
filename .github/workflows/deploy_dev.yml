@@ -7,7 +7,7 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: Build and deploy beta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -26,15 +26,28 @@ jobs:
           yarn build
 
       - name: List output files
-        run: ls
+        run: ls dist
+
+      - name: Enable maintenance mode
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: touch ~/SpeedSouls/maintenance.enable
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
 
       - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         env:
-          FTP_SERVER: ${{ secrets.DEV_HOST }}
-          FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
-          METHOD: sftp
-          LOCAL_DIR: dist
-          REMOTE_DIR: /home/soulsdev/SpeedSouls
-          ARGS: --delete
+          ftp-server: sftp://${{ secrets.DEV_HOST }}/SpeedSouls/
+          ftp-username: ${{ secrets.DEV_USERNAME }}
+          ftp-password: ${{ secrets.DEV_PASSWORD }}
+          local-dir: dist
+
+      - name: Disable maintenance mode
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: rm ~/SpeedSouls/maintenance.enable
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
