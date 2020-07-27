@@ -38,7 +38,7 @@ jobs:
 
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@3.1.1
-        env:
+        with:
           ftp-server: sftp://${{ secrets.DEV_HOST }}/SpeedSouls/
           ftp-username: ${{ secrets.DEV_USERNAME }}
           ftp-password: ${{ secrets.DEV_PASSWORD }}
