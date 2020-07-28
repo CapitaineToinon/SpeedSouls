@@ -1,5 +1,8 @@
 <template>
-  <alert type="danger">{{ message }}</alert>
+  <alert type="danger">
+    Something broke 😨 <span v-if="message">({{ message }}) </span>
+    <a :href="$route.fullPath" class="underline">Click here to try again</a>.
+  </alert>
 </template>
 
 <script>
@@ -19,7 +22,7 @@ export default {
         this.error?.response?.message ||
         this.error?.message ||
         this.error ||
-        'Something broke...'
+        undefined
       );
     }
   }
