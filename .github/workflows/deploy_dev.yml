@@ -30,14 +30,6 @@ jobs:
       - name: List output files
         run: ls dist
 
-      - name: Creates TMP folder
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: mkdir -p /tmp/SpeedSouls/
-          host: ${{ secrets.DEV_HOST }}
-          username: ${{ secrets.DEV_USERNAME }}
-          password: ${{ secrets.DEV_PASSWORD }}
-
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
         env:
