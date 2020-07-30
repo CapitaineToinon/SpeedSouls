@@ -7,7 +7,7 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    name: Build and deploy beta
+    name: Build and deploy to dev
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -44,7 +44,7 @@ jobs:
       - name: Move final files 
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: rm -r /home/soulsdev/SpeedSouls/* && mv /tmp/SpeedSouls/* /home/soulsdev/SpeedSouls/ && rm -r /tmp/SpeedSouls/
+          command: rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
