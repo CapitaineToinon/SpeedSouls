@@ -17,9 +17,9 @@ function SRC(path) {
 }
 
 function getSoulsGames() {
-  return SRC(`/series/${SERIE}/games?embed=categories,variables`).pipe(
-    map(response => response.data.map(formatGame))
-  );
+  return SRC(
+    `/series/${SERIE}/games?embed=categories,categories.variables,categories.game`
+  ).pipe(map(response => response.data.map(formatGame)));
 }
 
 function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = '') {
@@ -102,14 +102,14 @@ export function useSoulsCategory(gameLookFor, categoryLookFor) {
   );
 }
 
-export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
+export function useLeaderboard({ game, ...category }, variables = []) {
   const variablesQuery = variables.reduce((previous, current) => {
     return `${previous}&var-${current.id}=${current.values.default}`;
   }, '');
 
   return CACHE.get(
-    `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}/${variablesQuery}`,
-    getLeaderboard(gameLookFor, categoryLookFor, variablesQuery)
+    `getSoulsGames/${game.id}/${category.id}/${variablesQuery}`,
+    getLeaderboard(game, category, variablesQuery)
   );
 }
 

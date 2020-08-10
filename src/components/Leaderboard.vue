@@ -16,9 +16,9 @@
             <th class="shrink">Rank</th>
             <th class="shrink">Players</th>
             <th class="shrink">
-              <span class="block md:hidden lg:block">{{
-                leaderboard[0].primary_t.name
-              }}</span>
+              <span class="block md:hidden lg:block">
+                {{ leaderboard[0].primary_t.name }}
+              </span>
               <span class="hidden md:block lg:hidden">Time</span>
             </th>
             <th
@@ -30,9 +30,9 @@
             </th>
             <th
               class="shrink table-cell md:hidden lg:table-cell"
-              v-for="variable in game.variables
-                .filter(v => v.category === category.id)
-                .filter(v => !v['is-subcategory'])"
+              v-for="variable in category.variables.filter(
+                v => !v['is-subcategory']
+              )"
               :key="`th-${variable.id}`"
             >
               {{ variable.name }}
@@ -55,9 +55,9 @@
             </td>
 
             <td class="shrink" :data-label="row.primary_t.name">
-              <span class="block md:hidden lg:block">{{
-                row.primary_t.time
-              }}</span>
+              <span class="block md:hidden lg:block">
+                {{ row.primary_t.time }}
+              </span>
               <span class="hidden md:block lg:hidden">{{ row.time.time }}</span>
             </td>
 
@@ -72,9 +72,9 @@
 
             <td
               class="shrink table-cell md:hidden lg:table-cell"
-              v-for="variable in game.variables
-                .filter(v => v.category === category.id)
-                .filter(v => !v['is-subcategory'])"
+              v-for="variable in category.variables.filter(
+                v => !v['is-subcategory']
+              )"
               :key="variable.id"
               :data-label="variable.name"
             >
@@ -136,10 +136,6 @@ import date from '@/filters/date';
 export default {
   components: { Alert, PlayerName, BySpeedrunCom },
   props: {
-    game: {
-      type: Object,
-      required: true
-    },
     category: {
       type: Object,
       required: true
@@ -177,7 +173,7 @@ export default {
       });
     },
     getLeaderboard() {
-      return useLeaderboard(this.game, this.category, this.variables).pipe(
+      return useLeaderboard(this.category, this.variables).pipe(
         tap(() => (this.leaderboardError = null)),
         map(leaderboard => leaderboard.runs),
         startWith(undefined),
@@ -187,16 +183,7 @@ export default {
   },
   mounted() {
     this.$subscribeTo(
-      this.$watchAsObservable('game', { immediate: true, deep: true }).pipe(
-        pluck('newValue'),
-        skipWhile(v => v === undefined),
-        switchMap(() => this.getLeaderboard())
-      ),
-      this.onLeaderboardSuccess
-    );
-
-    this.$subscribeTo(
-      this.$watchAsObservable('category.id', { immediate: true }).pipe(
+      this.$watchAsObservable('category', { immediate: true, deep: true }).pipe(
         pluck('newValue'),
         skipWhile(v => v === undefined),
         switchMap(() => this.getLeaderboard())

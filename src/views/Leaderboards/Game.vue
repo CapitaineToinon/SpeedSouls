@@ -48,11 +48,7 @@
           :active="variable.values.default"
         />
       </div>
-      <Leaderboard
-        :game="game"
-        :category="category"
-        :variables="subCategories"
-      />
+      <Leaderboard :category="category" :variables="subCategories" />
     </div>
   </div>
 </template>
@@ -126,11 +122,8 @@ export default {
       }
       return array;
     },
-    categoryVariables() {
-      return this.game.variables.filter(v => v.category === this.category.id);
-    },
     subCategories() {
-      return this.categoryVariables.filter(v => v['is-subcategory']);
+      return this.category.variables.filter(v => v['is-subcategory']);
     }
   },
   methods: {

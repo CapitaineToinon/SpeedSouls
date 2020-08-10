@@ -1,5 +1,5 @@
 export default function Category(json) {
-  const { id, name, weblink, miscellaneous } = json;
+  const { id, name, weblink, miscellaneous, variables, game } = json;
 
   const hash = decodeURIComponent(weblink.split('#')[1]);
 
@@ -9,6 +9,8 @@ export default function Category(json) {
     weblink,
     hash: hash.toLowerCase(),
     uglyHash: hash,
-    misc: miscellaneous
+    misc: miscellaneous,
+    variables: variables.data,
+    game: game.data
   };
 }
