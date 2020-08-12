@@ -18,62 +18,67 @@
       >
       and here on SpeedSouls.
     </alert>
-    <div v-if="error">
-      <error :error="error" />
-    </div>
-    <div v-else-if="!games">
-      <div class="progress h-2 flex flex-row"></div>
-    </div>
-    <div v-else>
-      <div
-        class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
-      >
+    <Promised :promise="gamesPromise">
+      <template #pending>
+        <div class="progress h-2 flex flex-row" />
+      </template>
+
+      <template v-slot="games">
         <div
-          class="tab w-full overflow-hidden"
-          :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
-          v-for="(game, i) in games"
-          :key="game.id"
+          class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
         >
-          <input
-            class="absolute opacity-0"
-            :id="`tab-${game.id}`"
-            type="checkbox"
-            name="tabs2"
-          />
-          <label
-            class="block p-5 leading-normal cursor-pointer"
-            :for="`tab-${game.id}`"
-            >{{ game.name }}</label
-          >
           <div
-            :ref="`section-${game.id}`"
-            class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+            class="tab w-full overflow-hidden"
+            :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
+            v-for="(game, i) in games"
+            :key="game.id"
           >
-            <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
-              <a
-                class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
-                v-for="(category, i) in game.categories"
-                :key="i"
-                :href="`${game.weblink}/editrun#${category.uglyHash}`"
-                target="_blank"
-                rel="noopener"
-                >{{ category.name }}</a
+            <input
+              class="absolute opacity-0"
+              :id="`tab-${game.id}`"
+              type="checkbox"
+              name="tabs2"
+            />
+            <label
+              class="block p-5 leading-normal cursor-pointer"
+              :for="`tab-${game.id}`"
+              >{{ game.name }}</label
+            >
+            <div
+              :ref="`section-${game.id}`"
+              class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+            >
+              <div
+                class="p-5 flex flex-row flex-wrap justify-start shadow-inner"
               >
+                <a
+                  class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
+                  v-for="(category, i) in game.categories"
+                  :key="i"
+                  :href="`${game.weblink}/editrun#${category.uglyHash}`"
+                  target="_blank"
+                  rel="noopener"
+                  >{{ category.name }}</a
+                >
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="flex flex-col w-full">
-        <by-speedrun-com class="text-center" />
-      </div>
-    </div>
+        <div class="flex flex-col w-full">
+          <by-speedrun-com class="text-center" />
+        </div>
+      </template>
+
+      <template #rejected="error">
+        <error :error="error" />
+      </template>
+    </Promised>
   </div>
 </template>
 
 <script>
 const { VUE_APP_SPEEDRUNCOM } = process.env;
-import { of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { ref } from '@vue/composition-api';
 import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
@@ -84,31 +89,13 @@ export default {
     title: 'Submit a run'
   },
   components: { Alert, BySpeedrunCom, Error },
-  data: () => ({
-    VUE_APP_SPEEDRUNCOM,
-    games: undefined,
-    error: null
-  }),
-  methods: {
-    onSuccess(games) {
-      if (!games) return;
+  setup() {
+    const gamesPromise = ref(useSoulsGames().toPromise());
 
-      this.error = null;
-      this.games = games;
-    },
-    onError(error) {
-      this.error = error;
-      return of(undefined);
-    }
-  },
-  mounted() {
-    this.$subscribeTo(
-      useSoulsGames().pipe(
-        tap(() => (this.error = null)),
-        catchError(this.onError)
-      ),
-      this.onSuccess
-    );
+    return {
+      VUE_APP_SPEEDRUNCOM,
+      gamesPromise
+    };
   }
 };
 </script>

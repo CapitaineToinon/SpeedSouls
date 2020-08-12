@@ -1,9 +1,12 @@
 import Vue from 'vue';
+import VueCompositionAPI from '@vue/composition-api';
+Vue.use(VueCompositionAPI); // must call Vue.use(VueCompositionAPI) before using any function.
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import VueRx from 'vue-rx';
 import VueMeta from 'vue-meta';
+import { Promised } from 'vue-promised';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -46,9 +49,9 @@ library.add(
   faHourglassEnd
 );
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.use(VueRx);
 Vue.use(VueMeta);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('Promised', Promised);
 
 Vue.config.productionTip = true;
 

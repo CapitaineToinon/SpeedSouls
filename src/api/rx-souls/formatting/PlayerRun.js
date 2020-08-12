@@ -8,7 +8,7 @@ export default function PlayerRun(json) {
     .filter(raw => raw.category.data.type === 'per-game')
     .map(raw => {
       let { game, category, run, place } = raw;
-      let { times, videos, date, id } = run;
+      let { times, videos, date, id, values } = run;
 
       const formattedGame = formatGame(game.data);
 
@@ -16,6 +16,7 @@ export default function PlayerRun(json) {
         place,
         date,
         id,
+        values,
         game: formattedGame,
         category: formatCategory(category.data),
         primary_t: getPrimaryTime(times, formattedGame.ruleset),

@@ -69,6 +69,11 @@ const store = new Vuex.Store({
     disableRelativeTime({ commit }) {
       commit('setRelativeTime', false);
     }
+  },
+  getters: {
+    dark: state => state.dark,
+    theme: state => state.theme,
+    relativeTime: state => state.relativeTime
   }
 });
 

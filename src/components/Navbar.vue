@@ -118,21 +118,13 @@ const {
   VUE_APP_GITHUB
 } = process.env;
 
-import withScroll from '@/mixins/withScroll.js';
-import { mapState } from 'vuex';
+import useWithScroll from '@/mixins/withScroll';
+import useBodyLock from '@/mixins/bodyLocker';
+import onResize from '@/mixins/onResize';
 import clickOutside from '@/directives/clickOutside';
+import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 
 export default {
-  mixins: [withScroll],
-  data: () => ({
-    VUE_APP_WIKI,
-    VUE_APP_FORUMS,
-    VUE_APP_DISCORD,
-    VUE_APP_PATREON,
-    VUE_APP_TWITTER,
-    VUE_APP_GITHUB,
-    hidden: true
-  }),
   props: {
     transparant: {
       type: Boolean,
@@ -142,34 +134,62 @@ export default {
   directives: {
     clickOutside
   },
-  methods: {
-    toggleMenu() {
-      this.hidden = !this.hidden;
-    },
-    onClickOutside({ target }) {
-      // close the menu if clicked outside of it or the burger
-      if (target === this.$refs.burger || this.$refs.burger.contains(target))
-        return;
-      this.hidden = true;
-    }
-  },
-  computed: {
-    ...mapState(['dark']),
-    isWhiteLogo() {
-      return this.dark || this.isTransparant;
-    },
-    isTransparant() {
-      return this.transparant && this.off.y < 100;
-    }
-  },
-  watch: {
-    '$route.name': {
-      deep: true,
-      immediate: true,
-      handler() {
-        this.hidden = true;
+  setup(props, { root, refs }) {
+    const state = reactive({
+      VUE_APP_WIKI,
+      VUE_APP_FORUMS,
+      VUE_APP_DISCORD,
+      VUE_APP_PATREON,
+      VUE_APP_TWITTER,
+      VUE_APP_GITHUB,
+      hidden: true
+    });
+
+    const { y } = useWithScroll();
+    const [lock, unlock] = useBodyLock();
+    const dark = computed(() => root.$store.getters.dark);
+    const isTransparant = computed(() => props.transparant && y.value < 100);
+    const isWhiteLogo = computed(() => dark.value || isTransparant.value);
+
+    // lock the body when navbar menu is opened
+    watch(
+      () => state.hidden,
+      (value, old) => {
+        if (value === old) return;
+        !value ? lock() : unlock();
       }
+    );
+
+    // but close it on resize
+    onResize(() => {
+      state.hidden = true;
+    });
+
+    watch(
+      () => root.$route.name,
+      () => {
+        state.hidden = true;
+      }
+    );
+
+    function toggleMenu() {
+      state.hidden = !state.hidden;
     }
+
+    function onClickOutside({ target }) {
+      // close the menu if clicked outside of it or the burger
+      if (target === refs.burger || refs.burger.contains(target)) return;
+      state.hidden = true;
+    }
+
+    return {
+      ...toRefs(state),
+      dark,
+      isTransparant,
+      isWhiteLogo,
+      toggleMenu,
+      onClickOutside
+    };
   }
 };
 </script>
@@ -250,6 +270,10 @@ nav {
     @apply no-underline;
     @apply text-nord0;
     @apply p-2;
+
+    .router-link-exact-active:not([href='/']) {
+      @apply text-nord10;
+    }
   }
 
   .burger {

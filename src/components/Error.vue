@@ -7,6 +7,7 @@
 
 <script>
 import Alert from '@/components/Alert';
+import { computed } from '@vue/composition-api';
 
 export default {
   components: { Alert },
@@ -16,15 +17,17 @@ export default {
       required: true
     }
   },
-  computed: {
-    message() {
-      return (
-        this.error?.response?.message ||
+  setup() {
+    const message = computed(() => {
+      this.error?.response?.message ||
         this.error?.message ||
         this.error ||
-        undefined
-      );
-    }
+        undefined;
+    });
+
+    return {
+      message
+    };
   }
 };
 </script>

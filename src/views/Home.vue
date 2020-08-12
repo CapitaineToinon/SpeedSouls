@@ -102,9 +102,10 @@ const {
   VUE_APP_GITHUB,
   VUE_APP_PATREON
 } = process.env;
-import { mapState } from 'vuex';
+
 import Hero from '@/components/Hero';
 import Discord from '@/components/Discord';
+import { computed, reactive, toRefs } from '@vue/composition-api';
 
 export default {
   metaInfo: {
@@ -112,31 +113,39 @@ export default {
     titleTemplate: null
   },
   components: { Hero, Discord },
-  data: () => ({
-    VUE_APP_WIKI,
-    VUE_APP_GITHUB,
-    VUE_APP_DISCORD,
-    VUE_APP_PATREON,
-    assets: [
-      'bloodborne',
-      'darksouls',
-      'darksouls2',
-      'darksouls3',
-      'darksoulsremastered',
-      'darksouls2sotfs',
-      'demonssouls'
-    ]
-  }),
-  computed: {
-    ...mapState(['dark']),
-    style() {
-      const image = this.assets[Math.floor(Math.random() * this.assets.length)];
+  setup(props, { root }) {
+    const state = reactive({
+      VUE_APP_WIKI,
+      VUE_APP_GITHUB,
+      VUE_APP_DISCORD,
+      VUE_APP_PATREON,
+      assets: [
+        'bloodborne',
+        'darksouls',
+        'darksouls2',
+        'darksouls3',
+        'darksoulsremastered',
+        'darksouls2sotfs',
+        'demonssouls'
+      ]
+    });
+
+    const dark = computed(() => root.$store.getters.dark);
+    const style = computed(() => {
+      const image =
+        state.assets[Math.floor(Math.random() * state.assets.length)];
       const url = require(`@/assets/backgrounds/${image}-1280.jpg`);
 
       return {
         '--bg-url': `url(${url})`
       };
-    }
+    });
+
+    return {
+      ...toRefs(state),
+      dark,
+      style
+    };
   }
 };
 </script>
@@ -148,9 +157,6 @@ export default {
 
 .hero {
   @apply py-24;
-
-  h1 {
-  }
 }
 
 .home {

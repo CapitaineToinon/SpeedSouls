@@ -33,17 +33,13 @@ const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|vide
 import getIdFromUrl from 'get-youtube-id';
 import Alert from '@/components/Alert';
 import ExternalLink from '@/components/ExternalLink';
+import { computed } from '@vue/composition-api';
 
 export default {
   components: {
     Alert,
     ExternalLink
   },
-  data: () => ({
-    youtubeID: null,
-    twitchID: null,
-    parent: window.location.hostname
-  }),
   props: {
     autoPlay: {
       type: Boolean,
@@ -54,18 +50,16 @@ export default {
       required: true
     }
   },
-  methods: {
-    getYouTubeID() {
-      return getIdFromUrl(this.url);
-    },
-    getTwitchID() {
-      const matches = TWITCH_REGEX.exec(this.url);
-      return matches && matches[1] ? matches[1] : null;
-    }
-  },
-  beforeMount() {
-    this.youtubeID = this.getYouTubeID();
-    this.twitchID = this.getTwitchID();
+  setup(props) {
+    const youtubeID = computed(() => getIdFromUrl(props.url));
+    const twitchID = computed(() => TWITCH_REGEX.exec(props.url)?.[1] || null);
+    const parent = computed(() => window.location.hostname);
+
+    return {
+      youtubeID,
+      twitchID,
+      parent
+    };
   }
 };
 </script>

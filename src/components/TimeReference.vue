@@ -9,32 +9,28 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { computed, watch, ref } from '@vue/composition-api';
 
 export default {
-  data: () => ({
-    selected: 0
-  }),
-  computed: {
-    ...mapState(['relativeTime'])
-  },
-  watch: {
-    selected(val) {
+  setup(props, { root }) {
+    const relativeTime = computed(() => root.$store.getters.relativeTime);
+    const selected = ref(relativeTime.value ? '0' : '1');
+
+    watch(selected, val => {
       switch (val) {
         case '0':
-          this.enableRelativeTime();
+          root.$store.dispatch('enableRelativeTime');
           break;
         case '1':
-          this.disableRelativeTime();
+          root.$store.dispatch('disableRelativeTime');
           break;
       }
-    }
-  },
-  methods: {
-    ...mapActions(['enableRelativeTime', 'disableRelativeTime'])
-  },
-  mounted() {
-    this.selected = this.relativeTime ? '0' : '1';
+    });
+
+    return {
+      relativeTime,
+      selected
+    };
   }
 };
 </script>

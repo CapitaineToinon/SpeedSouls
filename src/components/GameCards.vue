@@ -1,29 +1,39 @@
 <template>
-  <div v-if="error" class="rejected">
-    <error :error="error" />
-  </div>
-  <div v-else-if="!games" class="pending">
-    <div class="progress h-2 flex flex-row"></div>
-  </div>
-  <div v-else class="flex flex-col justify-center w-full">
-    <div
-      class="games grid grid-cols-1 mb-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-    >
-      <router-link
-        :to="to(game.abbreviation)"
-        v-for="(game, i) in games"
-        :key="i"
-      >
-        <game-card :game="game" />
-      </router-link>
-    </div>
-    <by-speedrun-com class="text-center" />
-  </div>
+  <Promised :promise="gamesPromise">
+    <template #pending>
+      <div class="progress h-2 flex flex-row" />
+    </template>
+
+    <template #default="games">
+      <div class="flex flex-col justify-center w-full">
+        <div
+          class="games grid grid-cols-1 mb-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
+          <router-link
+            :to="{
+              name: 'Game',
+              params: {
+                game: game.abbreviation
+              }
+            }"
+            v-for="(game, i) in games"
+            :key="i"
+          >
+            <game-card :game="game" />
+          </router-link>
+        </div>
+        <by-speedrun-com class="text-center" />
+      </div>
+    </template>
+
+    <template #rejected="error">
+      <error :error="error" />
+    </template>
+  </Promised>
 </template>
 
 <script>
-import { of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { ref } from '@vue/composition-api';
 import { useSoulsGames } from '@/api/rx-souls';
 import Error from '@/components/Error';
 import GameCard from '@/components/GameCard';
@@ -31,38 +41,12 @@ import BySpeedrunCom from '@/components/BySpeedrunCom';
 
 export default {
   components: { Error, GameCard, BySpeedrunCom },
-  data: () => ({
-    games: undefined,
-    error: null
-  }),
-  methods: {
-    onSuccess(games) {
-      if (!games) return;
+  setup() {
+    const gamesPromise = ref(useSoulsGames().toPromise());
 
-      this.error = null;
-      this.games = games;
-    },
-    onError(error) {
-      this.error = error;
-      return of(undefined);
-    },
-    to(game) {
-      return {
-        name: 'Game',
-        params: {
-          game
-        }
-      };
-    }
-  },
-  mounted() {
-    this.$subscribeTo(
-      useSoulsGames().pipe(
-        tap(() => (this.error = null)),
-        catchError(this.onError)
-      ),
-      this.onSuccess
-    );
+    return {
+      gamesPromise
+    };
   }
 };
 </script>

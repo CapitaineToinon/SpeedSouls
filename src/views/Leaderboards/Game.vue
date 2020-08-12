@@ -1,68 +1,88 @@
 <template>
-  <div v-if="gameError" class="min-h-screen-navbar container">
-    <error :error="gameError" />
-  </div>
-  <div v-else-if="categoryError" class="min-h-screen-navbar container">
-    <error :error="categoryError" />
-  </div>
-  <div v-else-if="!game || !category" class="min-h-screen-navbar container">
-    <div class="progress h-2 flex flex-row"></div>
-  </div>
-  <div v-else class="min-h-screen-navbar container flex flex-row">
-    <button
-      id="sidebar-button"
-      ref="sidebarButton"
-      @click="openSidebar = !openSidebar"
-      :class="{ open: openSidebar }"
-    >
-      <font-awesome-icon
-        v-if="!openSidebar"
-        :icon="['fas', 'list']"
-        size="2x"
-      />
-      <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
-    </button>
-    <aside :class="{ open: openSidebar }">
-      <categories
-        class="categories"
-        :categories="game.categories"
-        :active="$route.params.category"
-        @click="onCategoryClick"
-        v-click-outside="closeAside"
-      />
-    </aside>
-    <div
-      class="content flex flex-col flex-grow ml-0 md:ml-5"
-      :class="{ open: openSidebar }"
-    >
-      <breadcrumbs class="mb-4" :items="breadcrumbs" />
-      <div
-        class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
-      >
-        <ButtonGroup
-          class="mb-4"
-          v-for="variable in subCategories"
-          :key="variable.id"
-          :options="variable.values.values"
-          @change="v => (variable.values.default = v)"
-          :active="variable.values.default"
-        />
+  <Promised :promise="gamePromise">
+    <template #pending>
+      <div class="min-h-screen-navbar container">
+        <div class="progress h-2 flex flex-row"></div>
       </div>
-      <Leaderboard :category="category" :variables="subCategories" />
-    </div>
-  </div>
+    </template>
+
+    <template #default="game">
+      <div class="min-h-screen-navbar container flex flex-row">
+        <button
+          id="sidebar-button"
+          ref="sidebarButtonRef"
+          @click="openSidebar = !openSidebar"
+          :class="{ open: openSidebar }"
+        >
+          <font-awesome-icon
+            v-if="!openSidebar"
+            :icon="['fas', 'list']"
+            size="2x"
+          />
+          <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
+        </button>
+        <aside :class="{ open: openSidebar }">
+          <categories
+            class="categories"
+            :categories="game.categories"
+            :active="$route.params.category"
+            @click="onCategoryClick"
+            v-click-outside="closeAside"
+          />
+        </aside>
+        <div
+          class="content flex flex-col flex-grow ml-0 md:ml-5"
+          :class="{ open: openSidebar }"
+        >
+          <breadcrumbs class="mb-4" :items="breadcrumbs" />
+
+          <Promised :promise="categoryPromise">
+            <template #combined="{ data: category }">
+              <div
+                v-if="category"
+                class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
+              >
+                <ButtonGroup
+                  class="mb-4"
+                  v-for="variable in category.variables.filter(
+                    v => v['is-subcategory']
+                  )"
+                  :key="variable.id"
+                  :options="variable.values.values"
+                  @change="v => (variable.values.default = v)"
+                  :active="variable.values.default"
+                />
+              </div>
+              <Leaderboard
+                v-if="category"
+                :category="category"
+                :variables="category.variables.filter(v => v['is-subcategory'])"
+              />
+            </template>
+          </Promised>
+        </div>
+      </div>
+    </template>
+
+    <template #rejected="error">
+      <div class="min-h-screen-navbar container">
+        <error :error="error" />
+      </div>
+    </template>
+  </Promised>
 </template>
 
 <script>
-import { of } from 'rxjs';
-import { switchMap, pluck, catchError, skipWhile, tap } from 'rxjs/operators';
 import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import clickOutside from '@/directives/clickOutside';
+import useBodyLock from '@/mixins/bodyLocker';
+import onResize from '@/mixins/onResize';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
 import ButtonGroup from '@/components/ButtonGroup';
+import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 
 export default {
   metaInfo() {
@@ -80,130 +100,116 @@ export default {
     Categories,
     Leaderboard
   },
-  data: () => ({
-    game: undefined,
-    gameError: null,
-    category: undefined,
-    categoryError: null,
-    openSidebar: false
-  }),
-  computed: {
-    metaTitle() {
-      if (this.game && this.category) {
-        return `${this.game.name} ${this.category.name} Leaderboards`;
-      }
+  setup(props, { root, refs }) {
+    const [lock, unlock] = useBodyLock();
 
-      if (this.game) {
-        return `${this.game.name} Leaderboards`;
-      }
+    const state = reactive({
+      openSidebar: false,
+      metaTitle: undefined,
+      gameLink: undefined,
+      categoryLink: undefined
+    });
 
-      return undefined;
-    },
-    breadcrumbs() {
-      const array = [
-        {
-          text: 'Leaderboards',
-          to: { name: 'Games' }
-        }
-      ];
-      if (this.game) {
-        array.push({
-          text: this.game.name,
-          to: {},
-          active: true
-        });
+    // prevent the body from scrolling when sidebar is opened
+    watch(
+      () => state.openSidebar,
+      (value, old) => {
+        if (value === old) return;
+        value ? lock() : unlock();
       }
-      if (this.category) {
-        array.push({
-          text: this.category.name,
-          to: {},
-          active: true
-        });
-      }
-      return array;
-    },
-    subCategories() {
-      return this.category.variables.filter(v => v['is-subcategory']);
-    }
-  },
-  methods: {
-    onGameSuccess(data) {
-      if (!data) return;
+    );
 
-      if (!this.$route.params.category && data.categories.length) {
-        this.$router.replace({
-          name: 'Game',
-          params: {
-            game: this.$route.params.game,
-            category: data.categories[0].hash
+    // but close it on resize
+    onResize(() => {
+      state.openSidebar = false;
+    });
+
+    const breadcrumbs = computed({
+      get: () => {
+        const array = [
+          {
+            text: 'Leaderboards',
+            to: { name: 'Games' }
           }
-        });
-      }
+        ];
 
-      this.gameError = null;
-      this.game = data;
-    },
-    onGameError(error) {
-      this.gameError = error;
-      return of(undefined);
-    },
-    onCategorySuccess(category) {
-      if (!category) return;
+        if (state.gameLink) array.push(state.gameLink);
+        if (state.categoryLink) array.push(state.categoryLink);
+        return array;
+      },
+      set: value => (state.otherLinks = value)
+    });
 
-      this.categoryError = null;
-      this.category = category;
-    },
-    onCategoryError(error) {
-      this.categoryError = error;
-      return of(undefined);
-    },
-    onCategoryClick(category) {
+    const gamePromise = computed(() =>
+      useSoulsGame(root.$route.params.game)
+        .toPromise()
+        .then(game => {
+          if (!root.$route.params.category && game.categories.length) {
+            root.$router.replace({
+              name: 'Game',
+              params: {
+                game: root.$route.params.game,
+                category: game.categories[0].hash
+              }
+            });
+          }
+
+          // breadcrumbs
+          state.gameLink = {
+            text: game.name,
+            to: {},
+            active: true
+          };
+
+          return game;
+        })
+    );
+
+    const categoryPromise = computed(() =>
+      useSoulsCategory(root.$route.params.game, root.$route.params.category)
+        .toPromise()
+        .then(category => {
+          // breadcrumbs
+          state.categoryLink = {
+            text: category.name,
+            to: {},
+            active: true
+          };
+
+          return category;
+        })
+    );
+
+    function onCategoryClick(category) {
       this.openSidebar = false;
-      if (this.category === category) return;
+      if (root.$route.params.category === category.hash) return;
 
-      this.$router.push({
+      root.$router.push({
         name: 'Game',
         params: {
-          game: this.$route.params.game,
+          game: root.$route.params.game,
           category: category.hash
         }
       });
-    },
-    closeAside({ target }) {
+    }
+
+    function closeAside({ target }) {
       if (
-        target === this.$refs.sidebarButton ||
-        this.$refs.sidebarButton.contains(target)
+        target === refs.sidebarButtonRef ||
+        refs.sidebarButtonRef.contains(target)
       )
         return;
-      this.openSidebar = false;
+      state.openSidebar = false;
     }
-  },
-  mounted() {
-    this.$subscribeTo(
-      this.$watchAsObservable('$route.params.game', { immediate: true }).pipe(
-        pluck('newValue'),
-        skipWhile(v => v === undefined),
-        tap(() => (this.gameError = null)),
-        switchMap(game => useSoulsGame(game).pipe(catchError(this.onGameError)))
-      ),
-      this.onGameSuccess
-    );
 
-    this.$subscribeTo(
-      this.$watchAsObservable('$route.params.category', {
-        immediate: true
-      }).pipe(
-        pluck('newValue'),
-        skipWhile(v => v === undefined),
-        tap(() => (this.categoryError = null)),
-        switchMap(category =>
-          useSoulsCategory(this.$route.params.game, category).pipe(
-            catchError(this.onCategoryError)
-          )
-        )
-      ),
-      this.onCategorySuccess
-    );
+    return {
+      ...toRefs(state),
+      breadcrumbs,
+      gamePromise,
+      categoryPromise,
+      onCategoryClick,
+      closeAside
+    };
   }
 };
 </script>

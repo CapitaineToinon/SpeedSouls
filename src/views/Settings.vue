@@ -1,6 +1,8 @@
 <template>
   <div class="container text-nord0 dark:text-nord6 max-w-screen-sm">
-    <h1 class="text-4xl text-center mb-6">Settings</h1>
+    <h1 class="text-4xl text-center mb-6 font-bold text-nord0 dark:text-nord6">
+      Settings
+    </h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex flex-col justify-between">

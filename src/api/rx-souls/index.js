@@ -14,7 +14,9 @@ const SERIE = 'souls';
 const RETRY_COUNT = 3;
 
 function SRC(path) {
-  return ajax.getJSON(`${API_ENDPOINT}${path}`).pipe(retry(RETRY_COUNT));
+  const key = `${API_ENDPOINT}${path}`;
+
+  return CACHE.get(key, ajax.getJSON(key).pipe(retry(RETRY_COUNT)));
 }
 
 function getSoulsGames() {
@@ -71,7 +73,7 @@ function getUserPersonalBests(userId) {
 }
 
 export function useSoulsGames() {
-  return CACHE.get('getSoulsGames', getSoulsGames());
+  return getSoulsGames();
 }
 
 export function useSoulsGame(lookFor) {
@@ -108,23 +110,17 @@ export function useLeaderboard({ game, ...category }, variables = []) {
     return `${previous}&var-${current.id}=${current.values.default}`;
   }, '');
 
-  return CACHE.get(
-    `getSoulsGames/${game.id}/${category.id}/${variablesQuery}`,
-    getLeaderboard(game, category, variablesQuery)
-  );
+  return getLeaderboard(game, category, variablesQuery);
 }
 
 export function useRuns(runId) {
-  return CACHE.get(`getRun/${runId}`, getRun(runId));
+  return getRun(runId);
 }
 
 export function useUser(userId) {
-  return CACHE.get(`getUser/${userId}`, getUser(userId));
+  return getUser(userId);
 }
 
 export function useUserPersonalBests(userId) {
-  return CACHE.get(
-    `getUserPersonalBests/${userId}`,
-    getUserPersonalBests(userId)
-  );
+  return getUserPersonalBests(userId);
 }
