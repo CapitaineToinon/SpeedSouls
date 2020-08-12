@@ -11,14 +11,15 @@ import CACHE from './cache';
 export const BASE_URL = 'https://www.speedrun.com';
 export const API_ENDPOINT = `${BASE_URL}/api/v1`;
 const SERIE = 'souls';
+const RETRY_COUNT = 3;
 
 function SRC(path) {
-  return ajax.getJSON(`${API_ENDPOINT}${path}`).pipe(retry(2));
+  return ajax.getJSON(`${API_ENDPOINT}${path}`).pipe(retry(RETRY_COUNT));
 }
 
 function getSoulsGames() {
   return SRC(
-    `/series/${SERIE}/games?embed=categories,categories.variables,categories.game`
+    `/series/${SERIE}/games?embed=categories,variables,categories.variables,categories.game`
   ).pipe(map(response => response.data.map(formatGame)));
 }
 
@@ -35,21 +36,21 @@ function getRun(runId) {
   return forkJoin(
     from(getSoulsGames()),
     from(
-      SRC(`/runs/${runId}?embed=players,category`).pipe(
-        map(response => response.data)
-      )
+      SRC(
+        `/runs/${runId}?embed=players,game,category,category.variables,category.game`
+      ).pipe(map(response => response.data))
     )
   ).pipe(
     map(([games, run]) => {
-      const game = games.find(g => g.id === run.game);
+      const game = games.find(g => g.id === run.game.data.id);
 
       if (!game) {
         throw new Error('Run not found');
       }
 
-      return [game, run];
+      return run;
     }),
-    map(([game, run]) => formatRun(run, game))
+    map(formatRun)
   );
 }
 
@@ -62,7 +63,7 @@ function getUser(userId) {
 
 function getUserPersonalBests(userId) {
   return SRC(
-    `/users/${userId}/personal-bests?series=${SERIE}&embed=game,category`
+    `/users/${userId}/personal-bests?series=${SERIE}&embed=game,category,category.variables,category.game`
   ).pipe(
     map(response => response.data),
     map(raw => formatPlayerRun(raw))
