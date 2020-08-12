@@ -16,7 +16,6 @@
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/vue-fontawesome": "^0.1.9",
-    "@now/node": "^1.6.1",
     "@vue/composition-api": "^1.0.0-beta.9",
     "date-fns": "^2.12.0",
     "flag-icon-css": "^3.4.6",
