@@ -79,7 +79,6 @@ import BySpeedrunCom from '@/components/BySpeedrunCom';
 import date from '@/filters/date';
 import { useRuns } from '@/api/rx-souls';
 import { reactive, computed, toRefs } from '@vue/composition-api';
-import { delay } from 'rxjs/operators';
 
 export default {
   metaInfo() {
@@ -117,7 +116,6 @@ export default {
 
     const runPromise = computed(() =>
       useRuns(root.$route.params.id)
-        .pipe(delay(2000))
         .toPromise()
         .then(run => {
           const game = run.game;
