@@ -36,10 +36,13 @@
         >
           <breadcrumbs class="mb-4" :items="breadcrumbs" />
 
-          <Promised :promise="categoryPromise">
-            <template #combined="{ data: category }">
+          <Promised :promise="categoryPromise" :pending-delay="1000">
+            <template #pending>
+              <div class="progress h-2 flex flex-row"></div>
+            </template>
+
+            <template #default="category">
               <div
-                v-if="category"
                 class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
               >
                 <ButtonGroup
@@ -54,10 +57,13 @@
                 />
               </div>
               <Leaderboard
-                v-if="category"
                 :category="category"
                 :variables="category.variables.filter(v => v['is-subcategory'])"
               />
+            </template>
+
+            <template #rejected="error">
+              <error :error="error" />
             </template>
           </Promised>
         </div>
@@ -73,7 +79,6 @@
 </template>
 
 <script>
-import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import clickOutside from '@/directives/clickOutside';
 import useBodyLock from '@/mixins/bodyLocker';
 import onResize from '@/mixins/onResize';
@@ -82,6 +87,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
 import ButtonGroup from '@/components/ButtonGroup';
+import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 
 export default {
