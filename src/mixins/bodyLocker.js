@@ -30,7 +30,7 @@ watch(
  * Mixin to lock the body, preventing it to scroll
  * The lock doesn't actually directly lock the body
  * but instead increase a counter as multiple
- * component count request the body to be locked
+ * component could request the body to be locked
  * at the same time.
  */
 export default function useBodyLocker() {

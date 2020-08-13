@@ -1,22 +1,51 @@
 <template>
   <div class="container flex flex-col lg:flex-row flex-wrap">
     <aside
-      v-if="players.length"
-      class="w-full mb-5 gap-4 md:mb-0 lg:w-64"
-      :class="{ 'order-2 lg:order-1': isRunPage }"
+      v-if="!error"
+      class="w-full mb-0 gap-4 lg:w-64"
+      :class="{
+        'order-2 lg:order-1 ': isRunPage
+      }"
     >
-      <player-card
-        class="mb-4"
-        v-for="(p, i) in players"
-        :class="{ sticky: $route.name === 'Player' }"
-        :key="i"
-        :player="p"
-        :showbutton="!isPlayerPage"
-      />
+      <div v-if="players.length">
+        <player-card
+          class="mb-4"
+          v-for="(p, i) in players"
+          :class="{ sticky: $route.name === 'Player' }"
+          :key="i"
+          :player="p"
+          :showbutton="isRunPage"
+        />
+      </div>
+      <div
+        v-else
+        class="bg-nord6 text-center dark:bg-nord1 rounded overflow-hidden shadow-lg py-5 flex flex-col justify-evenly"
+      >
+        <div class="flex-1 flex flex-col justify-center items-center mx-2">
+          <div class="is-skeleton rounded pb-4 w-1/2 mb-5"></div>
+          <div class="is-skeleton rounded pb-1/3 w-1/3 mb-5"></div>
+          <div class="is-skeleton rounded pb-3 w-2/3"></div>
+          <div
+            v-if="isRunPage"
+            class="flex-1 flex flex-row items-center mx-2 justify-center mt-4"
+          >
+            <button
+              disabled
+              class="w-auto bg-nord10 text-white font-bold py-2 px-4 border-b-4 border-nord9 rounded cursor-not-allowed opacity-50"
+            >
+              View Profile
+            </button>
+          </div>
+        </div>
+      </div>
+      <div v-if="isRunPage" class="flex lg:hidden flex-col w-full mt-5">
+        <by-speedrun-com class="text-center" />
+      </div>
     </aside>
+
     <div
-      class="w-full md:flex-1 ml-0 lg:ml-5 mb-4 lg:mb-0"
-      :class="{ 'order-1 lg:order-2': isRunPage }"
+      class="w-full md:flex-1 ml-0 lg:ml-5"
+      :class="{ 'order-1 lg:order-2 mb-4 lg:mb-0': isRunPage }"
     >
       <router-view />
     </div>
@@ -30,40 +59,39 @@
  * on and change the source in which we get the players from.
  * We don't need to worry about duplicated api calls because it's
  * cached on the frontend. We also don't do loaders or error
- * display because the child routes already do.
+ * display because the child routes already do. We do hide everything
+ * on error though.
  *
  * Players is always an array, even on profiles, to simplify the logic.
  */
-import { useUser, useRuns } from '@/api/rx-souls';
 import PlayerCard from '@/components/PlayerCard';
+import BySpeedrunCom from '@/components/BySpeedrunCom';
+import { useUser, useRuns } from '@/api/rx-souls';
 import { ref, computed, watch } from '@vue/composition-api';
+import { map } from 'rxjs/operators';
+import { iif } from 'rxjs';
 
 export default {
-  components: { PlayerCard },
+  components: { BySpeedrunCom, PlayerCard },
   setup(props, { root }) {
     const isRunPage = computed(() => root.$route.name === 'Run');
     const isPlayerPage = computed(() => !isRunPage.value);
     const players = ref([]);
+    const error = ref(null);
 
     /**
      * Get the player from the run api
-     * @return {Promise<any[]>}
      */
-    function getFromRun() {
-      return useRuns(root.$route.params.id)
-        .toPromise()
-        .then(({ players }) => players);
-    }
+    const getFromRun = computed(() =>
+      useRuns(root.$route.params.id).pipe(map(({ players }) => players))
+    );
 
     /**
      * Get the player from the user api
-     * @return {Promise<any[]>}
      */
-    function getFromUser() {
-      return useUser(root.$route.params.id)
-        .toPromise()
-        .then(player => [player]);
-    }
+    const getFromUser = computed(() =>
+      useUser(root.$route.params.id).pipe(map(player => [player]))
+    );
 
     /**
      * Find a player by name
@@ -76,10 +104,15 @@ export default {
     }
 
     // we do not expose the promise here and don't do
-    // any loader or error handling in this route
-    // because child routes already do it
+    // any loader or error displaying in this route
+    // because child routes already do it. Just hide
+    // the template if error
     const playersPromise = computed(() =>
-      isRunPage.value ? getFromRun() : getFromUser()
+      iif(
+        () => isRunPage.value,
+        getFromRun.value,
+        getFromUser.value
+      ).toPromise()
     );
 
     // watchEffect updating the players array
@@ -88,20 +121,28 @@ export default {
     // needlessly
     async function effect(id, old) {
       if (id === old) return;
+      error.value = null;
 
-      const newPlayers = await Promise.resolve(playersPromise.value);
-      let length = players.length;
+      try {
+        const newPlayers = await Promise.resolve(playersPromise.value);
+        let length = players.length;
 
-      // remove players if needed
-      while (length--) {
-        const p = players.value[length];
-        if (!find(p, newPlayers)) players.value.pop();
+        // remove the curre t players that aren't in the
+        // new players
+        while (length--) {
+          const p = players.value[length];
+          if (!find(p, newPlayers)) players.value.pop();
+        }
+
+        // add the new players that aren't already
+        // in the list of current players
+        newPlayers.forEach(p => {
+          if (!find(p, players.value)) players.value.push(p);
+        });
+      } catch (e) {
+        // save the error to hide the template
+        error.value = e;
       }
-
-      // add new players if needed
-      newPlayers.forEach(p => {
-        if (!find(p, players.value)) players.value.push(p);
-      });
     }
 
     // the id can either be a username or a run id
@@ -112,7 +153,8 @@ export default {
     return {
       isRunPage,
       isPlayerPage,
-      players
+      players,
+      error
     };
   }
 };

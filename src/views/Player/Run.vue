@@ -1,66 +1,70 @@
 <template>
-  <Promised :promise="runPromise">
-    <template #pending>
-      <div class="progress h-2 flex flex-row" />
-    </template>
+  <Promised :promise="runPromise" :pending-delay="0">
+    <template #combined="{ isPending, data: run, error }">
+      <error v-if="error" :error="error" />
+      <div v-else>
+        <breadcrumbs class="pb-3" :items="breadcrumbs" :loading="isPending" />
 
-    <template #default="run">
-      <breadcrumbs class="pb-3" :items="breadcrumbs" />
-      <div
-        class="overflow-hidden rounded mb-4 bg-nord5 dark:bg-nord1 shadow-md"
-      >
-        <div v-if="run && run.videos && run.videos.links" class="w-full">
-          <run-video
-            v-for="(link, i) in run.videos.links"
-            :key="i"
-            :url="link.uri"
-          ></run-video>
-        </div>
-        <div v-else class="p-4">
-          <alert type="warning">No video.</alert>
-        </div>
-        <div class="px-6 py-4">
-          <div class="text-nord0 dark:text-nord6 text-xl">
-            <router-link :to="to(run.game, run.category)">
-              {{ run.category.name }}
-            </router-link>
-            <span
-              class="text-nord1 dark:text-nord4"
-              v-for="(value, varId) in run.values"
-              :key="varId"
-            >
-              ({{ getVariableName(run.category.variables, varId, value) }})
-            </span>
-            in {{ run.primary_t.time }} by
-            <span class="player-names">
-              <player-name
-                class="player-name"
-                :class="{ 'cursor-pointer': !!player.id }"
-                v-for="(player, i) in run.players"
-                :key="`player-${i}`"
-                :player="player"
-                @click="onPlayerClick"
-              />
-            </span>
+        <div
+          v-if="!error"
+          class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md"
+        >
+          <div v-if="isPending" class="w-full">
+            <div class="speedsouls-video inverted"></div>
           </div>
-          <p class="text-nord1 dark:text-nord4 text-base">
-            {{ run.date | date }}
-          </p>
-          <p
-            v-if="run.comment"
-            class="text-nord1 dark:text-nord4 text-base mt-5 italic"
-          >
-            {{ run.comment }}
-          </p>
+          <div v-else-if="run && run.videos && run.videos.links" class="w-full">
+            <run-video
+              v-for="(link, i) in run.videos.links"
+              :key="i"
+              :url="link.uri"
+            ></run-video>
+          </div>
+          <div v-else class="p-4">
+            <alert type="warning">No video.</alert>
+          </div>
+          <div v-if="isPending" class="px-6 py-4">
+            <div class="is-skeleton dark:is-dark rounded w-1/2 pb-6 mb-3"></div>
+            <div class="is-skeleton dark:is-dark rounded w-1/3 pb-4 mb-3"></div>
+          </div>
+          <div v-else class="px-6 py-4">
+            <div class="text-nord0 dark:text-nord6 text-xl">
+              <router-link :to="to(run.game, run.category)">
+                {{ run.category.name }}
+              </router-link>
+              <span
+                class="text-nord1 dark:text-nord4"
+                v-for="(value, varId) in run.values"
+                :key="varId"
+              >
+                ({{ getVariableName(run.category.variables, varId, value) }})
+              </span>
+              in {{ run.primary_t.time }} by
+              <span class="player-names">
+                <player-name
+                  class="player-name"
+                  :class="{ 'cursor-pointer': !!player.id }"
+                  v-for="(player, i) in run.players"
+                  :key="`player-${i}`"
+                  :player="player"
+                  @click="onPlayerClick"
+                />
+              </span>
+            </div>
+            <p class="text-nord1 dark:text-nord4 text-base">
+              {{ run.date | date }}
+            </p>
+            <p
+              v-if="run.comment"
+              class="text-nord1 dark:text-nord4 text-base mt-5 italic"
+            >
+              {{ run.comment }}
+            </p>
+          </div>
+        </div>
+        <div class="hidden lg:flex flex-col w-full mt-5">
+          <by-speedrun-com class="text-center" />
         </div>
       </div>
-      <div class="flex flex-col w-full">
-        <by-speedrun-com class="text-center" />
-      </div>
-    </template>
-
-    <template #rejected="error">
-      <error :error="error" />
     </template>
   </Promised>
 </template>
@@ -75,6 +79,7 @@ import BySpeedrunCom from '@/components/BySpeedrunCom';
 import date from '@/filters/date';
 import { useRuns } from '@/api/rx-souls';
 import { reactive, computed, toRefs } from '@vue/composition-api';
+import { delay } from 'rxjs/operators';
 
 export default {
   metaInfo() {
@@ -112,6 +117,7 @@ export default {
 
     const runPromise = computed(() =>
       useRuns(root.$route.params.id)
+        .pipe(delay(2000))
         .toPromise()
         .then(run => {
           const game = run.game;

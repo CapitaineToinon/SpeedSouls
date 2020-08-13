@@ -1,5 +1,5 @@
 <template>
-  <Promised :promise="pbsPromise">
+  <Promised :promise="pbsPromise" :pending-delay="0">
     <template #pending>
       <div class="progress h-2 flex flex-row" />
     </template>

@@ -1,0 +1,48 @@
+:root.mode-dark {
+  --skeleton-background-color: #4c566a;
+  --skeleton-color: #434c5e;
+}
+
+:root:not(.mode-dark) {
+  --skeleton-background-color: #d8dee9;
+  --skeleton-color: #e5e9f0;
+}
+
+@mixin skeleton {
+  position: relative;
+  overflow: hidden;
+
+  --bg: var(--skeleton-background-color);
+  --co: var(--skeleton-color);
+
+  &.inverted {
+    --bg: var(--skeleton-color);
+    --co: var(--skeleton-background-color);
+  }
+
+  background-color: var(--bg);
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 150px;
+    background: linear-gradient(to right, transparent 0%, var(--co) 50%, transparent 100%);
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+
+    @keyframes load {
+      from {
+        left: -100%;
+      }
+      to {
+        left: 100%;
+      }
+    }
+  }
+}
+
+.is-skeleton {
+  @include skeleton;
+}

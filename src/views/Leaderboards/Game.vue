@@ -1,5 +1,5 @@
 <template>
-  <Promised :promise="gamePromise">
+  <Promised :promise="gamePromise" :pending-delay="0">
     <template #pending>
       <div class="min-h-screen-navbar container">
         <div class="progress h-2 flex flex-row"></div>
@@ -36,7 +36,7 @@
         >
           <breadcrumbs class="mb-4" :items="breadcrumbs" />
 
-          <Promised :promise="categoryPromise" :pending-delay="1000">
+          <Promised :promise="categoryPromise" :pending-delay="0">
             <template #pending>
               <div class="progress h-2 flex flex-row"></div>
             </template>
