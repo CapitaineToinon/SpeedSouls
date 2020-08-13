@@ -18,9 +18,10 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
-import MyFooter from './components/MyFooter';
-import { onUnmounted, computed } from '@vue/composition-api';
+import Navbar from '@/components/Navbar';
+import MyFooter from '@/components/MyFooter';
+import onEvent from '@/mixins/onEvent';
+import { computed } from '@vue/composition-api';
 
 export default {
   metaInfo: {
@@ -39,15 +40,9 @@ export default {
     const isHome = computed(() => root.$route.name === 'Home');
     const isTransparant = computed(() => isHome.value);
 
-    function onFocus() {
+    onEvent('focus', () => {
       if (root.$store.getters.theme === 'AUTO')
         root.$store.dispatch('enableAuto');
-    }
-
-    window.addEventListener('focus', onFocus, false);
-
-    onUnmounted(() => {
-      window.removeEventListener('focus', onFocus, false);
     });
 
     return {

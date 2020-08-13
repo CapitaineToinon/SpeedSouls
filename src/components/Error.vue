@@ -1,6 +1,6 @@
 <template>
   <alert type="danger">
-    Something broke 😨 <span v-if="message">({{ message }}) </span>
+    <span v-if="message">{{ message }} </span>
     <a :href="$route.fullPath" class="underline">Click here to try again</a>.
   </alert>
 </template>
@@ -17,13 +17,14 @@ export default {
       required: true
     }
   },
-  setup() {
-    const message = computed(() => {
-      this.error?.response?.message ||
-        this.error?.message ||
-        this.error ||
-        undefined;
-    });
+  setup(props) {
+    const message = computed(
+      () =>
+        props.error?.response?.message ||
+        props.error?.message ||
+        props.error ||
+        'Unknown error.'
+    );
 
     return {
       message

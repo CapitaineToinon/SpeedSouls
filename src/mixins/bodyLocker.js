@@ -1,11 +1,4 @@
-import Vue from 'vue';
-import VueCompositionAPI, {
-  ref,
-  watch,
-  onUnmounted,
-  computed
-} from '@vue/composition-api';
-Vue.use(VueCompositionAPI);
+import { ref, watch, onUnmounted, computed } from '@vue/composition-api';
 
 const CLASS = 'overflow-hidden';
 const _count = ref(0);
@@ -16,6 +9,7 @@ const count = computed({
   }
 });
 
+// Lock the body if at least one component needs it
 watch(
   count,
   value => {
@@ -25,6 +19,13 @@ watch(
   { immediate: true }
 );
 
+/**
+ * Mixin to lock the body, preventing it to scroll
+ * The lock doesn't actually directly lock the body
+ * but instead increase a counter as multiple
+ * component count request the body to be locked
+ * at the same time.
+ */
 export default function useBodyLocker() {
   const locked = ref(false);
 
@@ -49,6 +50,7 @@ export default function useBodyLocker() {
     value ? subscribe() : unsubscribe();
   });
 
+  // might also need onDeactivated for keep-alive components?
   onUnmounted(() => {
     if (locked.value) unsubscribe();
   });

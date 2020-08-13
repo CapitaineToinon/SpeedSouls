@@ -15,7 +15,6 @@ const RETRY_COUNT = 3;
 
 function SRC(path) {
   const key = `${API_ENDPOINT}${path}`;
-
   return CACHE.get(key, ajax.getJSON(key).pipe(retry(RETRY_COUNT)));
 }
 

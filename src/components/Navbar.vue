@@ -165,6 +165,7 @@ export default {
       state.hidden = true;
     });
 
+    // close the navbar on route change
     watch(
       () => root.$route.name,
       () => {
