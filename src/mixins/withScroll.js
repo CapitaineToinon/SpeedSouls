@@ -1,5 +1,7 @@
+import Vue from 'vue';
 import onEvent from './onEvent';
-import { reactive, toRefs } from '@vue/composition-api';
+import VueCompositionAPI, { reactive, toRefs } from '@vue/composition-api';
+Vue.use(VueCompositionAPI);
 
 function getScrollOffsets() {
   let doc = document,

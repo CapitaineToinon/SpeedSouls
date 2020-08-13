@@ -1,4 +1,11 @@
-import { ref, watch, onUnmounted, computed } from '@vue/composition-api';
+import Vue from 'vue';
+import VueCompositionAPI, {
+  ref,
+  watch,
+  onUnmounted,
+  computed
+} from '@vue/composition-api';
+Vue.use(VueCompositionAPI);
 
 const CLASS = 'overflow-hidden';
 const _count = ref(0);

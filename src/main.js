@@ -1,11 +1,9 @@
 import Vue from 'vue';
-import VueCompositionAPI from '@vue/composition-api';
-Vue.use(VueCompositionAPI); // must call Vue.use(VueCompositionAPI) before using any function.
-
-import App from './App.vue';
-import router from './router';
-import store from './store';
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
 import VueMeta from 'vue-meta';
+import VueCompositionAPI from '@vue/composition-api';
 import { Promised } from 'vue-promised';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -50,6 +48,7 @@ library.add(
 );
 
 Vue.use(VueMeta);
+Vue.use(VueCompositionAPI);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Promised', Promised);
 
