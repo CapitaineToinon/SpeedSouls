@@ -3,7 +3,7 @@
     <navbar
       class="absolute top-0 left-0 right-0 z-10"
       :class="{ 'dark:bg-gray-800': !isHome, 'bg-white': !isHome }"
-      :transparant="transparant"
+      :transparant="isTransparant"
     />
     <main
       class="flex-grow z-0 bg-nord4 dark:bg-nord0"
@@ -18,9 +18,10 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
-import MyFooter from './components/MyFooter';
-import { mapState, mapActions } from 'vuex';
+import Navbar from '@/components/Navbar';
+import MyFooter from '@/components/MyFooter';
+import onEvent from '@/mixins/onEvent';
+import { computed } from '@vue/composition-api';
 
 export default {
   metaInfo: {
@@ -35,28 +36,19 @@ export default {
     ]
   },
   components: { Navbar, MyFooter },
-  computed: {
-    ...mapState(['dark', 'theme']),
-    isHome() {
-      return this.$route.name === 'Home';
-    },
-    transparant() {
-      return this.isHome;
-    }
-  },
-  methods: {
-    ...mapActions(['enableAuto']),
-    onFocus() {
-      if (this.theme === 'AUTO') {
-        this.enableAuto();
-      }
-    }
-  },
-  created() {
-    window.addEventListener('focus', this.onFocus, false);
-  },
-  destroyed() {
-    window.removeEventListener('focus', this.onFocus, false);
+  setup(props, { root }) {
+    const isHome = computed(() => root.$route.name === 'Home');
+    const isTransparant = computed(() => isHome.value);
+
+    onEvent('focus', () => {
+      if (root.$store.getters.theme === 'AUTO')
+        root.$store.dispatch('enableAuto');
+    });
+
+    return {
+      isHome,
+      isTransparant
+    };
   }
 };
 </script>

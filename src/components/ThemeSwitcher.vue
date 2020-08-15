@@ -1,45 +1,49 @@
 <template>
-  <ButtonGroup
-    :options="themes"
-    @change="onChange"
-    :active="themes.findIndex(t => t.id === theme)"
-  />
+  <ButtonGroup :options="themes" @change="onChange" :active="active" />
 </template>
 
 <script>
 import ButtonGroup from '@/components/ButtonGroup';
-import { mapState, mapActions } from 'vuex';
+import { reactive, toRefs, computed } from '@vue/composition-api';
 
 export default {
   components: { ButtonGroup },
-  data: () => ({
-    themes: [
-      { id: 'DARK', label: 'Dark' },
-      { id: 'LIGHT', label: 'Light' },
-      { id: 'AUTO', label: 'Auto' }
-    ]
-  }),
-  methods: {
-    ...mapActions(['enableDark', 'enableLight', 'enableAuto']),
-    onChange(index) {
-      this.enable(this.themes[index].id);
-    },
-    enable(theme) {
+  setup(props, { root }) {
+    const state = reactive({
+      themes: [
+        { id: 'DARK', label: 'Dark' },
+        { id: 'LIGHT', label: 'Light' },
+        { id: 'AUTO', label: 'Auto' }
+      ]
+    });
+
+    const active = computed(() =>
+      state.themes.findIndex(t => t.id === root.$store.getters.theme)
+    );
+
+    function onChange(index) {
+      enable(state.themes[index].id);
+    }
+
+    function enable(theme) {
       switch (theme) {
         case 'DARK':
-          this.enableDark();
+          root.$store.dispatch('enableDark');
           break;
         case 'LIGHT':
-          this.enableLight();
+          root.$store.dispatch('enableLight');
           break;
         case 'AUTO':
-          this.enableAuto();
+          root.$store.dispatch('enableAuto');
           break;
       }
     }
-  },
-  computed: {
-    ...mapState(['theme'])
+
+    return {
+      ...toRefs(state),
+      active,
+      onChange
+    };
   }
 };
 </script>

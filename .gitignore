@@ -23,4 +23,3 @@ yarn-error.log*
 # generated images
 src/assets/backgrounds/*
 !src/assets/backgrounds/.gitkeep
-.vercel

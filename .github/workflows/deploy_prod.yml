@@ -7,16 +7,30 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: Build and deploy to prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+        with:
+          ref: 'master'
 
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
 
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+    
       - name: Build Project
         run: |
           yarn install
@@ -26,7 +40,7 @@ jobs:
           yarn build
 
       - name: List output files
-        run: ls
+        run: ls dist
 
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -36,5 +50,14 @@ jobs:
           FTP_PASSWORD: ${{ secrets.PROD_PASSWORD }}
           METHOD: sftp
           LOCAL_DIR: dist
-          REMOTE_DIR: /var/lib/vue
+          REMOTE_DIR: /tmp/SpeedSouls
           ARGS: --delete
+
+      - name: Move final files 
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          password: ${{ secrets.PROD_PASSWORD }}
+

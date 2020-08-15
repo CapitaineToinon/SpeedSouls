@@ -2,7 +2,7 @@
   <div class="breadcrumbs flex flex-row flex-wrap">
     <div
       class="item text-nord0 dark:text-nord6 flex flex-row flex-no-wrap items-center"
-      v-for="(item, i) in items"
+      v-for="(item, i) in acutalItems"
       :key="i"
     >
       <font-awesome-icon
@@ -22,12 +22,35 @@
 </template>
 
 <script>
+import { computed } from '@vue/composition-api';
 export default {
   props: {
     items: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
+  },
+  setup(props) {
+    const acutalItems = computed(() => {
+      if (props.loading)
+        return [
+          ...props.items,
+          {
+            active: true,
+            text: '...'
+          }
+        ];
+      else return props.items;
+    });
+
+    return {
+      acutalItems
+    };
   }
 };
 </script>

@@ -1,29 +1,27 @@
-# buefy-souls
+# SpeedSouls
+
+![deploy_prod](https://github.com/CapitaineToinon/SpeedSouls/workflows/deploy_prod/badge.svg)
+![deploy_dev](https://github.com/CapitaineToinon/SpeedSouls/workflows/deploy_dev/badge.svg)
 
 ## Project setup
+Install dependencies
 ```
 yarn install
 ```
-
-### Compiles and hot-reloads for development
+Download games' backgrounds (only need to do it once)
 ```
-yarn run serve
+node ./scripts/downloadBackgrounds.js
 ```
-
-### Compiles and minifies for production
+Then start the development server
 ```
-yarn run build
+yarn serve
 ```
-
-### Run your tests
+## Compiles and minifies for production
 ```
-yarn run test
+yarn build
 ```
 
-### Lints and fixes files
+## Lints and fixes files
 ```
-yarn run lint
+yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

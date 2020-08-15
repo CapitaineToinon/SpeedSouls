@@ -1,6 +1,6 @@
 import { forkJoin, from } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, startWith, flatMap, find } from 'rxjs/operators';
+import { map, startWith, flatMap, find, retry } from 'rxjs/operators';
 import formatGame from './formatting/Game';
 import formatLeaderboard from './formatting/Leaderboard';
 import formatRun from './formatting/Run';
@@ -11,66 +11,68 @@ import CACHE from './cache';
 export const BASE_URL = 'https://www.speedrun.com';
 export const API_ENDPOINT = `${BASE_URL}/api/v1`;
 const SERIE = 'souls';
+const RETRY_COUNT = 3;
+
+function SRC(path) {
+  const key = `${API_ENDPOINT}${path}`;
+  return CACHE.get(key, ajax.getJSON(key).pipe(retry(RETRY_COUNT)));
+}
 
 function getSoulsGames() {
-  return ajax
-    .getJSON(`${API_ENDPOINT}/series/${SERIE}/games?embed=categories,variables`)
-    .pipe(map(response => response.data.map(formatGame)));
+  return SRC(
+    `/series/${SERIE}/games?embed=categories,variables,categories.variables,categories.game`
+  ).pipe(map(response => response.data.map(formatGame)));
 }
 
 function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = '') {
-  return ajax
-    .getJSON(
-      `${API_ENDPOINT}/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
-    )
-    .pipe(
-      map(response => response.data),
-      map(raw => formatLeaderboard(raw, gameLookFor))
-    );
+  return SRC(
+    `/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
+  ).pipe(
+    map(response => response.data),
+    map(raw => formatLeaderboard(raw, gameLookFor))
+  );
 }
 
 function getRun(runId) {
   return forkJoin(
     from(getSoulsGames()),
     from(
-      ajax
-        .getJSON(`${API_ENDPOINT}/runs/${runId}?embed=players,category`)
-        .pipe(map(response => response.data))
+      SRC(
+        `/runs/${runId}?embed=players,game,category,category.variables,category.game`
+      ).pipe(map(response => response.data))
     )
   ).pipe(
     map(([games, run]) => {
-      const game = games.find(g => g.id === run.game);
+      const game = games.find(g => g.id === run.game.data.id);
 
       if (!game) {
         throw new Error('Run not found');
       }
 
-      return [game, run];
+      return run;
     }),
-    map(([game, run]) => formatRun(run, game))
+    map(formatRun)
   );
 }
 
 function getUser(userId) {
-  return ajax.getJSON(`${API_ENDPOINT}/users/${userId}`).pipe(
+  return SRC(`/users/${userId}`).pipe(
     map(response => response.data),
     map(raw => formatPlayer(raw))
   );
 }
 
 function getUserPersonalBests(userId) {
-  return ajax
-    .getJSON(
-      `${API_ENDPOINT}/users/${userId}/personal-bests?series=${SERIE}&embed=game,category`
-    )
-    .pipe(
-      map(response => response.data),
-      map(raw => formatPlayerRun(raw))
-    );
+  return SRC(
+    `/users/${userId}/personal-bests?series=${SERIE}&embed=game,category,category.variables,category.game`
+  ).pipe(
+    map(response => response.data),
+    map(raw => formatPlayerRun(raw))
+  );
 }
 
 export function useSoulsGames() {
-  return CACHE.get('getSoulsGames', getSoulsGames());
+  return getSoulsGames();
 }
 
 export function useSoulsGame(lookFor) {
@@ -102,28 +104,22 @@ export function useSoulsCategory(gameLookFor, categoryLookFor) {
   );
 }
 
-export function useLeaderboard(gameLookFor, categoryLookFor, variables = []) {
+export function useLeaderboard({ game, ...category }, variables = []) {
   const variablesQuery = variables.reduce((previous, current) => {
     return `${previous}&var-${current.id}=${current.values.default}`;
   }, '');
 
-  return CACHE.get(
-    `getSoulsGames/${gameLookFor.id}/${categoryLookFor.id}/${variablesQuery}`,
-    getLeaderboard(gameLookFor, categoryLookFor, variablesQuery)
-  );
+  return getLeaderboard(game, category, variablesQuery);
 }
 
 export function useRuns(runId) {
-  return CACHE.get(`getRun/${runId}`, getRun(runId));
+  return getRun(runId);
 }
 
 export function useUser(userId) {
-  return CACHE.get(`getUser/${userId}`, getUser(userId));
+  return getUser(userId);
 }
 
 export function useUserPersonalBests(userId) {
-  return CACHE.get(
-    `getUserPersonalBests/${userId}`,
-    getUserPersonalBests(userId)
-  );
+  return getUserPersonalBests(userId);
 }
