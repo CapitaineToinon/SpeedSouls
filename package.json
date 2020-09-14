@@ -25,7 +25,6 @@
     "tailwindcss-dark-mode": "^1.1.4",
     "vue": "^2.6.11",
     "vue-meta": "^2.3.3",
-    "vue-promised": "^1.2.2",
     "vue-router": "^3.1.6",
     "vuex": "^3.3.0",
     "vuex-persistedstate": "^3.0.1"

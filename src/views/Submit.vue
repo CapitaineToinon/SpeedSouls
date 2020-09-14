@@ -18,67 +18,56 @@
       >
       and here on SpeedSouls.
     </alert>
-    <Promised :promise="gamesPromise" :pending-delay="0">
-      <template #pending>
-        <div class="progress h-2 flex flex-row" />
-      </template>
-
-      <template v-slot="games">
-        <div
-          class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
+    <error v-if="error" :error="error" />
+    <div v-else-if="!games" class="progress h-2 flex flex-row" />
+    <div
+      v-else
+      class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
+    >
+      <div
+        class="tab w-full overflow-hidden"
+        :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
+        v-for="(game, i) in games"
+        :key="game.id"
+      >
+        <input
+          class="absolute opacity-0"
+          :id="`tab-${game.id}`"
+          type="checkbox"
+          name="tabs2"
+        />
+        <label
+          class="block p-5 leading-normal cursor-pointer"
+          :for="`tab-${game.id}`"
+          >{{ game.name }}</label
         >
-          <div
-            class="tab w-full overflow-hidden"
-            :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
-            v-for="(game, i) in games"
-            :key="game.id"
-          >
-            <input
-              class="absolute opacity-0"
-              :id="`tab-${game.id}`"
-              type="checkbox"
-              name="tabs2"
-            />
-            <label
-              class="block p-5 leading-normal cursor-pointer"
-              :for="`tab-${game.id}`"
-              >{{ game.name }}</label
+        <div
+          :ref="`section-${game.id}`"
+          class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+        >
+          <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
+            <a
+              class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
+              v-for="(category, i) in game.categories"
+              :key="i"
+              :href="`${game.weblink}/editrun#${category.uglyHash}`"
+              target="_blank"
+              rel="noopener"
+              >{{ category.name }}</a
             >
-            <div
-              :ref="`section-${game.id}`"
-              class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
-            >
-              <div
-                class="p-5 flex flex-row flex-wrap justify-start shadow-inner"
-              >
-                <a
-                  class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
-                  v-for="(category, i) in game.categories"
-                  :key="i"
-                  :href="`${game.weblink}/editrun#${category.uglyHash}`"
-                  target="_blank"
-                  rel="noopener"
-                  >{{ category.name }}</a
-                >
-              </div>
-            </div>
           </div>
         </div>
-        <div class="flex flex-col w-full">
-          <by-speedrun-com class="text-center" />
-        </div>
-      </template>
-
-      <template #rejected="error">
-        <error :error="error" />
-      </template>
-    </Promised>
+      </div>
+    </div>
+    <div class="flex flex-col w-full">
+      <by-speedrun-com class="text-center" />
+    </div>
   </div>
 </template>
 
 <script>
 const { VUE_APP_SPEEDRUNCOM } = process.env;
-import { ref } from '@vue/composition-api';
+import { reactive, onMounted, toRefs } from '@vue/composition-api';
 import { useSoulsGames } from '@/api/rx-souls';
 import Alert from '@/components/Alert';
 import Error from '@/components/Error';
@@ -90,11 +79,27 @@ export default {
   },
   components: { Alert, BySpeedrunCom, Error },
   setup() {
-    const gamesPromise = ref(useSoulsGames().toPromise());
+    const state = reactive({
+      games: undefined,
+      error: null
+    });
+
+    async function fetchGames() {
+      state.games = undefined;
+      state.error = null;
+
+      try {
+        state.games = await useSoulsGames().toPromise();
+      } catch (e) {
+        state.error = e;
+      }
+    }
+
+    onMounted(fetchGames);
 
     return {
       VUE_APP_SPEEDRUNCOM,
-      gamesPromise
+      ...toRefs(state)
     };
   }
 };
