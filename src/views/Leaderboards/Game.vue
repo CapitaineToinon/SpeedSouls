@@ -1,81 +1,60 @@
 <template>
-  <Promised :promise="gamePromise" :pending-delay="0">
-    <template #pending>
-      <div class="min-h-screen-navbar container">
-        <div class="progress h-2 flex flex-row"></div>
-      </div>
-    </template>
+  <div v-if="gameError" class="min-h-screen-navbar container">
+    <error :error="gameError" />
+  </div>
+  <div v-else-if="!game" class="min-h-screen-navbar container">
+    <div class="progress h-2 flex flex-row"></div>
+  </div>
+  <div v-else class="min-h-screen-navbar container flex flex-row">
+    <button
+      id="sidebar-button"
+      ref="sidebarButtonRef"
+      @click="openSidebar = !openSidebar"
+      :class="{ open: openSidebar }"
+    >
+      <font-awesome-icon
+        v-if="!openSidebar"
+        :icon="['fas', 'list']"
+        size="2x"
+      />
+      <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
+    </button>
+    <aside :class="{ open: openSidebar }">
+      <categories
+        class="categories"
+        :categories="game.categories"
+        :active="$route.params.category"
+        @click="onCategoryClick"
+        v-click-outside="closeAside"
+      />
+    </aside>
+    <div
+      class="content flex flex-col flex-grow ml-0 md:ml-5"
+      :class="{ open: openSidebar }"
+    >
+      <breadcrumbs class="mb-4" :items="breadcrumbs" />
 
-    <template #default="game">
-      <div class="min-h-screen-navbar container flex flex-row">
-        <button
-          id="sidebar-button"
-          ref="sidebarButtonRef"
-          @click="openSidebar = !openSidebar"
-          :class="{ open: openSidebar }"
-        >
-          <font-awesome-icon
-            v-if="!openSidebar"
-            :icon="['fas', 'list']"
-            size="2x"
-          />
-          <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
-        </button>
-        <aside :class="{ open: openSidebar }">
-          <categories
-            class="categories"
-            :categories="game.categories"
-            :active="$route.params.category"
-            @click="onCategoryClick"
-            v-click-outside="closeAside"
-          />
-        </aside>
+      <error v-if="categoryError" :error="categoryError" />
+      <div v-else-if="!category" class="progress h-2 flex flex-row"></div>
+      <div v-else>
         <div
-          class="content flex flex-col flex-grow ml-0 md:ml-5"
-          :class="{ open: openSidebar }"
+          class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
         >
-          <breadcrumbs class="mb-4" :items="breadcrumbs" />
-
-          <Promised :promise="categoryPromise" :pending-delay="0">
-            <template #pending>
-              <div class="progress h-2 flex flex-row"></div>
-            </template>
-
-            <template #default="category">
-              <div
-                class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
-              >
-                <ButtonGroup
-                  class="mb-4"
-                  v-for="variable in category.variables.filter(
-                    v => v['is-subcategory']
-                  )"
-                  :key="variable.id"
-                  :options="variable.values.values"
-                  @change="v => (variable.values.default = v)"
-                  :active="variable.values.default"
-                />
-              </div>
-              <Leaderboard
-                :category="category"
-                :variables="category.variables.filter(v => v['is-subcategory'])"
-              />
-            </template>
-
-            <template #rejected="error">
-              <error :error="error" />
-            </template>
-          </Promised>
+          <ButtonGroup
+            class="mb-4"
+            v-for="variable in category.variables.filter(
+              v => v['is-subcategory']
+            )"
+            :key="variable.id"
+            :options="variable.values.values"
+            @change="v => (variable.values.default = v)"
+            :active="variable.values.default"
+          />
         </div>
+        <Leaderboard :category="category" :variables="[]" />
       </div>
-    </template>
-
-    <template #rejected="error">
-      <div class="min-h-screen-navbar container">
-        <error :error="error" />
-      </div>
-    </template>
-  </Promised>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -108,12 +87,16 @@ export default {
   },
   setup(props, { root, refs }) {
     const [lock, unlock] = useBodyLock();
+    const gameParam = computed(() => root.$route.params.game);
+    const categoryParam = computed(() => root.$route.params.category);
 
     const state = reactive({
+      game: undefined,
+      category: undefined,
+      gameError: null,
+      categoryError: null,
       openSidebar: false,
-      metaTitle: undefined,
-      gameLink: undefined,
-      categoryLink: undefined
+      metaTitle: undefined
     });
 
     // prevent the body from scrolling when sidebar is opened
@@ -130,75 +113,49 @@ export default {
       state.openSidebar = false;
     });
 
-    const breadcrumbs = computed({
-      get: () => {
-        const array = [
-          {
-            text: 'Leaderboards',
-            to: { name: 'Games' }
-          }
-        ];
+    // Dynamic breacrumbs based on the game and category
+    const breadcrumbs = computed(() => {
+      const array = [
+        {
+          text: 'Leaderboards',
+          to: { name: 'Games' }
+        }
+      ];
 
-        if (state.gameLink) array.push(state.gameLink);
-        if (state.categoryLink) array.push(state.categoryLink);
-        return array;
-      },
-      set: value => (state.otherLinks = value)
+      if (state.game) {
+        array.push({
+          text: state.game.name,
+          to: {},
+          active: true
+        });
+      }
+
+      if (state.category) {
+        array.push({
+          text: state.category.name,
+          to: {},
+          active: true
+        });
+      }
+
+      return array;
     });
 
-    const gamePromise = computed(() =>
-      useSoulsGame(root.$route.params.game)
-        .toPromise()
-        .then(game => {
-          if (!root.$route.params.category && game.categories.length) {
-            root.$router.replace({
-              name: 'Game',
-              params: {
-                game: root.$route.params.game,
-                category: game.categories[0].hash
-              }
-            });
-          }
-
-          // breadcrumbs
-          state.gameLink = {
-            text: game.name,
-            to: {},
-            active: true
-          };
-
-          return game;
-        })
-    );
-
-    const categoryPromise = computed(() =>
-      useSoulsCategory(root.$route.params.game, root.$route.params.category)
-        .toPromise()
-        .then(category => {
-          // breadcrumbs
-          state.categoryLink = {
-            text: category.name,
-            to: {},
-            active: true
-          };
-
-          return category;
-        })
-    );
-
+    // Go to category on click
     function onCategoryClick(category) {
       this.openSidebar = false;
-      if (root.$route.params.category === category.hash) return;
+      if (categoryParam.value === category.hash) return;
 
       root.$router.push({
         name: 'Game',
         params: {
-          game: root.$route.params.game,
+          game: gameParam.value,
           category: category.hash
         }
       });
     }
 
+    // close the aside menu
     function closeAside({ target }) {
       if (
         target === refs.sidebarButtonRef ||
@@ -208,11 +165,68 @@ export default {
       state.openSidebar = false;
     }
 
+    // fetch the game on route game param change
+    // also reset the category
+    watch(
+      gameParam,
+      async id => {
+        if (!id) return;
+
+        state.game = undefined;
+        state.category = undefined;
+        state.gameError = null;
+        state.categoryError = null;
+
+        try {
+          state.game = await useSoulsGame(id).toPromise();
+        } catch (e) {
+          state.gameError = e;
+        }
+      },
+      { immediate: true }
+    );
+
+    // fetch the category on route game or category change
+    watch(
+      [gameParam, categoryParam],
+      async ([gameId, categoryId]) => {
+        if (!gameId || !categoryId) return;
+
+        state.category = undefined;
+        state.categoryError = null;
+
+        try {
+          state.category = await useSoulsCategory(
+            gameId,
+            categoryId
+          ).toPromise();
+        } catch (e) {
+          state.categoryError = e;
+        }
+      },
+      { immediate: true }
+    );
+
+    // Watch for game change and redirect to the first category if needed/possible
+    watch(
+      () => state.game,
+      game => {
+        if (!game) return;
+        if (!categoryParam.value && game.categories.length) {
+          root.$router.replace({
+            name: 'Game',
+            params: {
+              game: game.abbreviation,
+              category: game.categories[0].hash
+            }
+          });
+        }
+      }
+    );
+
     return {
       ...toRefs(state),
       breadcrumbs,
-      gamePromise,
-      categoryPromise,
       onCategoryClick,
       closeAside
     };
