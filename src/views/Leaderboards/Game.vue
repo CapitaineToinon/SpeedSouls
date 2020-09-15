@@ -51,7 +51,10 @@
             :active="variable.values.default"
           />
         </div>
-        <Leaderboard :category="category" :variables="[]" />
+        <Leaderboard
+          :category="category"
+          :variables="category.variables.filter(v => v['is-subcategory'])"
+        />
       </div>
     </div>
   </div>
