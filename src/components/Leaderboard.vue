@@ -160,6 +160,8 @@ export default {
 
       try {
         const { runs } = await useLeaderboard(category, variables).toPromise();
+        Object.freeze(runs);
+
         state.leaderboard = runs;
       } catch (e) {
         state.error = e;

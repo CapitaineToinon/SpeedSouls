@@ -181,7 +181,10 @@ export default {
         state.categoryError = null;
 
         try {
-          state.game = await useSoulsGame(id).toPromise();
+          const game = await useSoulsGame(id).toPromise();
+          Object.freeze(game);
+
+          state.game = game;
         } catch (e) {
           state.gameError = e;
         }
@@ -199,10 +202,13 @@ export default {
         state.categoryError = null;
 
         try {
-          state.category = await useSoulsCategory(
+          const category = await useSoulsCategory(
             gameId,
             categoryId
           ).toPromise();
+          Object.freeze(category);
+
+          state.category = category;
         } catch (e) {
           state.categoryError = e;
         }

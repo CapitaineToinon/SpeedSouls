@@ -132,6 +132,9 @@ export default {
           useUserPersonalBests(id).toPromise()
         ]);
 
+        Object.freeze(_player);
+        Object.freeze(_pbs);
+
         state.player = _player;
         state.pbs = _pbs;
       } catch (e) {

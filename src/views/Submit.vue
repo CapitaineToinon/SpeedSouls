@@ -89,7 +89,10 @@ export default {
       state.error = null;
 
       try {
-        state.games = await useSoulsGames().toPromise();
+        const games = await useSoulsGames().toPromise();
+        Object.freeze(games);
+
+        state.games = games;
       } catch (e) {
         state.error = e;
       }
