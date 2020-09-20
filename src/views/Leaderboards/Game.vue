@@ -182,8 +182,6 @@ export default {
 
         try {
           const game = await useSoulsGame(id).toPromise();
-          Object.freeze(game);
-
           state.game = game;
         } catch (e) {
           state.gameError = e;
