@@ -51,7 +51,10 @@
             :active="variable.values.default"
           />
         </div>
-        <Leaderboard :category="category" :variables="[]" />
+        <Leaderboard
+          :category="category"
+          :variables="category.variables.filter(v => v['is-subcategory'])"
+        />
       </div>
     </div>
   </div>
@@ -178,7 +181,8 @@ export default {
         state.categoryError = null;
 
         try {
-          state.game = await useSoulsGame(id).toPromise();
+          const game = await useSoulsGame(id).toPromise();
+          state.game = game;
         } catch (e) {
           state.gameError = e;
         }
@@ -196,10 +200,13 @@ export default {
         state.categoryError = null;
 
         try {
-          state.category = await useSoulsCategory(
+          const category = await useSoulsCategory(
             gameId,
             categoryId
           ).toPromise();
+          Object.freeze(category);
+
+          state.category = category;
         } catch (e) {
           state.categoryError = e;
         }

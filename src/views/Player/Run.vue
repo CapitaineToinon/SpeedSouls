@@ -167,7 +167,9 @@ export default {
       state.run = undefined;
 
       try {
-        state.run = await useRuns(id).toPromise();
+        const run = await useRuns(id).toPromise();
+        Object.freeze(run);
+        state.run = run;
       } catch (e) {
         state.error = e;
       }

@@ -125,6 +125,8 @@ export default {
 
       try {
         const newPlayers = await Promise.resolve(playersPromise.value);
+        Object.freeze(newPlayers);
+
         let length = players.length;
 
         // remove the curre t players that aren't in the
