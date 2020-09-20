@@ -56,7 +56,7 @@ jobs:
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: rm -r ~/SpeedSouls/.[!.]* && mv /tmp/SpeedSouls/.[!.]* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/
+          command: shopt -s dotglob && rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/ && shopt -u dotglob
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
