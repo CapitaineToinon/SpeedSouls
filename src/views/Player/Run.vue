@@ -185,8 +185,6 @@ export default {
         const run = await useRuns(id).toPromise();
         Object.freeze(run);
         state.run = run;
-
-        console.log({ run });
       } catch (e) {
         state.error = e;
       }
