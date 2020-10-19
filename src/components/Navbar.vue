@@ -45,9 +45,6 @@
           <a :href="VUE_APP_WIKI">Wiki.</a>
         </li>
         <li class="menu-item">
-          <a :href="VUE_APP_FORUMS">Forums.</a>
-        </li>
-        <li class="menu-item">
           <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
         </li>
       </ul>
@@ -111,7 +108,6 @@
 <script>
 const {
   VUE_APP_WIKI,
-  VUE_APP_FORUMS,
   VUE_APP_DISCORD,
   VUE_APP_PATREON,
   VUE_APP_TWITTER,
@@ -137,7 +133,6 @@ export default {
   setup(props, { root, refs }) {
     const state = reactive({
       VUE_APP_WIKI,
-      VUE_APP_FORUMS,
       VUE_APP_DISCORD,
       VUE_APP_PATREON,
       VUE_APP_TWITTER,

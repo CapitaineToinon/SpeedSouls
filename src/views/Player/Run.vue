@@ -3,10 +3,25 @@
   <div v-else>
     <breadcrumbs class="pb-3" :items="breadcrumbs" :loading="isPending" />
 
-    <div
-      v-if="!error"
-      class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md"
+    <alert
+      v-if="run && run.status.status === 'rejected'"
+      type="danger"
+      class="mb-3"
     >
+      <template v-slot:header>Rejected</template>
+      {{ run.status.reason }}
+    </alert>
+
+    <alert
+      v-if="run && run.status.status === 'new'"
+      type="warning"
+      class="mb-3"
+    >
+      <template v-slot:header>Awaiting verification</template>
+      A moderator needs to verify this run before it appears on the leaderboard.
+    </alert>
+
+    <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
       <div v-if="!run" class="w-full">
         <div class="speedsouls-video inverted"></div>
       </div>
