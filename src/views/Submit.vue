@@ -1,9 +1,10 @@
 <template>
-  <div class="container max-w-screen-md">
+  <div class="container py-6 px-3 max-w-screen-md">
+    <site-notice />
     <h1 class="text-4xl font-bold leading-none mb-4 text-nord0 dark:text-nord6">
       Submit a Run.
     </h1>
-    <alert type="info" class="mb-3">
+    <alert type="info" class="mb-6">
       You will need a
       <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a

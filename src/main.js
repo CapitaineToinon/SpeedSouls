@@ -4,6 +4,7 @@ import router from '@/router';
 import store from '@/store';
 import VueMeta from 'vue-meta';
 import VueCompositionAPI from '@vue/composition-api';
+import SiteNotice from '@/components/SiteNotice';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -48,6 +49,7 @@ library.add(
 
 Vue.use(VueMeta);
 Vue.use(VueCompositionAPI);
+Vue.component('site-notice', SiteNotice);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = true;

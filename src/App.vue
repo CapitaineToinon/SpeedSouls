@@ -7,7 +7,9 @@
     />
     <main
       class="flex-grow z-0 bg-nord4 dark:bg-nord0"
-      :class="{ 'has-fixed-navbar': !isHome }"
+      :class="{
+        'has-fixed-navbar': !isHome
+      }"
     >
       <keep-alive :include="['Home', 'Player', 'Run']">
         <router-view />

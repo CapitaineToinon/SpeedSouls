@@ -1,7 +1,11 @@
 <template>
   <div class="min-h-screen">
-    <hero class="home h-screen md:h-auto shadow-md" :style="style">
-      <div class="max-w-2xl md mx-auto text-center py-40">
+    <hero
+      class="home min-h-screen md:min-h-0 shadow-md has-fixed-navbar"
+      :style="style"
+    >
+      <SiteNotice />
+      <div class="max-w-2xl md mx-auto text-center py-6 md:py-40">
         <img
           class="mx-auto mb-4"
           :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
@@ -103,6 +107,7 @@ const {
   VUE_APP_PATREON
 } = process.env;
 
+import SiteNotice from '@/components/SiteNotice';
 import Hero from '@/components/Hero';
 import Discord from '@/components/Discord';
 import { computed, reactive, toRefs } from '@vue/composition-api';
@@ -112,7 +117,7 @@ export default {
     title: 'SpeedSouls',
     titleTemplate: null
   },
-  components: { Hero, Discord },
+  components: { SiteNotice, Hero, Discord },
   setup(props, { root }) {
     const state = reactive({
       VUE_APP_WIKI,

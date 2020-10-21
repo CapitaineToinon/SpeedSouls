@@ -22,6 +22,7 @@ module.exports = {
         twitter: '#4099ff',
         youtube: 'red',
         patreon: 'rgb(232, 91, 70)',
+        speedsouls: '#ef6c06',
         nord0: '#2E3440',
         nord1: '#3B4252',
         nord2: '#434C5E',

@@ -1,5 +1,5 @@
 <template>
-  <div class="container max-w-screen-md">
+  <div class="container py-6 px-3 max-w-screen-md">
     <alert type="info" class="mb-4">
       You are being redirected.
       <a :href="to" class="text-nord10 underline"

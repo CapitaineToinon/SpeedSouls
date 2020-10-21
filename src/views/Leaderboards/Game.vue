@@ -1,11 +1,7 @@
 <template>
-  <div v-if="gameError" class="min-h-screen-navbar container">
-    <error :error="gameError" />
-  </div>
-  <div v-else-if="!game" class="min-h-screen-navbar container">
-    <div class="progress h-2 flex flex-row"></div>
-  </div>
-  <div v-else class="min-h-screen-navbar container flex flex-row">
+  <error v-if="gameError" :error="gameError" />
+  <div v-else-if="!game" class="progress h-2 flex flex-row"></div>
+  <div v-else class="flex flex-row">
     <button
       id="sidebar-button"
       ref="sidebarButtonRef"
