@@ -1,5 +1,6 @@
 <template>
-  <div class="container flex flex-col lg:flex-row flex-wrap">
+  <div class="container py-6 px-3 flex flex-col lg:flex-row flex-wrap">
+    <site-notice />
     <aside
       v-if="!error"
       class="w-full mb-0 gap-4 lg:w-64"

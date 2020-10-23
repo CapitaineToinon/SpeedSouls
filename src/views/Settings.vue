@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-nord0 dark:text-nord6 max-w-screen-sm">
+  <div class="container py-6 px-3 text-nord0 dark:text-nord6 max-w-screen-sm">
     <h1 class="text-4xl text-center mb-6 font-bold text-nord0 dark:text-nord6">
       Settings
     </h1>

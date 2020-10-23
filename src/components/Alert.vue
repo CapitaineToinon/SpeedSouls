@@ -40,6 +40,7 @@ div[role='alert'] {
 
   .content {
     @apply bg-nord6;
+    @apply text-nord0;
   }
 
   &.danger {
@@ -85,6 +86,17 @@ div[role='alert'] {
 
     .content {
       @apply border-nord14;
+    }
+  }
+
+  &.speedsouls {
+    .title {
+      @apply bg-speedsouls;
+      @apply text-nord6;
+    }
+
+    .content {
+      @apply border-speedsouls;
     }
   }
 }
