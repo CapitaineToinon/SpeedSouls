@@ -1,0 +1,30 @@
+body {
+  @apply overflow-y-scroll;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+html,
+body,
+main {
+  max-width: 100vw;
+}
+
+:root {
+  --navbar-height: 3rem;
+}
+
+.has-fixed-navbar {
+  padding-top: var(--navbar-height);
+}
+
+.min-h-screen-navbar {
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.top-0-navbar {
+  top: var(--navbar-height);
+}
