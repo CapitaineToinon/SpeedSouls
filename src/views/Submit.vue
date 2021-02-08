@@ -113,12 +113,20 @@ export default {
 .tab {
   /* Tab content - closed */
   .tab-content {
-    height: 0;
+    max-height: 0;
     transition: all 0.6s;
+    div {
+      a {
+        transition: all 0.3s;
+      }
+      a:hover{
+        @apply bg-nord10;
+      }
+    }
   }
   /* :checked - resize to full height */
   input:checked ~ .tab-content {
-    height: auto;
+    max-height: 700px;
   }
 }
 </style>

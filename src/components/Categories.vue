@@ -41,6 +41,7 @@ export default {
   letter-spacing: 1px;
 }
 .btn {
+  transition: all 0.4s;
   &.active,
   &:hover {
     @apply text-gray-100;

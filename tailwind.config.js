@@ -13,11 +13,11 @@ module.exports = {
       }
     },
     fontFamily: {
-      sans: 'Robot, Helvetica, Arial, sans-serif'
+      sans: 'Roboto, Helvetica, Arial, sans-serif'
     },
     extend: {
       colors: {
-        twitch: '#772ce8',
+        twitch: '#9147ff',
         discord: '#7289da',
         twitter: '#4099ff',
         youtube: 'red',

@@ -270,6 +270,10 @@ nav {
     .router-link-exact-active:not([href='/']) {
       @apply text-nord10;
     }
+
+    a {
+      transition: color 0.4s;
+    }
   }
 
   .burger {

@@ -60,7 +60,9 @@ export default {
 
 <style lang="scss" scoped>
 .games a:hover {
-  transition: all 0.1s ease-in-out;
   transform: scale(1.02);
+}
+.games a {
+    transition: 0.1s transform ease-in-out;
 }
 </style>
