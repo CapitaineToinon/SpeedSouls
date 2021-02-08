@@ -31,19 +31,13 @@
         v-for="(game, i) in games"
         :key="game.id"
       >
-        <input
-          class="absolute opacity-0"
-          :id="`tab-${game.id}`"
-          type="checkbox"
-          name="tabs2"
-        />
         <label
           class="block p-5 leading-normal cursor-pointer"
-          :for="`tab-${game.id}`"
+          v-on:click="handleClick(game.id)"
           >{{ game.name }}</label
         >
         <div
-          :ref="`section-${game.id}`"
+          :id="`section-${game.id}`"
           class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
         >
           <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
@@ -78,6 +72,13 @@ export default {
   metaInfo: {
     title: 'Submit a run'
   },
+  methods: {
+    handleClick: function(gameId) {
+      let gameSection = document.getElementById(`section-${gameId}`);
+      gameSection.style.height =
+        (!gameSection.clientHeight ? gameSection.scrollHeight : 0) + 'px';
+    }
+  },
   components: { Alert, BySpeedrunCom, Error },
   setup() {
     const state = reactive({
@@ -111,22 +112,18 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-  /* Tab content - closed */
+  /* Tab content */
   .tab-content {
-    max-height: 0;
+    height: 0;
     transition: all 0.6s;
     div {
       a {
         transition: all 0.3s;
       }
-      a:hover{
+      a:hover {
         @apply bg-nord10;
       }
     }
-  }
-  /* :checked - resize to full height */
-  input:checked ~ .tab-content {
-    max-height: 700px;
   }
 }
 </style>

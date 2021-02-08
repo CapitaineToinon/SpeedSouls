@@ -63,6 +63,6 @@ export default {
   transform: scale(1.02);
 }
 .games a {
-    transition: 0.1s transform ease-in-out;
+  transition: 0.1s transform ease-in-out;
 }
 </style>
