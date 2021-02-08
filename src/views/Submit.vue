@@ -75,8 +75,7 @@ export default {
   methods: {
     handleClick: function(gameId) {
       let gameSection = document.getElementById(`section-${gameId}`);
-      gameSection.style.height =
-        (!gameSection.clientHeight ? gameSection.scrollHeight : 0) + 'px';
+      gameSection.style.height = (!gameSection.clientHeight ? gameSection.scrollHeight : 0) + 'px';
     }
   },
   components: { Alert, BySpeedrunCom, Error },
