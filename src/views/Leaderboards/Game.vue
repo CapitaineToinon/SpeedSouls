@@ -178,6 +178,7 @@ export default {
         try {
           const game = await useSoulsGame(id).toPromise();
           state.game = game;
+          state.metaTitle = game.name;
         } catch (e) {
           state.gameError = e;
         }
@@ -202,6 +203,7 @@ export default {
           Object.freeze(category);
 
           state.category = category;
+          state.metaTitle = `${category.game.name} ${category.name}`;
         } catch (e) {
           state.categoryError = e;
         }
