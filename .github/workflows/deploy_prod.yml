@@ -14,10 +14,10 @@ jobs:
         with:
           ref: 'master'
 
-      - name: Use Node.js 10.x
+      - name: Use Latest Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: 'node'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
