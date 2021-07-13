@@ -49,13 +49,13 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           port: 22
-          source: "dist/"
+          source: "dist/*, dist/.htaccess"
           target: "/tmp/SpeedSouls/"
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: shopt -s dotglob && rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/ && shopt -u dotglob
+          command: shopt -s dotglob && rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/ && find ~/SpeedSouls/ -type f -exec chmod 644 -- {} + && shopt -u dotglob
           host: ${{ secrets.DEV_HOST }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
