@@ -1,9 +1,9 @@
-:root.mode-dark {
+:root.dark {
   --skeleton-background-color: #4c566a;
   --skeleton-color: #434c5e;
 }
 
-:root:not(.mode-dark) {
+:root:not(.dark) {
   --skeleton-background-color: #d8dee9;
   --skeleton-color: #e5e9f0;
 }

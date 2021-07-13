@@ -1,4 +1,6 @@
-module.exports = {
+/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
+const config = {
+  darkMode: 'class',
   purge: ['./src/**/*.vue', './public/index.html'],
   theme: {
     screens: {
@@ -71,33 +73,35 @@ module.exports = {
     }
   },
   variants: {
-    backgroundColor: [
-      'responsive',
-      'hover',
-      'focus',
-      'dark',
-      'dark-hover',
-      'dark-group-hover',
-      'dark-even',
-      'dark-odd'
-    ],
-    borderColor: [
-      'responsive',
-      'hover',
-      'focus',
-      'dark',
-      'dark-focus',
-      'dark-focus-within'
-    ],
-    textColor: [
-      'responsive',
-      'hover',
-      'focus',
-      'dark',
-      'dark-hover',
-      'dark-active',
-      'dark-placeholder'
-    ]
+    // backgroundColor: [
+    //   'responsive',
+    //   'hover',
+    //   'focus',
+    //   // 'dark',
+    //   // 'dark-hover',
+    //   // 'dark-group-hover',
+    //   // 'dark-even',
+    //   // 'dark-odd'
+    // ],
+    // borderColor: [
+    //   'responsive',
+    //   'hover',
+    //   'focus',
+    //   // 'dark',
+    //   // 'dark-focus',
+    //   // 'dark-focus-within'
+    // ],
+    // textColor: [
+    //   'responsive',
+    //   'hover',
+    //   'focus',
+    //   // 'dark',
+    //   // 'dark-hover',
+    //   // 'dark-active',
+    //   // 'dark-placeholder'
+    // ]
   },
-  plugins: [require('tailwindcss-dark-mode')()]
+  plugins: []
 };
+
+module.exports = config;

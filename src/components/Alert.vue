@@ -101,7 +101,7 @@ div[role='alert'] {
   }
 }
 
-:root.mode-dark div[role='alert'].information {
+:root.dark div[role='alert'].information {
   .title {
     @apply bg-nord1;
     @apply text-nord6;
@@ -113,7 +113,7 @@ div[role='alert'] {
   }
 }
 
-:root:not(.mode-dark) div[role='alert'].information {
+:root:not(.dark) div[role='alert'].information {
   .title {
     @apply bg-nord5;
     @apply text-nord0;

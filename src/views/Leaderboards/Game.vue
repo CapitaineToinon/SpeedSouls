@@ -344,7 +344,7 @@ aside {
   }
 }
 
-:root.mode-dark {
+:root.dark {
   .categories {
     @apply bg-nord1;
   }
@@ -356,7 +356,7 @@ aside {
   }
 }
 
-:root:not(mode-dark) {
+:root:not(dark) {
   .categories {
     @apply bg-nord5;
   }
