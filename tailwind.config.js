@@ -15,7 +15,7 @@ const config = {
       }
     },
     fontFamily: {
-      sans: 'Robot, Helvetica, Arial, sans-serif'
+      sans: 'Roboto, Helvetica, Arial, sans-serif'
     },
     extend: {
       colors: {
