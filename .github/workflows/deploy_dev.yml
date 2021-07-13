@@ -42,14 +42,15 @@ jobs:
       - name: List output files
         run: ls dist
 
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      - name: SCP content
+        uses: appleboy/scp-action@master
         with:
-          ftp-server: ${{ secrets.DEV_HOST }}
-          ftp-username: ${{ secrets.DEV_USERNAME }}
-          ftp-password: ${{ secrets.DEV_PASSWORD }}
-          local-dir: dist/
-          git-ftp-args: --insecure
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
+          port: 22
+          source: "dist/"
+          target: "/tmp/SpeedSouls/"
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
