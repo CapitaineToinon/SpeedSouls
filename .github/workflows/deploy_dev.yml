@@ -43,15 +43,15 @@ jobs:
         run: ls dist
 
       - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.DEV_HOST }}
-          FTP_USERNAME: ${{ secrets.DEV_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.DEV_PASSWORD }}
-          METHOD: sftp
-          LOCAL_DIR: dist
-          REMOTE_DIR: /tmp/SpeedSouls
-          ARGS: --delete
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
+          port: 22
+          protocol: ftps
+          local-dir: dist/
+          server-dir: /tmp/SpeedSouls/
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
