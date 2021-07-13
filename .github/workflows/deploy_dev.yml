@@ -43,15 +43,13 @@ jobs:
         run: ls dist
 
       - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          server: ${{ secrets.DEV_HOST }}
-          username: ${{ secrets.DEV_USERNAME }}
-          password: ${{ secrets.DEV_PASSWORD }}
-          port: 21
-          protocol: ftps
+          ftp-server: ${{ secrets.DEV_HOST }}
+          ftp-username: ${{ secrets.DEV_USERNAME }}
+          ftp-password: ${{ secrets.DEV_PASSWORD }}
           local-dir: dist/
-          server-dir: /tmp/SpeedSouls/
+          git-ftp-args: --insecure
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
