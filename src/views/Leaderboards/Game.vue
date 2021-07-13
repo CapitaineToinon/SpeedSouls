@@ -17,11 +17,11 @@
     </button>
     <aside :class="{ open: openSidebar }">
       <categories
+        ref="aside"
         class="categories"
         :categories="game.categories"
         :active="$route.params.category"
         @click="onCategoryClick"
-        v-click-outside="closeAside"
       />
     </aside>
     <div
@@ -57,9 +57,7 @@
 </template>
 
 <script>
-import clickOutside from '@/directives/clickOutside';
 import useBodyLock from '@/mixins/bodyLocker';
-import onResize from '@/mixins/onResize';
 import Error from '@/components/Error';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Categories from '@/components/Categories.vue';
@@ -67,15 +65,13 @@ import Leaderboard from '@/components/Leaderboard.vue';
 import ButtonGroup from '@/components/ButtonGroup';
 import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import { reactive, computed, toRefs, watch } from '@vue/composition-api';
+import { useEventListener, onClickOutside } from '@vueuse/core';
 
 export default {
   metaInfo() {
     return {
       title: this.metaTitle
     };
-  },
-  directives: {
-    clickOutside
   },
   components: {
     Error,
@@ -85,6 +81,7 @@ export default {
     Leaderboard
   },
   setup(props, { root, refs }) {
+    const aside = computed(() => refs.aside);
     const [lock, unlock] = useBodyLock();
     const gameParam = computed(() => root.$route.params.game);
     const categoryParam = computed(() => root.$route.params.category);
@@ -108,9 +105,11 @@ export default {
     );
 
     // but close it on resize
-    onResize(() => {
+    useEventListener(window, 'resize', () => {
       state.openSidebar = false;
     });
+
+    onClickOutside(aside, closeAside);
 
     // Dynamic breacrumbs based on the game and category
     const breadcrumbs = computed(() => {

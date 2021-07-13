@@ -22,8 +22,8 @@
 <script>
 import Navbar from '@/components/Navbar';
 import MyFooter from '@/components/MyFooter';
-import onEvent from '@/mixins/onEvent';
 import { computed } from '@vue/composition-api';
+import { useEventListener } from '@vueuse/core';
 
 export default {
   metaInfo: {
@@ -42,7 +42,7 @@ export default {
     const isHome = computed(() => root.$route.name === 'Home');
     const isTransparant = computed(() => isHome.value);
 
-    onEvent('focus', () => {
+    useEventListener(window, 'focus', () => {
       if (root.$store.getters.theme === 'AUTO')
         root.$store.dispatch('enableAuto');
     });
