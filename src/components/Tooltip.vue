@@ -30,7 +30,7 @@ export default {
   @apply py-1;
   @apply px-2;
   @apply rounded;
-  @apply whitespace-no-wrap;
+  @apply whitespace-nowrap;
   visibility: hidden;
 
   text-align: center;

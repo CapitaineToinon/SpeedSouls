@@ -4,7 +4,7 @@
       v-for="(option, i) in options"
       :key="i"
       @click="$emit('change', i)"
-      class="btn theme whitespace-no-wrap border-nord0 dark:border-nord6"
+      class="btn theme whitespace-nowrap border-nord0 dark:border-nord6"
       :class="{
         'bg-nord0 text-nord6 dark:bg-nord6 dark:text-nord0': active === i,
         'bg-nord6 text-nord0 dark:bg-nord1 dark:text-nord6': active !== i

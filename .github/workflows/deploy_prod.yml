@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  FTP-Deploy-Action:
+  deploy-to-prod-env:
     name: Build and deploy to prod
     runs-on: ubuntu-latest
     steps:
@@ -14,10 +14,10 @@ jobs:
         with:
           ref: 'master'
 
-      - name: Use Node.js 10.x
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '16.x'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -41,22 +41,27 @@ jobs:
 
       - name: List output files
         run: ls dist
-
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.PROD_HOST }}
-          FTP_USERNAME: ${{ secrets.PROD_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.PROD_PASSWORD }}
-          METHOD: sftp
-          LOCAL_DIR: dist
-          REMOTE_DIR: /tmp/SpeedSouls
-          ARGS: --delete
+        
+      - name: SCP content to remote
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          password: ${{ secrets.PROD_PASSWORD }}
+          port: 22
+          source: "dist/*, dist/.htaccess"
+          target: "/tmp/SpeedSouls/"
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: shopt -s dotglob && rm -r ~/SpeedSouls/* && mv /tmp/SpeedSouls/* ~/SpeedSouls/ && rm -r /tmp/SpeedSouls/ && shopt -u dotglob
+          command: |
+            shopt -s dotglob && \
+            rm -r ~/SpeedSouls/* && \
+            mv /tmp/SpeedSouls/* ~/SpeedSouls/ && \
+            rm -r /tmp/SpeedSouls/ && \
+            find ~/SpeedSouls/ -type f -exec chmod 644 -- {} + && \
+            shopt -u dotglob
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USERNAME }}
           password: ${{ secrets.PROD_PASSWORD }}

@@ -25,7 +25,7 @@ table {
     @apply px-3;
 
     &.shrink {
-      @apply whitespace-no-wrap;
+      @apply whitespace-nowrap;
     }
 
     &.expand {
@@ -93,7 +93,7 @@ table {
   }
 }
 
-:root:not(.mode-dark) {
+:root:not(.dark) {
   table {
     @apply text-nord0;
 
@@ -144,7 +144,7 @@ table {
   }
 }
 
-:root.mode-dark {
+:root.dark {
   table {
     @apply text-nord6;
 
