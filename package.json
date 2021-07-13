@@ -21,6 +21,7 @@
     "flag-icon-css": "^3.4.6",
     "get-youtube-id": "^1.0.1",
     "rxjs": "^6.5.5",
+    "sass": "^1.35.2",
     "tailwindcss": "^1.4.1",
     "tailwindcss-dark-mode": "^1.1.4",
     "vue": "^2.6.11",
@@ -42,7 +43,6 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "sharp": "^0.25.2",
     "vue-template-compiler": "^2.6.11"
