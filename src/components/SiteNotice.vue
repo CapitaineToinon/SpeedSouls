@@ -15,7 +15,7 @@
 </template>
 
 <script>
-const { VITE_APP_ENABLE_SITE_NOTICE } = import.meta.env;;
+const { VITE_APP_ENABLE_SITE_NOTICE } = import.meta.env;
 import Alert from '@/components/Alert.vue';
 import { computed } from '@vue/composition-api';
 

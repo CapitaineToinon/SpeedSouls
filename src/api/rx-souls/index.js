@@ -8,7 +8,7 @@ import formatPlayer from './formatting/Player';
 import formatPlayerRun from './formatting/PlayerRun';
 import CACHE from './cache';
 
-const API_ENDPOINT = `${process.env.VUE_APP_SPEEDRUNCOM}/api/v1`;
+const API_ENDPOINT = `${import.meta.env.VITE_APP_SPEEDRUNCOM}/api/v1`;
 const SERIE = 'souls';
 const RETRY_COUNT = 3;
 
