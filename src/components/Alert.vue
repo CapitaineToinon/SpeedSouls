@@ -39,9 +39,10 @@ div[role='alert'] {
   }
 
   .content {
-    @apply bg-nord6;
-    @apply text-nord0;
+    @apply bg-nord6 dark:bg-nord3;
+    @apply text-nord1 dark:text-nord6;
   }
+
 
   &.danger {
     .title {
@@ -57,13 +58,11 @@ div[role='alert'] {
   &.warning {
     .title {
       @apply bg-nord13;
-      @apply text-nord0;
+      @apply text-nord1;
     }
 
     .content {
       @apply border-nord13;
-      @apply bg-gray-100;
-      @apply text-nord0;
     }
   }
 
@@ -81,7 +80,7 @@ div[role='alert'] {
   &.success {
     .title {
       @apply bg-nord14;
-      @apply text-nord0;
+      @apply text-nord1;
     }
 
     .content {
@@ -98,30 +97,6 @@ div[role='alert'] {
     .content {
       @apply border-speedsouls;
     }
-  }
-}
-
-:root.dark div[role='alert'].information {
-  .title {
-    @apply bg-nord1;
-    @apply text-nord6;
-  }
-  .content {
-    @apply bg-nord6;
-    @apply text-nord0;
-    @apply border-nord0;
-  }
-}
-
-:root:not(.dark) div[role='alert'].information {
-  .title {
-    @apply bg-nord5;
-    @apply text-nord0;
-  }
-  .content {
-    @apply bg-nord6;
-    @apply text-nord0;
-    @apply border-nord5;
   }
 }
 </style>
