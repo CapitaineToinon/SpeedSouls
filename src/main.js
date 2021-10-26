@@ -4,7 +4,7 @@ import router from '@/router';
 import store from '@/store';
 import VueMeta from 'vue-meta';
 import VueCompositionAPI from '@vue/composition-api';
-import SiteNotice from '@/components/SiteNotice';
+import SiteNotice from '@/components/SiteNotice.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {

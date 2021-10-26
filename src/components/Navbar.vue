@@ -7,14 +7,14 @@
       <img
         class="h-10 sm:h-10 py-2"
         v-show="isWhiteLogo"
-        :src="require('@/assets/logo-white.png')"
-        alt="speedsouls logo"
+        src="/assets/logo-white.png"
+        alt="speedsouls white logo"
       />
       <img
         v-show="!isWhiteLogo"
         class="h-10 sm:h-10 py-2"
-        :src="require('@/assets/logo-black.png')"
-        alt="speedsouls logo"
+        src="/assets/logo-black.png"
+        alt="speedsouls black logo"
       />
     </router-link>
     <div class="burger flex flex-col justify-center lg:hidden">
@@ -42,7 +42,7 @@
           <router-link :to="{ name: 'Games' }">Leaderboards.</router-link>
         </li>
         <li class="menu-item">
-          <a :href="VUE_APP_WIKI">Wiki.</a>
+          <a :href="VITE_APP_WIKI">Wiki.</a>
         </li>
         <li class="menu-item">
           <router-link :to="{ name: 'Submit' }">Submit a run.</router-link>
@@ -57,7 +57,7 @@
           }"
         >
           <a
-            :href="VUE_APP_DISCORD"
+            :href="VITE_APP_DISCORD"
             aria-label="Discord"
             class="hover:text-discord"
           >
@@ -66,7 +66,7 @@
         </li>
         <li class="menu-item icon">
           <a
-            :href="VUE_APP_PATREON"
+            :href="VITE_APP_PATREON"
             aria-label="Patreon"
             class="hover:text-patreon"
           >
@@ -75,7 +75,7 @@
         </li>
         <li class="menu-item icon">
           <a
-            :href="VUE_APP_TWITTER"
+            :href="VITE_APP_TWITTER"
             aria-label="Twitter"
             class="hover:text-twitter"
           >
@@ -84,7 +84,7 @@
         </li>
         <li class="menu-item icon">
           <a
-            :href="VUE_APP_GITHUB"
+            :href="VITE_APP_GITHUB"
             aria-label="Github"
             class="hover:text-nord10"
           >
@@ -107,12 +107,12 @@
 
 <script>
 const {
-  VUE_APP_WIKI,
-  VUE_APP_DISCORD,
-  VUE_APP_PATREON,
-  VUE_APP_TWITTER,
-  VUE_APP_GITHUB
-} = process.env;
+  VITE_APP_WIKI,
+  VITE_APP_DISCORD,
+  VITE_APP_PATREON,
+  VITE_APP_TWITTER,
+  VITE_APP_GITHUB
+} = import.meta.env;
 
 import useWithScroll from '@/mixins/withScroll';
 import useBodyLock from '@/mixins/bodyLocker';
@@ -132,11 +132,11 @@ export default {
   },
   setup(props, { root, refs }) {
     const state = reactive({
-      VUE_APP_WIKI,
-      VUE_APP_DISCORD,
-      VUE_APP_PATREON,
-      VUE_APP_TWITTER,
-      VUE_APP_GITHUB,
+      VITE_APP_WIKI,
+      VITE_APP_DISCORD,
+      VITE_APP_PATREON,
+      VITE_APP_TWITTER,
+      VITE_APP_GITHUB,
       hidden: true
     });
 

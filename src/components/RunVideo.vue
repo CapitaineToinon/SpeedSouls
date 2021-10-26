@@ -31,8 +31,8 @@
 /* eslint-disable-next-line */
 const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
 import getIdFromUrl from 'get-youtube-id';
-import Alert from '@/components/Alert';
-import ExternalLink from '@/components/ExternalLink';
+import Alert from '@/components/Alert.vue';
+import ExternalLink from '@/components/ExternalLink.vue';
 import { computed } from '@vue/composition-api';
 
 export default {

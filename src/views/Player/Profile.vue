@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import Alert from '@/components/Alert';
-import Error from '@/components/Error';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import BySpeedrunCom from '@/components/BySpeedrunCom';
+import Alert from '@/components/Alert.vue';
+import Error from '@/components/Error.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 import relativeDate from '@/filters/relativeDate';
 import date from '@/filters/date';
 import { computed, watch, reactive, toRefs } from '@vue/composition-api';

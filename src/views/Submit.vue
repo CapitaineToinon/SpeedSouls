@@ -6,15 +6,15 @@
     </h1>
     <alert type="info" class="mb-6">
       You will need a
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+      <a :href="VITE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
       account to be able to submit a run. Runs submitted on
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+      <a :href="VITE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
       will appear both on
-      <a :href="VUE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
+      <a :href="VITE_APP_SPEEDRUNCOM" target="_blank" rel="noopener"
         >speedrun.com</a
       >
       and here on SpeedSouls.
@@ -67,12 +67,12 @@
 </template>
 
 <script>
-const { VUE_APP_SPEEDRUNCOM } = process.env;
+const { VITE_APP_SPEEDRUNCOM } = import.meta.env;
 import { reactive, onMounted, toRefs } from '@vue/composition-api';
 import { useSoulsGames } from '@/api/rx-souls';
-import Alert from '@/components/Alert';
-import Error from '@/components/Error';
-import BySpeedrunCom from '@/components/BySpeedrunCom';
+import Alert from '@/components/Alert.vue';
+import Error from '@/components/Error.vue';
+import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 
 export default {
   metaInfo: {
@@ -102,7 +102,7 @@ export default {
     onMounted(fetchGames);
 
     return {
-      VUE_APP_SPEEDRUNCOM,
+      VITE_APP_SPEEDRUNCOM,
       ...toRefs(state)
     };
   }

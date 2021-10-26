@@ -81,12 +81,12 @@
 </template>
 
 <script>
-import Alert from '@/components/Alert';
-import Error from '@/components/Error';
-import RunVideo from '@/components/RunVideo';
-import PlayerName from '@/components/PlayerName';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import BySpeedrunCom from '@/components/BySpeedrunCom';
+import Alert from '@/components/Alert.vue';
+import Error from '@/components/Error.vue';
+import RunVideo from '@/components/RunVideo.vue';
+import PlayerName from '@/components/PlayerName.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 import date from '@/filters/date';
 import { useRuns } from '@/api/rx-souls';
 import { reactive, computed, toRefs, watch } from '@vue/composition-api';

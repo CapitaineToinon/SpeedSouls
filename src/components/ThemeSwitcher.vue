@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ButtonGroup from '@/components/ButtonGroup';
+import ButtonGroup from '@/components/ButtonGroup.vue';
 import { reactive, toRefs, computed } from '@vue/composition-api';
 
 export default {

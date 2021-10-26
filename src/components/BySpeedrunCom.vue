@@ -6,7 +6,7 @@
 </template>
 
 <script>
-const { VUE_APP_SPEEDRUNCOM } = process.env;
+const { VUE_APP_SPEEDRUNCOM } = import.meta.env;
 
 export default {
   data: () => ({

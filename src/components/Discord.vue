@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="VUE_APP_DISCORD"
+    :href="VITE_APP_DISCORD"
     target="_blank"
     rel="noopener"
     aria-label="Discord"
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-const { VUE_APP_DISCORD } = process.env;
+const { VITE_APP_DISCORD } = import.meta.env;
 
 export default {
   data: () => ({
-    VUE_APP_DISCORD
+    VITE_APP_DISCORD
   })
 };
 </script>

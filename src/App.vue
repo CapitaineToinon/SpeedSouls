@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar';
-import MyFooter from '@/components/MyFooter';
+import Navbar from '@/components/Navbar.vue';
+import MyFooter from '@/components/MyFooter.vue';
 import onEvent from '@/mixins/onEvent';
 import { computed } from '@vue/composition-api';
 

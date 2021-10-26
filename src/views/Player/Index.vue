@@ -65,8 +65,8 @@
  *
  * Players is always an array, even on profiles, to simplify the logic.
  */
-import PlayerCard from '@/components/PlayerCard';
-import BySpeedrunCom from '@/components/BySpeedrunCom';
+import PlayerCard from '@/components/PlayerCard.vue';
+import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 import { useUser, useRuns } from '@/api/rx-souls';
 import { ref, computed, watch } from '@vue/composition-api';
 import { map } from 'rxjs/operators';

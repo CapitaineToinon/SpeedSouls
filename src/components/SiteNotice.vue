@@ -15,15 +15,15 @@
 </template>
 
 <script>
-const { VUE_APP_ENABLE_SITE_NOTICE } = process.env;
-import Alert from '@/components/Alert';
+const { VITE_APP_ENABLE_SITE_NOTICE } = import.meta.env;;
+import Alert from '@/components/Alert.vue';
 import { computed } from '@vue/composition-api';
 
 export default {
   components: { Alert },
   setup() {
     return {
-      hidden: computed(() => VUE_APP_ENABLE_SITE_NOTICE === 'false')
+      hidden: computed(() => VITE_APP_ENABLE_SITE_NOTICE === 'false')
     };
   }
 };
