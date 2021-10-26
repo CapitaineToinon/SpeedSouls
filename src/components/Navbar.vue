@@ -33,7 +33,7 @@
         </svg>
       </button>
     </div>
-    <div class="menu" v-click-outside="onClickOutside">
+    <div class="menu" ref="menu">
       <ul class="links flex flex-col lg:flex-row list-none">
         <li class="menu-item">
           <router-link to="/">Home.</router-link>
@@ -114,11 +114,13 @@ const {
   VITE_APP_GITHUB
 } = import.meta.env;
 
-import useWithScroll from '@/mixins/withScroll';
 import useBodyLock from '@/mixins/bodyLocker';
-import onResize from '@/mixins/onResize';
-import clickOutside from '@/directives/clickOutside';
 import { reactive, computed, toRefs, watch } from '@vue/composition-api';
+import {
+  useWindowScroll,
+  useEventListener,
+  onClickOutside
+} from '@vueuse/core';
 
 export default {
   props: {
@@ -126,9 +128,6 @@ export default {
       type: Boolean,
       required: true
     }
-  },
-  directives: {
-    clickOutside
   },
   setup(props, { root, refs }) {
     const state = reactive({
@@ -140,7 +139,8 @@ export default {
       hidden: true
     });
 
-    const { y } = useWithScroll();
+    const menu = computed(() => refs.menu);
+    const { y } = useWindowScroll();
     const [lock, unlock] = useBodyLock();
     const dark = computed(() => root.$store.getters.dark);
     const isTransparant = computed(() => props.transparant && y.value < 100);
@@ -156,7 +156,13 @@ export default {
     );
 
     // but close it on resize
-    onResize(() => {
+    useEventListener(window, 'resize', () => {
+      state.hidden = true;
+    });
+
+    // close the menu if clicked outside of it or the burger
+    onClickOutside(menu, ({ target }) => {
+      if (target === refs.burger || refs.burger.contains(target)) return;
       state.hidden = true;
     });
 
@@ -172,19 +178,13 @@ export default {
       state.hidden = !state.hidden;
     }
 
-    function onClickOutside({ target }) {
-      // close the menu if clicked outside of it or the burger
-      if (target === refs.burger || refs.burger.contains(target)) return;
-      state.hidden = true;
-    }
-
     return {
       ...toRefs(state),
       dark,
       isTransparant,
       isWhiteLogo,
-      toggleMenu,
-      onClickOutside
+      toggleMenu
+      // onClickOutside
     };
   }
 };

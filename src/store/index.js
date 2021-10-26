@@ -10,10 +10,7 @@ const DARK_CLASS = 'dark';
  * Get the current theme from the user prefers color scheme
  */
 function getDarkFromPrefersColorScheme() {
-  return (
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
+  return !!window.matchMedia?.('(prefers-color-scheme: dark)').matches;
 }
 
 // Update the dark mode on the DOM

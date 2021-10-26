@@ -1,3 +1,5 @@
+import formatGame from './Game';
+
 export default function Category(json) {
   const { id, name, weblink, miscellaneous, variables, game } = json;
 
@@ -11,6 +13,6 @@ export default function Category(json) {
     uglyHash: hash,
     misc: miscellaneous,
     variables: variables.data,
-    game: game.data
+    game: formatGame(game.data)
   };
 }

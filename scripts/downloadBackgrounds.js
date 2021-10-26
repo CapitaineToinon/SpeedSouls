@@ -1,7 +1,8 @@
+require('dotenv').config();
 const axios = require('axios');
 const sharp = require('sharp');
 
-const BASE_URL = 'https://www.speedrun.com/api/v1';
+const BASE_URL = `${process.env.VUE_APP_SPEEDRUNCOM}/api/v1`;
 const SERIE = 'souls';
 const SIZES = [240, 1280];
 const DESTINATION = './assets/backgrounds';
