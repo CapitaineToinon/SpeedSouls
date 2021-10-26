@@ -7,13 +7,13 @@
       <img
         class="h-10 sm:h-10 py-2"
         v-show="isWhiteLogo"
-        src="/assets/logo-white.png"
+        src="/img/logo-white.png"
         alt="speedsouls white logo"
       />
       <img
         v-show="!isWhiteLogo"
         class="h-10 sm:h-10 py-2"
-        src="/assets/logo-black.png"
+        src="/img/logo-black.png"
         alt="speedsouls black logo"
       />
     </router-link>

@@ -8,7 +8,7 @@
       <div class="max-w-2xl md mx-auto text-center py-6 md:py-40">
         <img
           class="mx-auto mb-4"
-          src="/assets/SpeedSouls-Horizontal-White_with_motto.png"
+          src="/img/SpeedSouls-Horizontal-White_with_motto.png"
           alt="speedsouls logo"
         />
         <div class="links py-5">
@@ -141,7 +141,7 @@ export default {
         state.assets[Math.floor(Math.random() * state.assets.length)];
 
       return {
-        '--bg-url': `url(/assets/backgrounds/${image}-1280.jpg)`
+        '--bg-url': `url(/img/backgrounds/${image}-1280.jpg)`
       };
     });
 

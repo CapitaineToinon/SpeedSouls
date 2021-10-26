@@ -5,7 +5,7 @@ const sharp = require('sharp');
 const BASE_URL = `${process.env.VITE_APP_SPEEDRUNCOM}/api/v1`;
 const SERIE = 'souls';
 const SIZES = [240, 1280];
-const DESTINATION = './assets/backgrounds';
+const DESTINATION = './img/backgrounds';
 
 function downloadBackground(game) {
   axios({
