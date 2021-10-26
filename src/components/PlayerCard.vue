@@ -17,7 +17,7 @@
       />
       <p class="text-base text-nord3 dark:text-nord6" v-if="player.country">
         <span
-          class="whitespace-no-wrap"
+          class="whitespace-nowrap"
           :class="`flag-icon flag-icon-${player.country.code} mr-1`"
         />
         {{ player.country.name }}

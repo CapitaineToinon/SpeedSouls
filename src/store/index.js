@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
-const DARK_CLASS = 'mode-dark';
+const DARK_CLASS = 'dark';
 
 /**
  * Get the current theme from the user prefers color scheme

@@ -139,10 +139,9 @@ export default {
     const style = computed(() => {
       const image =
         state.assets[Math.floor(Math.random() * state.assets.length)];
-      const url = `/assets/backgrounds/${image}-1280.jpg`;
 
       return {
-        '--bg-url': `url(${url})`
+        '--bg-url': `url(/assets/backgrounds/${image}-1280.jpg)`
       };
     });
 

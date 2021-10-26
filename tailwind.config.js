@@ -1,5 +1,10 @@
 module.exports = {
-  purge: ['./src/**/*.vue', './public/index.html'],
+  mode: 'jit',
+   purge: [
+    './src/**/*.vue',
+    './index.html',
+  ],
+  darkMode: 'class',
   theme: {
     screens: {
       sm: '768px',
@@ -75,29 +80,17 @@ module.exports = {
       'responsive',
       'hover',
       'focus',
-      'dark',
-      'dark-hover',
-      'dark-group-hover',
-      'dark-even',
-      'dark-odd'
     ],
     borderColor: [
       'responsive',
       'hover',
       'focus',
-      'dark',
-      'dark-focus',
-      'dark-focus-within'
     ],
     textColor: [
       'responsive',
       'hover',
       'focus',
-      'dark',
-      'dark-hover',
-      'dark-active',
-      'dark-placeholder'
     ]
   },
-  plugins: [require('tailwindcss-dark-mode')()]
+  plugins: []
 };
