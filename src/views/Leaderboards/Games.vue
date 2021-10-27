@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import GameCards from '@/components/GameCards';
+import GameCards from '@/components/GameCards.vue';
 
 export default {
   metaInfo: {

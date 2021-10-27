@@ -11,21 +11,21 @@
 </template>
 
 <script>
-const { VUE_APP_WIKI } = process.env;
-import Alert from '@/components/Alert';
+const { VITE_APP_WIKI } = import.meta.env;
+import Alert from '@/components/Alert.vue';
 import { computed } from '@vue/composition-api';
 
 export default {
   components: { Alert },
   setup() {
-    const to = computed(() => `${VUE_APP_WIKI}${this.$route.fullPath}`);
+    const to = computed(() => `${VITE_APP_WIKI}${this.$route.fullPath}`);
 
     return {
       to
     };
   },
   beforeRouteEnter(to, from, next) {
-    window.location.replace(`${VUE_APP_WIKI}${to.fullPath}`);
+    window.location.replace(`${VITE_APP_WIKI}${to.fullPath}`);
     next();
   }
 };

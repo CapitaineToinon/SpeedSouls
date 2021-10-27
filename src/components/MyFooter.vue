@@ -6,7 +6,7 @@
       >
         <div class="discord">
           <a
-            :href="VUE_APP_DISCORD"
+            :href="VITE_APP_DISCORD"
             class="hover:text-discord"
             target="_blank"
             rel="noopener"
@@ -21,7 +21,7 @@
         </div>
         <div class="twitter">
           <a
-            :href="VUE_APP_TWITTER"
+            :href="VITE_APP_TWITTER"
             class="hover:text-twitter"
             target="_blank"
             rel="noopener"
@@ -36,7 +36,7 @@
         </div>
         <div class="patreon">
           <a
-            :href="VUE_APP_PATREON"
+            :href="VITE_APP_PATREON"
             class="hover:text-patreon"
             target="_blank"
             rel="noopener"
@@ -51,7 +51,7 @@
         </div>
         <div class="github">
           <a
-            :href="VUE_APP_GITHUB"
+            :href="VITE_APP_GITHUB"
             class="hover:text-nord10"
             target="_blank"
             rel="noopener"
@@ -69,22 +69,22 @@
         class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs border-t border-nord5 dark:border-nord3 text-center"
       >
         Site created by the SpeedSouls team. Please visit our
-        <a :href="VUE_APP_GITHUB">Github</a> to report any issues. This work is
+        <a :href="VITE_APP_GITHUB">Github</a> to report any issues. This work is
         licensed under a
         <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
           >CC BY-NC-ND 4.0 Int'l License</a
         >.
       </div>
       <div
-        v-if="VUE_APP_GITHUB_SHA"
+        v-if="VITE_APP_GITHUB_SHA"
         class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs dark:border-nord3 text-center"
       >
         Site deployed by commit
         <a
           :href="
-            `${VUE_APP_GITHUB_SERVER_URL}/${VUE_APP_GITHUB_REPOSITORY}/commit/${VUE_APP_GITHUB_SHA}`
+            `${VITE_APP_GITHUB_SERVER_URL}/${VITE_APP_GITHUB_REPOSITORY}/commit/${VITE_APP_GITHUB_SHA}`
           "
-          >{{ VUE_APP_GITHUB_SHA }}</a
+          >{{ VITE_APP_GITHUB_SHA }}</a
         >.
       </div>
     </div>
@@ -93,24 +93,24 @@
 
 <script>
 const {
-  VUE_APP_DISCORD,
-  VUE_APP_PATREON,
-  VUE_APP_TWITTER,
-  VUE_APP_GITHUB,
-  VUE_APP_GITHUB_SHA,
-  VUE_APP_GITHUB_REPOSITORY,
-  VUE_APP_GITHUB_SERVER_URL
-} = process.env;
+  VITE_APP_DISCORD,
+  VITE_APP_PATREON,
+  VITE_APP_TWITTER,
+  VITE_APP_GITHUB,
+  VITE_APP_GITHUB_SHA,
+  VITE_APP_GITHUB_REPOSITORY,
+  VITE_APP_GITHUB_SERVER_URL
+} = import.meta.env;
 
 export default {
   data: () => ({
-    VUE_APP_DISCORD,
-    VUE_APP_PATREON,
-    VUE_APP_TWITTER,
-    VUE_APP_GITHUB,
-    VUE_APP_GITHUB_SHA,
-    VUE_APP_GITHUB_REPOSITORY,
-    VUE_APP_GITHUB_SERVER_URL
+    VITE_APP_DISCORD,
+    VITE_APP_PATREON,
+    VITE_APP_TWITTER,
+    VITE_APP_GITHUB,
+    VITE_APP_GITHUB_SHA,
+    VITE_APP_GITHUB_REPOSITORY,
+    VITE_APP_GITHUB_SERVER_URL
   })
 };
 </script>

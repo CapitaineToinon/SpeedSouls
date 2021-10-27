@@ -1,7 +1,10 @@
-/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
-const config = {
+module.exports = {
+  mode: 'jit',
+   purge: [
+    './src/**/*.vue',
+    './index.html',
+  ],
   darkMode: 'class',
-  purge: ['./src/**/*.vue', './public/index.html'],
   theme: {
     screens: {
       sm: '768px',
@@ -73,35 +76,21 @@ const config = {
     }
   },
   variants: {
-    // backgroundColor: [
-    //   'responsive',
-    //   'hover',
-    //   'focus',
-    //   // 'dark',
-    //   // 'dark-hover',
-    //   // 'dark-group-hover',
-    //   // 'dark-even',
-    //   // 'dark-odd'
-    // ],
-    // borderColor: [
-    //   'responsive',
-    //   'hover',
-    //   'focus',
-    //   // 'dark',
-    //   // 'dark-focus',
-    //   // 'dark-focus-within'
-    // ],
-    // textColor: [
-    //   'responsive',
-    //   'hover',
-    //   'focus',
-    //   // 'dark',
-    //   // 'dark-hover',
-    //   // 'dark-active',
-    //   // 'dark-placeholder'
-    // ]
+    backgroundColor: [
+      'responsive',
+      'hover',
+      'focus',
+    ],
+    borderColor: [
+      'responsive',
+      'hover',
+      'focus',
+    ],
+    textColor: [
+      'responsive',
+      'hover',
+      'focus',
+    ]
   },
   plugins: []
 };
-
-module.exports = config;

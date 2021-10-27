@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@/components/Tooltip.vue';
 import date from '@/filters/date';
 
 export default {

@@ -8,7 +8,7 @@
   --skeleton-color: #e5e9f0;
 }
 
-@mixin skeleton {
+@mixin skeleton() {
   position: relative;
   overflow: hidden;
 
@@ -44,5 +44,5 @@
 }
 
 .is-skeleton {
-  @include skeleton;
+  @include skeleton();
 }

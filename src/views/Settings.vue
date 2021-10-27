@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import ThemeSwitcher from '@/components/ThemeSwitcher';
-import TimeReference from '@/components/TimeReference';
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue';
+import TimeReference from '@/components/TimeReference.vue';
 
 export default {
   metaInfo: {

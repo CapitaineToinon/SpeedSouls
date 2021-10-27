@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="h-screen flex flex-col">
+  <div id="app" class="min-h-screen flex flex-col">
     <navbar
       class="absolute top-0 left-0 right-0 z-10"
       :class="{ 'dark:bg-gray-800': !isHome, 'bg-white': !isHome }"
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar';
-import MyFooter from '@/components/MyFooter';
+import Navbar from '@/components/Navbar.vue';
+import MyFooter from '@/components/MyFooter.vue';
 import { computed } from '@vue/composition-api';
 import { useEventListener } from '@vueuse/core';
 
@@ -54,7 +54,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import '@/scss/main.scss';
-</style>

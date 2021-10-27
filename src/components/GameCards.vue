@@ -25,9 +25,9 @@
 <script>
 import { reactive, toRefs, onMounted } from '@vue/composition-api';
 import { useSoulsGames } from '@/api/rx-souls';
-import Error from '@/components/Error';
-import GameCard from '@/components/GameCard';
-import BySpeedrunCom from '@/components/BySpeedrunCom';
+import Error from '@/components/Error.vue';
+import GameCard from '@/components/GameCard.vue';
+import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 
 export default {
   components: { Error, GameCard, BySpeedrunCom },

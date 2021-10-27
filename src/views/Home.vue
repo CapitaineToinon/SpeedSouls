@@ -8,7 +8,7 @@
       <div class="max-w-2xl md mx-auto text-center py-6 md:py-40">
         <img
           class="mx-auto mb-4"
-          :src="require('@/assets/SpeedSouls-Horizontal-White_with_motto.png')"
+          src="/img/SpeedSouls-Horizontal-White_with_motto.png"
           alt="speedsouls logo"
         />
         <div class="links py-5">
@@ -19,7 +19,7 @@
           >
             <font-awesome-icon :icon="['fas', 'list']" />Leaderboards
           </router-link>
-          <a :href="VUE_APP_WIKI" class="btn -primary">
+          <a :href="VITE_APP_WIKI" class="btn -primary">
             <font-awesome-icon
               :icon="['fas', 'angle-double-right']"
             />SpeedSouls Wiki
@@ -31,7 +31,7 @@
           >
             <font-awesome-icon :icon="['fas', 'hourglass-end']" />Submit a Run
           </router-link>
-          <a :href="VUE_APP_DISCORD" class="btn -primary">
+          <a :href="VITE_APP_DISCORD" class="btn -primary">
             <font-awesome-icon :icon="['fab', 'discord']" />Discord
           </a>
         </div>
@@ -50,7 +50,7 @@
         </p>
 
         <div class="flex flex-row px-2 py-2 justify-center">
-          <a class="btn -primary" :href="`${VUE_APP_WIKI}/SpeedSouls:About`"
+          <a class="btn -primary" :href="`${VITE_APP_WIKI}/SpeedSouls:About`"
             >Read More</a
           >
         </div>
@@ -89,7 +89,7 @@
         </p>
 
         <div class="flex flex-row px-2 py-2 justify-center">
-          <a :href="VUE_APP_PATREON" class="btn -primary">
+          <a :href="VITE_APP_PATREON" class="btn -primary">
             <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
             Patreon
           </a>
@@ -101,15 +101,15 @@
 
 <script>
 const {
-  VUE_APP_WIKI,
-  VUE_APP_DISCORD,
-  VUE_APP_GITHUB,
-  VUE_APP_PATREON
-} = process.env;
+  VITE_APP_WIKI,
+  VITE_APP_DISCORD,
+  VITE_APP_GITHUB,
+  VITE_APP_PATREON
+} = import.meta.env;
 
-import SiteNotice from '@/components/SiteNotice';
-import Hero from '@/components/Hero';
-import Discord from '@/components/Discord';
+import SiteNotice from '@/components/SiteNotice.vue';
+import Hero from '@/components/Hero.vue';
+import Discord from '@/components/Discord.vue';
 import { computed, reactive, toRefs } from '@vue/composition-api';
 
 export default {
@@ -120,10 +120,10 @@ export default {
   components: { SiteNotice, Hero, Discord },
   setup(props, { root }) {
     const state = reactive({
-      VUE_APP_WIKI,
-      VUE_APP_GITHUB,
-      VUE_APP_DISCORD,
-      VUE_APP_PATREON,
+      VITE_APP_WIKI,
+      VITE_APP_GITHUB,
+      VITE_APP_DISCORD,
+      VITE_APP_PATREON,
       assets: [
         'bloodborne',
         'darksouls',
@@ -139,10 +139,9 @@ export default {
     const style = computed(() => {
       const image =
         state.assets[Math.floor(Math.random() * state.assets.length)];
-      const url = require(`@/assets/backgrounds/${image}-1280.jpg`);
 
       return {
-        '--bg-url': `url(${url})`
+        '--bg-url': `url(/img/backgrounds/${image}-1280.jpg)`
       };
     });
 

@@ -27,15 +27,7 @@ export default {
   },
   computed: {
     src() {
-      let src;
-
-      try {
-        src = require(`@/assets/backgrounds/${this.game.abbreviation}-240.jpg`);
-      } catch {
-        src = this.game.background;
-      }
-
-      return src;
+      return `/img/backgrounds/${this.game.abbreviation}-240.jpg`;
     }
   }
 };

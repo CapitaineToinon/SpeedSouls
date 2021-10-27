@@ -58,11 +58,11 @@
 
 <script>
 import useBodyLock from '@/mixins/bodyLocker';
-import Error from '@/components/Error';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import Error from '@/components/Error.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Categories from '@/components/Categories.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
-import ButtonGroup from '@/components/ButtonGroup';
+import ButtonGroup from '@/components/ButtonGroup.vue';
 import { useSoulsGame, useSoulsCategory } from '@/api/rx-souls';
 import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 import { useEventListener, onClickOutside } from '@vueuse/core';
@@ -357,7 +357,7 @@ aside {
   }
 }
 
-:root:not(dark) {
+:root:not(.dark) {
   .categories {
     @apply bg-nord5;
   }

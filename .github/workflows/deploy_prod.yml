@@ -14,10 +14,15 @@ jobs:
         with:
           ref: 'master'
 
-      - name: Use Node.js 16
-        uses: actions/setup-node@v1
+      # Read node version from `.nvmrc` file
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
+          # use the output from the action
+          node-version: "${{ steps.nvmrc.outputs.NVMRC }}"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

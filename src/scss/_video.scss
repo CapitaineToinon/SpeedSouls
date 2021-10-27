@@ -1,3 +1,5 @@
+@use './skeleton' as m;
+
 /**
  * Scoped CSS Doesn't work on dynamic content 
  * https://github.com/vuejs/vue-loader/issues/559
@@ -6,7 +8,7 @@
   width: 100%;
   padding-top: 56.25%;
 
-  @include skeleton;
+  @include m.skeleton();
 
   iframe {
     width: 100%;
