@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           # use the output from the action
-          node-version: "${{ steps.nvmrc.outputs.NVMRC }}"
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
