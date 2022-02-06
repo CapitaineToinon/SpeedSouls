@@ -1,15 +1,15 @@
 <template>
-  <div class="border-gray-100 rounded overflow-hidden shadow-md">
-    <div class="bg-black pb-3/5 relative">
+  <div class="overflow-hidden rounded border-gray-100 shadow-md">
+    <div class="relative bg-black pb-3/5">
       <img
         class="absolute h-full w-full object-cover opacity-75"
         :src="src"
         alt="Sunset in the mountains"
       />
       <div
-        class="absolute h-full w-full flex items-center justify-center text-center p-2"
+        class="absolute flex h-full w-full items-center justify-center p-2 text-center"
       >
-        <div class="text-gray-100 font-bold">
+        <div class="font-bold text-gray-100">
           {{ game.name }}
         </div>
       </div>
@@ -22,13 +22,13 @@ export default {
   props: {
     game: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     src() {
       return `/img/backgrounds/${this.game.abbreviation}-240.jpg`;
-    }
-  }
+    },
+  },
 };
 </script>

@@ -1,11 +1,11 @@
 <template>
   <div role="alert" class="overflow-hidden" :class="type">
-    <div v-if="!headless" class="title font-bold rounded-t px-4 py-2">
+    <div v-if="!headless" class="title rounded-t px-4 py-2 font-bold">
       <slot name="header">{{ type }}</slot>
     </div>
     <div
       class="content border px-4 py-3"
-      :class="{ 'border-t-0 rounded-b': !headless, rounded: headless }"
+      :class="{ 'rounded-b border-t-0': !headless, rounded: headless }"
     >
       <p>
         <slot></slot>
@@ -20,13 +20,13 @@ export default {
     type: {
       type: String,
       default: () => 'information',
-      required: false
+      required: false,
     },
     headless: {
       type: Boolean,
-      default: () => false
-    }
-  }
+      default: () => false,
+    },
+  },
 };
 </script>
 
@@ -42,7 +42,6 @@ div[role='alert'] {
     @apply bg-nord6 dark:bg-nord3;
     @apply text-nord1 dark:text-nord6;
   }
-
 
   &.danger {
     .title {

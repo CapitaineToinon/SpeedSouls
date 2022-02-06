@@ -11,9 +11,9 @@ function downloadBackground(game) {
   axios({
     url: game.assets.background.uri,
     method: 'get',
-    responseType: 'arraybuffer'
+    responseType: 'arraybuffer',
   }).then(({ data }) => {
-    SIZES.forEach(size => {
+    SIZES.forEach((size) => {
       sharp(data)
         .resize(size)
         .toFile(`${DESTINATION}/${game.abbreviation}-${size}.jpg`);
@@ -23,7 +23,7 @@ function downloadBackground(game) {
 
 axios({
   url: `${BASE_URL}/series/${SERIE}/games`,
-  method: 'get'
+  method: 'get',
 }).then(({ data }) => {
   data.data.forEach(downloadBackground);
 });

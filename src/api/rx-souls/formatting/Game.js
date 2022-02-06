@@ -9,7 +9,7 @@ export default function Game(json) {
     categories,
     ruleset,
     variables,
-    weblink
+    weblink,
   } = json;
 
   let formatted = {
@@ -25,12 +25,12 @@ export default function Game(json) {
         ? assets['cover-large'].uri
         : '',
     ruleset,
-    weblink
+    weblink,
   };
 
   if (categories) {
     formatted.categories = categories.data
-      .filter(category => category.type === 'per-game')
+      .filter((category) => category.type === 'per-game')
       .map(formatCategory);
   }
 

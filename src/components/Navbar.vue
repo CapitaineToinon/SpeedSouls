@@ -1,18 +1,18 @@
 <template>
   <nav
-    class="font-sans text-center flex h-12 justify-between px-3 bg-nord6 dark:bg-nord1"
+    class="flex h-12 justify-between bg-nord6 px-3 text-center font-sans dark:bg-nord1"
     :class="{ transparant: isTransparant, active: !hidden, dark: dark }"
   >
-    <router-link to="/" class="h-full flex flex-col justify-center">
+    <router-link to="/" class="flex h-full flex-col justify-center">
       <img
-        class="h-10 sm:h-10 py-2"
         v-show="isWhiteLogo"
+        class="h-10 py-2 sm:h-10"
         src="/img/logo-white.png"
         alt="speedsouls white logo"
       />
       <img
         v-show="!isWhiteLogo"
-        class="h-10 sm:h-10 py-2"
+        class="h-10 py-2 sm:h-10"
         src="/img/logo-black.png"
         alt="speedsouls black logo"
       />
@@ -20,11 +20,11 @@
     <div class="burger flex flex-col justify-center lg:hidden">
       <button
         ref="burger"
+        class="flex items-center rounded border px-3 py-2"
         @click="toggleMenu"
-        class="flex items-center px-3 py-2 border rounded"
       >
         <svg
-          class="fill-current h-3 w-3"
+          class="h-3 w-3 fill-current"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -33,8 +33,8 @@
         </svg>
       </button>
     </div>
-    <div class="menu" ref="menu">
-      <ul class="links flex flex-col lg:flex-row list-none">
+    <div ref="menu" class="menu">
+      <ul class="links flex list-none flex-col lg:flex-row">
         <li class="menu-item">
           <router-link to="/">Home.</router-link>
         </li>
@@ -53,7 +53,7 @@
           class="menu-item icon"
           :class="{
             'border-nord0': !transparant,
-            'dark:border-nord6': transparant
+            'dark:border-nord6': transparant,
           }"
         >
           <a
@@ -111,7 +111,7 @@ const {
   VITE_APP_DISCORD,
   VITE_APP_PATREON,
   VITE_APP_TWITTER,
-  VITE_APP_GITHUB
+  VITE_APP_GITHUB,
 } = import.meta.env;
 
 import useBodyLock from '@/mixins/bodyLocker';
@@ -119,15 +119,15 @@ import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 import {
   useWindowScroll,
   useEventListener,
-  onClickOutside
+  onClickOutside,
 } from '@vueuse/core';
 
 export default {
   props: {
     transparant: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props, { root, refs }) {
     const state = reactive({
@@ -136,7 +136,7 @@ export default {
       VITE_APP_PATREON,
       VITE_APP_TWITTER,
       VITE_APP_GITHUB,
-      hidden: true
+      hidden: true,
     });
 
     const menu = computed(() => refs.menu);
@@ -183,10 +183,10 @@ export default {
       dark,
       isTransparant,
       isWhiteLogo,
-      toggleMenu
+      toggleMenu,
       // onClickOutside
     };
-  }
+  },
 };
 </script>
 

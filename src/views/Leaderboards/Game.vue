@@ -1,12 +1,12 @@
 <template>
   <error v-if="gameError" :error="gameError" />
-  <div v-else-if="!game" class="progress h-2 flex flex-row"></div>
+  <div v-else-if="!game" class="progress flex h-2 flex-row"></div>
   <div v-else class="flex flex-row">
     <button
       id="sidebar-button"
       ref="sidebarButtonRef"
-      @click="openSidebar = !openSidebar"
       :class="{ open: openSidebar }"
+      @click="openSidebar = !openSidebar"
     >
       <font-awesome-icon
         v-if="!openSidebar"
@@ -29,33 +29,26 @@
         />
       </aside>
       <div
-        class="content flex flex-col flex-grow ml-0 md:ml-5"
+        class="content ml-0 flex flex-grow flex-col md:ml-5"
         :class="{ open: openSidebar }"
       >
         <breadcrumbs class="mb-4" :items="breadcrumbs" />
 
         <error v-if="categoryError" :error="categoryError" />
-        <div v-else-if="!category" class="progress h-2 flex flex-row"></div>
+        <div v-else-if="!category" class="progress flex h-2 flex-row"></div>
         <div v-else>
           <div
-            class="
-              subcategories
-              flex flex-col
-              justify-center
-              align-middle
-              items-stretch
-              md:items-start
-            "
+            class="subcategories flex flex-col items-stretch justify-center align-middle md:items-start"
           >
             <ButtonGroup
-              class="mb-4"
               v-for="variable in category.variables.filter(
                 (v) => v['is-subcategory']
               )"
               :key="variable.id"
+              class="mb-4"
               :options="variable.values.values"
-              @change="(v) => (variable.values.default = v)"
               :active="variable.values.default"
+              @change="(v) => (variable.values.default = v)"
             />
           </div>
           <Leaderboard

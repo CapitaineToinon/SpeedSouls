@@ -24,7 +24,7 @@ function formatLeaderboardRun(json, players, fullGame, fullCategory) {
     primary_t,
     others_t,
     time,
-    showicon: videos !== null
+    showicon: videos !== null,
   };
 }
 
@@ -32,16 +32,18 @@ export default function formatLeaderboard(json, game) {
   const { runs, players, category } = json;
 
   const formatted = {
-    runs: runs.map(run => {
+    runs: runs.map((run) => {
       const formattedPlayers = run.run.players
-        .map(player => {
+        .map((player) => {
           const isGuest = !Object.prototype.hasOwnProperty.call(player, 'id');
-          return isGuest ? player : players.data.find(p => p.id === player.id);
+          return isGuest
+            ? player
+            : players.data.find((p) => p.id === player.id);
         })
         .map(formatPlayer);
 
       return formatLeaderboardRun(run, formattedPlayers, game, category.data);
-    })
+    }),
   };
 
   return formatted;

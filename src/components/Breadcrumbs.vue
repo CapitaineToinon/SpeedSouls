@@ -1,9 +1,9 @@
 <template>
   <div class="breadcrumbs flex flex-row flex-wrap">
     <div
-      class="item text-nord0 dark:text-nord6 flex flex-row flex-nowrap items-center"
       v-for="(item, i) in acutalItems"
       :key="i"
+      class="item flex flex-row flex-nowrap items-center text-nord0 dark:text-nord6"
     >
       <font-awesome-icon
         v-if="i !== 0"
@@ -11,12 +11,12 @@
         :icon="['fas', 'chevron-right']"
       />
       <router-link
-        class="mr-3 text-nord10"
         v-if="item.to && !item.active"
+        class="mr-3 text-nord10"
         :to="item.to"
         >{{ item.text }}</router-link
       >
-      <span class="text mr-3" v-else>{{ item.text }}</span>
+      <span v-else class="text mr-3">{{ item.text }}</span>
     </div>
   </div>
 </template>
@@ -27,13 +27,13 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     loading: {
       type: Boolean,
       required: false,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
   setup(props) {
     const acutalItems = computed(() => {
@@ -42,15 +42,15 @@ export default {
           ...props.items,
           {
             active: true,
-            text: '...'
-          }
+            text: '...',
+          },
         ];
       else return props.items;
     });
 
     return {
-      acutalItems
+      acutalItems,
     };
-  }
+  },
 };
 </script>

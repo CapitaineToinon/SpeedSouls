@@ -20,15 +20,15 @@ function SRC(path) {
 function getSoulsGames() {
   return SRC(
     `/series/${SERIE}/games?embed=categories,variables,categories.variables,categories.game`
-  ).pipe(map(response => response.data.map(formatGame)));
+  ).pipe(map((response) => response.data.map(formatGame)));
 }
 
 function getLeaderboard(gameLookFor, categoryLookFor, variablesQuery = '') {
   return SRC(
     `/leaderboards/${gameLookFor.id}/category/${categoryLookFor.id}?embed=players,variables,category&${variablesQuery}`
   ).pipe(
-    map(response => response.data),
-    map(raw => formatLeaderboard(raw, gameLookFor))
+    map((response) => response.data),
+    map((raw) => formatLeaderboard(raw, gameLookFor))
   );
 }
 
@@ -38,11 +38,11 @@ function getRun(runId) {
     from(
       SRC(
         `/runs/${runId}?embed=players,game,category,category.variables,category.game`
-      ).pipe(map(response => response.data))
+      ).pipe(map((response) => response.data))
     )
   ).pipe(
     map(([games, run]) => {
-      const game = games.find(g => g.id === run.game.data.id);
+      const game = games.find((g) => g.id === run.game.data.id);
 
       if (!game) {
         throw new Error('Run not found');
@@ -56,8 +56,8 @@ function getRun(runId) {
 
 function getUser(userId) {
   return SRC(`/users/${userId}`).pipe(
-    map(response => response.data),
-    map(raw => formatPlayer(raw))
+    map((response) => response.data),
+    map((raw) => formatPlayer(raw))
   );
 }
 
@@ -65,8 +65,8 @@ function getUserPersonalBests(userId) {
   return SRC(
     `/users/${userId}/personal-bests?series=${SERIE}&embed=game,category,category.variables,category.game`
   ).pipe(
-    map(response => response.data),
-    map(raw => formatPlayerRun(raw))
+    map((response) => response.data),
+    map((raw) => formatPlayerRun(raw))
   );
 }
 
@@ -77,9 +77,9 @@ export function useSoulsGames() {
 export function useSoulsGame(lookFor) {
   return useSoulsGames().pipe(
     startWith([]),
-    flatMap(data => data),
-    find(game => game.abbreviation === lookFor),
-    map(game => {
+    flatMap((data) => data),
+    find((game) => game.abbreviation === lookFor),
+    map((game) => {
       if (!game) {
         throw new Error('Game not found');
       }
@@ -91,9 +91,9 @@ export function useSoulsGame(lookFor) {
 
 export function useSoulsCategory(gameLookFor, categoryLookFor) {
   return useSoulsGame(gameLookFor).pipe(
-    flatMap(game => game.categories),
-    find(category => category.hash === categoryLookFor),
-    map(category => {
+    flatMap((game) => game.categories),
+    find((category) => category.hash === categoryLookFor),
+    map((category) => {
       if (!category) {
         throw new Error('Category not found');
       }

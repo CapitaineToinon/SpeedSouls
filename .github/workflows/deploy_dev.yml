@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           # use the output from the action
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -54,8 +54,8 @@ jobs:
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PASSWORD }}
           port: 22
-          source: "dist/*, dist/.htaccess"
-          target: "/tmp/SpeedSouls/"
+          source: 'dist/*, dist/.htaccess'
+          target: '/tmp/SpeedSouls/'
 
       - name: Move final files
         uses: garygrossgarten/github-action-ssh@release

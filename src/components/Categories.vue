@@ -1,15 +1,15 @@
 <template>
-  <div class="categories w-64 flex flex-col">
+  <div class="categories flex w-64 flex-col">
     <span
       v-if="showLabel"
-      class="label text-xs text-nord0 dark:text-nord6 uppercase mb-1"
+      class="label mb-1 text-xs uppercase text-nord0 dark:text-nord6"
       >Categories</span
     >
     <button
-      class="btn text-nord0 dark:text-nord6 text-left py-2 pl-8 px-4 m-px rounded"
-      :class="{ active: category.hash === active }"
       v-for="(category, i) in categories"
       :key="i"
+      class="btn m-px rounded py-2 px-4 pl-8 text-left text-nord0 dark:text-nord6"
+      :class="{ active: category.hash === active }"
       @click="$emit('click', category)"
     >
       {{ category.name }}
@@ -22,17 +22,17 @@ export default {
   props: {
     active: {
       type: String,
-      default: () => ''
+      default: () => '',
     },
     categories: {
       type: Array,
-      required: true
+      required: true,
     },
     showLabel: {
       type: Boolean,
-      default: () => true
-    }
-  }
+      default: () => true,
+    },
+  },
 };
 </script>
 

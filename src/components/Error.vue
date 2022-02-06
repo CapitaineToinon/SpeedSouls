@@ -14,8 +14,8 @@ export default {
   props: {
     error: {
       type: Error,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const message = computed(
@@ -27,8 +27,8 @@ export default {
     );
 
     return {
-      message
+      message,
     };
-  }
+  },
 };
 </script>

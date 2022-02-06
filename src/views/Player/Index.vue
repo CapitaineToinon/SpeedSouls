@@ -1,52 +1,52 @@
 <template>
-  <div class="container py-6 px-3 flex flex-col lg:flex-row flex-wrap">
+  <div class="container flex flex-col flex-wrap py-6 px-3 lg:flex-row">
     <site-notice />
     <aside
       v-if="!error"
-      class="w-full mb-0 gap-4 lg:w-64"
+      class="mb-0 w-full gap-4 lg:w-64"
       :class="{
-        'order-2 lg:order-1 ': isRunPage
+        'order-2 lg:order-1 ': isRunPage,
       }"
     >
       <div v-if="players.length">
         <player-card
-          class="mb-4"
           v-for="(p, i) in players"
-          :class="{ sticky: $route.name === 'Player' }"
           :key="i"
+          class="mb-4"
+          :class="{ sticky: $route.name === 'Player' }"
           :player="p"
           :showbutton="isRunPage"
         />
       </div>
       <div
         v-else
-        class="bg-nord6 text-center dark:bg-nord1 rounded overflow-hidden shadow-lg py-5 flex flex-col justify-evenly"
+        class="flex flex-col justify-evenly overflow-hidden rounded bg-nord6 py-5 text-center shadow-lg dark:bg-nord1"
       >
-        <div class="flex-1 flex flex-col justify-center items-center mx-2">
-          <div class="is-skeleton rounded pb-4 w-1/2 mb-5"></div>
-          <div class="is-skeleton rounded pb-1/3 w-1/3 mb-5"></div>
-          <div class="is-skeleton rounded pb-3 w-2/3"></div>
+        <div class="mx-2 flex flex-1 flex-col items-center justify-center">
+          <div class="is-skeleton mb-5 w-1/2 rounded pb-4"></div>
+          <div class="is-skeleton mb-5 w-1/3 rounded pb-1/3"></div>
+          <div class="is-skeleton w-2/3 rounded pb-3"></div>
           <div
             v-if="isRunPage"
-            class="flex-1 flex flex-row items-center mx-2 justify-center mt-4"
+            class="mx-2 mt-4 flex flex-1 flex-row items-center justify-center"
           >
             <button
               disabled
-              class="w-auto bg-nord10 text-white font-bold py-2 px-4 border-b-4 border-nord9 rounded cursor-not-allowed opacity-50"
+              class="w-auto cursor-not-allowed rounded border-b-4 border-nord9 bg-nord10 py-2 px-4 font-bold text-white opacity-50"
             >
               View Profile
             </button>
           </div>
         </div>
       </div>
-      <div v-if="isRunPage" class="flex lg:hidden flex-col w-full mt-5">
+      <div v-if="isRunPage" class="mt-5 flex w-full flex-col lg:hidden">
         <by-speedrun-com class="text-center" />
       </div>
     </aside>
 
     <div
-      class="w-full md:flex-1 ml-0 lg:ml-5"
-      :class="{ 'order-1 lg:order-2 mb-4 lg:mb-0': isRunPage }"
+      class="ml-0 w-full md:flex-1 lg:ml-5"
+      :class="{ 'order-1 mb-4 lg:order-2 lg:mb-0': isRunPage }"
     >
       <router-view />
     </div>
@@ -91,7 +91,7 @@ export default {
      * Get the player from the user api
      */
     const getFromUser = computed(() =>
-      useUser(root.$route.params.id).pipe(map(player => [player]))
+      useUser(root.$route.params.id).pipe(map((player) => [player]))
     );
 
     /**
@@ -101,7 +101,7 @@ export default {
      * @return {any} player
      */
     function find(player, source) {
-      return source.find(p => p.name === player.name);
+      return source.find((p) => p.name === player.name);
     }
 
     // we do not expose the promise here and don't do
@@ -128,7 +128,7 @@ export default {
         const newPlayers = await Promise.resolve(playersPromise.value);
         Object.freeze(newPlayers);
 
-        let length = players.length;
+        let length = players.value.length;
 
         // remove the curre t players that aren't in the
         // new players
@@ -139,7 +139,7 @@ export default {
 
         // add the new players that aren't already
         // in the list of current players
-        newPlayers.forEach(p => {
+        newPlayers.forEach((p) => {
           if (!find(p, players.value)) players.value.push(p);
         });
       } catch (e) {
@@ -150,16 +150,16 @@ export default {
 
     // the id can either be a username or a run id
     watch(() => root.$route.params.id, effect, {
-      immediate: true
+      immediate: true,
     });
 
     return {
       isRunPage,
       isPlayerPage,
       players,
-      error
+      error,
     };
-  }
+  },
 };
 </script>
 

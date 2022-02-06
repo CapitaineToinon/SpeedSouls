@@ -3,7 +3,7 @@ import VueCompositionAPI, {
   ref,
   watch,
   onUnmounted,
-  computed
+  computed,
 } from '@vue/composition-api';
 Vue.use(VueCompositionAPI);
 
@@ -11,15 +11,15 @@ const CLASS = 'overflow-hidden';
 const _count = ref(0);
 const count = computed({
   get: () => _count.value,
-  set: value => {
+  set: (value) => {
     _count.value = value > 0 ? value : 0;
-  }
+  },
 });
 
 // Lock the body if at least one component needs it
 watch(
   count,
-  value => {
+  (value) => {
     if (value <= 0) document.body.classList.remove(CLASS);
     else document.body.classList.add(CLASS);
   },

@@ -14,7 +14,7 @@ export default function Run(json) {
     game: fullGame,
     primary_t: getPrimaryTime(times, ruleset),
     others_t: getOtherTimes(times, ruleset),
-    players: players.data.map(p => formatPlayer(p)),
-    category: formatCategory(category.data)
+    players: players.data.map((p) => formatPlayer(p)),
+    category: formatCategory(category.data),
   };
 }

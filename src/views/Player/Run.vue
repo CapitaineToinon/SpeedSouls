@@ -8,7 +8,7 @@
       type="danger"
       class="mb-3"
     >
-      <template v-slot:header>Rejected</template>
+      <template #header>Rejected</template>
       {{ run.status.reason }}
     </alert>
 
@@ -17,11 +17,11 @@
       type="warning"
       class="mb-3"
     >
-      <template v-slot:header>Awaiting verification</template>
+      <template #header>Awaiting verification</template>
       A moderator needs to verify this run before it appears on the leaderboard.
     </alert>
 
-    <div class="overflow-hidden rounded bg-nord5 dark:bg-nord1 shadow-md">
+    <div class="overflow-hidden rounded bg-nord5 shadow-md dark:bg-nord1">
       <div v-if="!run" class="w-full">
         <div class="speedsouls-video inverted"></div>
       </div>
@@ -36,45 +36,45 @@
         <alert type="warning">No video.</alert>
       </div>
       <div v-if="isPending" class="px-6 py-4">
-        <div class="is-skeleton dark:is-dark rounded w-1/2 pb-6 mb-3"></div>
-        <div class="is-skeleton dark:is-dark rounded w-1/3 pb-4 mb-3"></div>
+        <div class="is-skeleton dark:is-dark mb-3 w-1/2 rounded pb-6"></div>
+        <div class="is-skeleton dark:is-dark mb-3 w-1/3 rounded pb-4"></div>
       </div>
       <div v-else class="px-6 py-4">
-        <div class="text-nord0 dark:text-nord6 text-xl">
+        <div class="text-xl text-nord0 dark:text-nord6">
           <router-link :to="to(run.game, run.category)">
             {{ run.category.name }}
           </router-link>
           <span
-            class="text-nord1 dark:text-nord4"
             v-for="(value, varId) in run.values"
             :key="varId"
+            class="text-nord1 dark:text-nord4"
           >
             ({{ getVariableName(run.category.variables, varId, value) }})
           </span>
           in {{ run.primary_t.time }} by
           <span class="player-names">
             <player-name
-              class="player-name"
-              :class="{ 'cursor-pointer': !!player.id }"
               v-for="(player, i) in run.players"
               :key="`player-${i}`"
+              class="player-name"
+              :class="{ 'cursor-pointer': !!player.id }"
               :player="player"
               @click="onPlayerClick"
             />
           </span>
         </div>
-        <p class="text-nord1 dark:text-nord4 text-base">
+        <p class="text-base text-nord1 dark:text-nord4">
           {{ run.date | date }}
         </p>
         <p
           v-if="run.comment"
-          class="text-nord1 dark:text-nord4 text-base mt-5 italic"
+          class="mt-5 text-base italic text-nord1 dark:text-nord4"
         >
           {{ run.comment }}
         </p>
       </div>
     </div>
-    <div class="hidden lg:flex flex-col w-full mt-5">
+    <div class="mt-5 hidden w-full flex-col lg:flex">
       <by-speedrun-com class="text-center" />
     </div>
   </div>
@@ -94,7 +94,7 @@ import { reactive, computed, toRefs, watch } from '@vue/composition-api';
 export default {
   metaInfo() {
     return {
-      title: this.metaTitle
+      title: this.metaTitle,
     };
   },
   components: {
@@ -103,15 +103,15 @@ export default {
     Breadcrumbs,
     RunVideo,
     PlayerName,
-    BySpeedrunCom
+    BySpeedrunCom,
   },
   filters: {
-    date
+    date,
   },
   setup(props, { root }) {
     const state = reactive({
       run: undefined,
-      error: null
+      error: null,
     });
 
     const isPending = computed(() => state.run === undefined);
@@ -122,7 +122,7 @@ export default {
       const game = state.run.game;
       const category = state.run.category;
       const time = state.run.primary_t;
-      const players = state.run.players.map(p => p.name).join(', ');
+      const players = state.run.players.map((p) => p.name).join(', ');
       return `${game.name} ${category.name} in ${time.time} by ${players}`;
     });
 
@@ -130,8 +130,8 @@ export default {
       const base = [
         {
           text: 'Leaderboards',
-          to: { name: 'Games' }
-        }
+          to: { name: 'Games' },
+        },
       ];
 
       if (!state.run) return base;
@@ -139,7 +139,7 @@ export default {
       const game = state.run.game;
       const category = state.run.category;
       const time = state.run.primary_t;
-      const players = state.run.players.map(p => p.name).join(', ');
+      const players = state.run.players.map((p) => p.name).join(', ');
 
       const array = [
         ...base,
@@ -148,10 +148,10 @@ export default {
           to: {
             name: 'Game',
             params: {
-              game: game.abbreviation
-            }
+              game: game.abbreviation,
+            },
           },
-          active: false
+          active: false,
         },
         {
           text: category.name,
@@ -159,17 +159,17 @@ export default {
             name: 'Game',
             params: {
               game: game.abbreviation,
-              category: category.hash
-            }
+              category: category.hash,
+            },
           },
-          active: false
+          active: false,
         },
 
         {
           text: `${time.time} by ${players}`,
           to: {},
-          active: true
-        }
+          active: true,
+        },
       ];
 
       return array;
@@ -195,8 +195,8 @@ export default {
         name: 'Game',
         params: {
           game: game.abbreviation,
-          category: category.hash
-        }
+          category: category.hash,
+        },
       };
     }
 
@@ -205,13 +205,13 @@ export default {
       root.$router.push({
         name: 'Player',
         params: {
-          id: player.name
-        }
+          id: player.name,
+        },
       });
     }
 
     function getVariableName(variables, id, value) {
-      return variables.find(v => v.id === id)?.values.values[value]?.label;
+      return variables.find((v) => v.id === id)?.values.values[value]?.label;
     }
 
     // react to route changes
@@ -224,9 +224,9 @@ export default {
       metaTitle,
       to,
       onPlayerClick,
-      getVariableName
+      getVariableName,
     };
-  }
+  },
 };
 </script>
 

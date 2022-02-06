@@ -10,7 +10,7 @@ const { VUE_APP_SPEEDRUNCOM } = import.meta.env;
 
 export default {
   data: () => ({
-    VUE_APP_SPEEDRUNCOM
-  })
+    VUE_APP_SPEEDRUNCOM,
+  }),
 };
 </script>

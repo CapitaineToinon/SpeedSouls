@@ -1,7 +1,7 @@
 const timingMethodsNames = {
   ingame: 'In-Game Time',
   realtime: 'Real Time',
-  realtime_noloads: 'Time without loads'
+  realtime_noloads: 'Time without loads',
 };
 
 function toDigits(value, count = 2) {
@@ -35,7 +35,7 @@ function formatTime(value = 0) {
 function formatTimingMethod(key, value) {
   return {
     name: timingMethodsNames[key],
-    time: formatTime(value)
+    time: formatTime(value),
   };
 }
 
@@ -90,11 +90,11 @@ export function getOtherTimes(times, ruleset) {
     times[ruleset['default-time'] + '_t'] === 0
   ) {
     return ruleset['run-times']
-      .filter(t => t !== ruleset['default-time'])
-      .map(t => formatTimingMethod(t, 0));
+      .filter((t) => t !== ruleset['default-time'])
+      .map((t) => formatTimingMethod(t, 0));
   }
 
   return ruleset['run-times']
-    .filter(t => t !== ruleset['default-time'])
-    .map(t => formatTimingMethod(t, times[t + '_t']));
+    .filter((t) => t !== ruleset['default-time'])
+    .map((t) => formatTimingMethod(t, times[t + '_t']));
 }

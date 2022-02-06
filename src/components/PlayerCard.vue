@@ -1,28 +1,28 @@
 <template>
   <div
-    class="bg-nord6 text-center dark:bg-nord1 rounded overflow-hidden shadow-lg py-5 flex flex-col justify-evenly"
+    class="flex flex-col justify-evenly overflow-hidden rounded bg-nord6 py-5 text-center shadow-lg dark:bg-nord1"
   >
-    <div class="flex-1 flex flex-col justify-center mx-2">
+    <div class="mx-2 flex flex-1 flex-col justify-center">
       <p
-        class="player-name max-w-full overflow-hidden text-base text-nord0 dark:text-nord4 mb-4"
+        class="player-name mb-4 max-w-full overflow-hidden text-base text-nord0 dark:text-nord4"
       >
         {{ player.name }}
       </p>
       <img
-        class="pp w-auto object-fit mx-auto mb-4"
+        class="pp object-fit mx-auto mb-4 w-auto"
         :class="{ hidden: !playerImage }"
         :src="`https://www.speedrun.com/themes/user/${player.name}/image.png`"
-        @error="onImageError"
         :alt="`${player.name}'s profile picture`"
+        @error="onImageError"
       />
-      <p class="text-base text-nord3 dark:text-nord6" v-if="player.country">
+      <p v-if="player.country" class="text-base text-nord3 dark:text-nord6">
         <span
           class="whitespace-nowrap"
           :class="`flag-icon flag-icon-${player.country.code} mr-1`"
         />
         {{ player.country.name }}
       </p>
-      <p class="text-nord3 dark:text-nord4 text-base" v-if="player.signup">
+      <p v-if="player.signup" class="text-base text-nord3 dark:text-nord4">
         {{ player.signup | date }}
       </p>
       <div class="links flex flex-row justify-center px-6">
@@ -80,15 +80,15 @@
       </div>
     </div>
     <div
-      class="flex-1 flex flex-row items-center mx-2 justify-center mt-4"
       v-if="showbutton"
+      class="mx-2 mt-4 flex flex-1 flex-row items-center justify-center"
     >
       <router-link
         tag="button"
         :to="profile"
         :disabled="!player.id"
         :class="{ 'cursor-not-allowed opacity-50': !player.id }"
-        class="w-auto bg-nord10 text-white font-bold py-2 px-4 border-b-4 border-nord9 rounded"
+        class="w-auto rounded border-b-4 border-nord9 bg-nord10 py-2 px-4 font-bold text-white"
         >View Profile</router-link
       >
     </div>
@@ -101,37 +101,37 @@ import date from '@/filters/date';
 
 export default {
   components: { Tooltip },
-  data: () => ({
-    playerImage: true
-  }),
+  filters: {
+    date,
+  },
   props: {
     player: {
       type: Object,
-      required: true
+      required: true,
     },
     showbutton: {
       type: Boolean,
-      default: () => true
-    }
+      default: () => true,
+    },
   },
-  filters: {
-    date
-  },
-  methods: {
-    onImageError() {
-      this.playerImage = false;
-    }
-  },
+  data: () => ({
+    playerImage: true,
+  }),
   computed: {
     profile() {
       return {
         name: 'Player',
         params: {
-          id: this.player.name
-        }
+          id: this.player.name,
+        },
       };
-    }
-  }
+    },
+  },
+  methods: {
+    onImageError() {
+      this.playerImage = false;
+    },
+  },
 };
 </script>
 

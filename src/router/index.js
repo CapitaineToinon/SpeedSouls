@@ -8,14 +8,14 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     // In case anyone links to the old wiki page
     path: '/Main_Page',
     redirect: {
-      name: 'Home'
-    }
+      name: 'Home',
+    },
   },
   {
     path: '/leaderboards',
@@ -30,15 +30,17 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "games" */ '@/views/Leaderboards/Games.vue'
-          )
+          ),
       },
       {
         path: ':game/:category?',
         name: 'Game',
         component: () =>
-          import(/* webpackChunkName: "game" */ '@/views/Leaderboards/Game.vue')
-      }
-    ]
+          import(
+            /* webpackChunkName: "game" */ '@/views/Leaderboards/Game.vue'
+          ),
+      },
+    ],
   },
   {
     path: '/run/:id',
@@ -49,9 +51,9 @@ const routes = [
         path: '',
         name: 'Run',
         component: () =>
-          import(/* webpackChunkName: "run" */ '@/views/Player/Run.vue')
-      }
-    ]
+          import(/* webpackChunkName: "run" */ '@/views/Player/Run.vue'),
+      },
+    ],
   },
   {
     path: '/player/:id',
@@ -62,34 +64,36 @@ const routes = [
         path: '',
         name: 'Player',
         component: () =>
-          import(/* webpackChunkName: "profile" */ '@/views/Player/Profile.vue')
-      }
-    ]
+          import(
+            /* webpackChunkName: "profile" */ '@/views/Player/Profile.vue'
+          ),
+      },
+    ],
   },
   {
     path: '/submit',
     name: 'Submit',
     component: () =>
-      import(/* webpackChunkName: "submit" */ '@/views/Submit.vue')
+      import(/* webpackChunkName: "submit" */ '@/views/Submit.vue'),
   },
   {
     path: '/settings',
     name: 'Settings',
     component: () =>
-      import(/* webpackChunkName: "settings" */ '@/views/Settings.vue')
+      import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
   },
   {
     path: '**',
     name: 'redirect',
     component: () =>
-      import(/* webpackChunkName: "redirect" */ '@/views/Redirect.vue')
-  }
+      import(/* webpackChunkName: "redirect" */ '@/views/Redirect.vue'),
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: import.meta.env.BASE_URL,
-  routes
+  routes,
 });
 
 // Scroll back on top of route change

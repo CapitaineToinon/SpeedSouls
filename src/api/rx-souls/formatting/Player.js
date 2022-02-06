@@ -1,22 +1,13 @@
 export default function Player(json) {
-  let {
-    id,
-    name,
-    names,
-    location,
-    weblink,
-    signup,
-    twitch,
-    twitter,
-    youtube
-  } = json;
+  let { id, name, names, location, weblink, signup, twitch, twitter, youtube } =
+    json;
   let country = null;
 
   if (location) {
     const { code, names } = location.country;
     country = {
       code: code.split('/')[0], // some countries on speedrun.com have region support
-      name: names.international
+      name: names.international,
     };
   }
 
@@ -32,6 +23,6 @@ export default function Player(json) {
     signup,
     twitch,
     twitter,
-    youtube
+    youtube,
   };
 }

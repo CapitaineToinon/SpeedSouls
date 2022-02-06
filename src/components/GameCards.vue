@@ -1,19 +1,19 @@
 <template>
   <error v-if="error" :error="error" />
-  <div v-else-if="!games" class="progress h-2 flex flex-row" />
-  <div v-else class="flex flex-col justify-center w-full">
+  <div v-else-if="!games" class="progress flex h-2 flex-row" />
+  <div v-else class="flex w-full flex-col justify-center">
     <div
-      class="games grid grid-cols-1 mb-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      class="games mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       <router-link
+        v-for="(game, i) in games"
+        :key="i"
         :to="{
           name: 'Game',
           params: {
-            game: game.abbreviation
-          }
+            game: game.abbreviation,
+          },
         }"
-        v-for="(game, i) in games"
-        :key="i"
       >
         <game-card :game="game" />
       </router-link>
@@ -34,7 +34,7 @@ export default {
   setup() {
     const state = reactive({
       games: undefined,
-      error: null
+      error: null,
     });
 
     async function fetchGames() {
@@ -54,7 +54,7 @@ export default {
     onMounted(fetchGames);
 
     return toRefs(state);
-  }
+  },
 };
 </script>
 
