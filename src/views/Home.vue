@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen">
     <hero
-      class="home min-h-screen md:min-h-0 shadow-md has-fixed-navbar"
+      class="home has-fixed-navbar min-h-screen shadow-md md:min-h-0"
       :style="style"
     >
       <SiteNotice />
-      <div class="max-w-2xl md mx-auto text-center py-6 md:py-40">
+      <div class="md mx-auto max-w-2xl py-6 text-center md:py-40">
         <img
           class="mx-auto mb-4"
           src="/img/SpeedSouls-Horizontal-White_with_motto.png"
@@ -38,9 +38,9 @@
       </div>
     </hero>
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord0 dark:text-nord6">
-      <div class="max-w-screen-md text-center mx-auto">
-        <h1 class="text-4xl font-bold text-center py-0">About Us</h1>
-        <p class="text-base py-8 text-center">
+      <div class="mx-auto max-w-screen-md text-center">
+        <h1 class="py-0 text-center text-4xl font-bold">About Us</h1>
+        <p class="py-8 text-center text-base">
           SpeedSouls was established in September 2014 as a community hub for
           people seeking information about speedrunning the various FROMSoftware
           Souls games. With the availability of Discord about a year later, we
@@ -49,7 +49,7 @@
           series.
         </p>
 
-        <div class="flex flex-row px-2 py-2 justify-center">
+        <div class="flex flex-row justify-center px-2 py-2">
           <a class="btn -primary" :href="`${VITE_APP_WIKI}/SpeedSouls:About`"
             >Read More</a
           >
@@ -58,13 +58,13 @@
     </hero>
     <hero class="hero bg-nord4 text-nord0 dark:bg-nord1 dark:text-nord6">
       <div
-        class="max-w-screen-md mx-auto flex flex-row items-center justify-evenly"
+        class="mx-auto flex max-w-screen-md flex-row items-center justify-evenly"
       >
         <div class="px-4 text-center">
-          <h1 class="text-4xl font-bold text-center leading-none">
+          <h1 class="text-center text-4xl font-bold leading-none">
             Join The Community
           </h1>
-          <p class="text-center py-8">
+          <p class="py-8 text-center">
             Join our Discord server where nearly 5000 members are waiting for
             you! Ask questions and receive answers from veteran runners, and
             share your accomplishments and ideas with the community! Note
@@ -73,22 +73,22 @@
             topics.
           </p>
 
-          <div class="flex flex-row px-2 py-2 justify-center">
+          <div class="flex flex-row justify-center px-2 py-2">
             <discord />
           </div>
         </div>
       </div>
     </hero>
     <hero class="hero bg-nord5 text-nord0 dark:bg-nord2 dark:text-nord6">
-      <div class="max-w-screen-md text-center mx-auto">
-        <h1 class="text-4xl font-bold text-center py-0">Patreon</h1>
-        <p class="text-base py-8 text-center">
+      <div class="mx-auto max-w-screen-md text-center">
+        <h1 class="py-0 text-center text-4xl font-bold">Patreon</h1>
+        <p class="py-8 text-center text-base">
           If you'd like to give back a bit for the upkeep and work put into the
           site, then feel free to visit our Patreon. Patreon Supporters receive
           their own special role on our Discord server.
         </p>
 
-        <div class="flex flex-row px-2 py-2 justify-center">
+        <div class="flex flex-row justify-center px-2 py-2">
           <a :href="VITE_APP_PATREON" class="btn -primary">
             <font-awesome-icon class="mr-3" :icon="['fab', 'patreon']" />Open
             Patreon
@@ -100,12 +100,8 @@
 </template>
 
 <script>
-const {
-  VITE_APP_WIKI,
-  VITE_APP_DISCORD,
-  VITE_APP_GITHUB,
-  VITE_APP_PATREON
-} = import.meta.env;
+const { VITE_APP_WIKI, VITE_APP_DISCORD, VITE_APP_GITHUB, VITE_APP_PATREON } =
+  import.meta.env;
 
 import SiteNotice from '@/components/SiteNotice.vue';
 import Hero from '@/components/Hero.vue';
@@ -115,7 +111,7 @@ import { computed, reactive, toRefs } from '@vue/composition-api';
 export default {
   metaInfo: {
     title: 'SpeedSouls',
-    titleTemplate: null
+    titleTemplate: null,
   },
   components: { SiteNotice, Hero, Discord },
   setup(props, { root }) {
@@ -131,8 +127,8 @@ export default {
         'darksouls3',
         'darksoulsremastered',
         'darksouls2sotfs',
-        'demonssouls'
-      ]
+        'demonssouls',
+      ],
     });
 
     const dark = computed(() => root.$store.getters.dark);
@@ -141,16 +137,16 @@ export default {
         state.assets[Math.floor(Math.random() * state.assets.length)];
 
       return {
-        '--bg-url': `url(/img/backgrounds/${image}-1280.jpg)`
+        '--bg-url': `url(/img/backgrounds/${image}-1280.jpg)`,
       };
     });
 
     return {
       ...toRefs(state),
       dark,
-      style
+      style,
     };
-  }
+  },
 };
 </script>
 

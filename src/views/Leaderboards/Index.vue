@@ -13,8 +13,8 @@ export default {
     const isGame = computed(() => root.$route.name === 'Game');
 
     return {
-      isGame
+      isGame,
     };
-  }
+  },
 };
 </script>

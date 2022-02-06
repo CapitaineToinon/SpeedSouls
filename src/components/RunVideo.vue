@@ -9,9 +9,7 @@
   </div>
   <div v-else-if="twitchID" class="speedsouls-video bg-nord5 dark:bg-nord3">
     <iframe
-      :src="
-        `https://player.twitch.tv/?video=${twitchID}&autoplay=${autoPlay}&parent=${parent}`
-      "
+      :src="`https://player.twitch.tv/?video=${twitchID}&autoplay=${autoPlay}&parent=${parent}`"
       frameborder="0"
       scrolling="no"
       allowfullscreen="true"
@@ -29,7 +27,8 @@
 
 <script>
 /* eslint-disable-next-line */
-const TWITCH_REGEX = /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
+const TWITCH_REGEX =
+  /(?:http(?:s)?:\/\/(?:www.)?)?twitch.tv\/(?:(?:.+?)\/v|videos)\/([0-9]+)/;
 import getIdFromUrl from 'get-youtube-id';
 import Alert from '@/components/Alert.vue';
 import ExternalLink from '@/components/ExternalLink.vue';
@@ -38,17 +37,17 @@ import { computed } from '@vue/composition-api';
 export default {
   components: {
     Alert,
-    ExternalLink
+    ExternalLink,
   },
   props: {
     autoPlay: {
       type: Boolean,
-      default: false
+      default: false,
     },
     url: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const youtubeID = computed(() => getIdFromUrl(props.url));
@@ -58,8 +57,8 @@ export default {
     return {
       youtubeID,
       twitchID,
-      parent
+      parent,
     };
-  }
+  },
 };
 </script>

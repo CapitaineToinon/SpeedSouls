@@ -14,7 +14,7 @@ import {
   faTwitter,
   faTwitch,
   faGithub,
-  faYoutube
+  faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faList,
@@ -26,7 +26,7 @@ import {
   faChevronRight,
   faLink,
   faCog,
-  faHourglassEnd
+  faHourglassEnd,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -50,13 +50,13 @@ library.add(
 
 Vue.use(VueMeta);
 Vue.use(VueCompositionAPI);
-Vue.component('site-notice', SiteNotice);
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('SiteNotice', SiteNotice);
+Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 
 Vue.config.productionTip = true;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app');

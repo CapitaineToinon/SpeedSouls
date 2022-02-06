@@ -1,6 +1,6 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import { createVuePlugin } from 'vite-plugin-vue2'
+import path from 'path';
+import { defineConfig } from 'vite';
+import { createVuePlugin } from 'vite-plugin-vue2';
 
 export default defineConfig({
   server: {
@@ -10,15 +10,13 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: path.resolve(__dirname, 'src')
+        replacement: path.resolve(__dirname, 'src'),
       },
       {
         find: '~',
-        replacement: path.resolve(__dirname, 'node_modules')
-      }
-    ]
+        replacement: path.resolve(__dirname, 'node_modules'),
+      },
+    ],
   },
-  plugins: [
-    createVuePlugin(),
-  ],
-})
+  plugins: [createVuePlugin()],
+});

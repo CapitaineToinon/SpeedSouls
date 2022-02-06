@@ -1,5 +1,5 @@
 <template>
-  <ButtonGroup :options="themes" @change="onChange" :active="active" />
+  <ButtonGroup :options="themes" :active="active" @change="onChange" />
 </template>
 
 <script>
@@ -13,12 +13,12 @@ export default {
       themes: [
         { id: 'DARK', label: 'Dark' },
         { id: 'LIGHT', label: 'Light' },
-        { id: 'AUTO', label: 'Auto' }
-      ]
+        { id: 'AUTO', label: 'Auto' },
+      ],
     });
 
     const active = computed(() =>
-      state.themes.findIndex(t => t.id === root.$store.getters.theme)
+      state.themes.findIndex((t) => t.id === root.$store.getters.theme)
     );
 
     function onChange(index) {
@@ -42,8 +42,8 @@ export default {
     return {
       ...toRefs(state),
       active,
-      onChange
+      onChange,
     };
-  }
+  },
 };
 </script>

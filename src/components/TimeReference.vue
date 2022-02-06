@@ -1,7 +1,7 @@
 <template>
   <select
-    class="block appearance-none h-10 w-full bg-nord6 dark:bg-nord2 border border-nord0 dark:border-nord6 py-2 px-4 rounded leading-tight"
     v-model="selected"
+    class="block h-10 w-full appearance-none rounded border border-nord0 bg-nord6 py-2 px-4 leading-tight dark:border-nord6 dark:bg-nord2"
   >
     <option value="0">Relative</option>
     <option value="1">Absolute</option>
@@ -16,7 +16,7 @@ export default {
     const relativeTime = computed(() => root.$store.getters.relativeTime);
     const selected = ref(relativeTime.value ? '0' : '1');
 
-    watch(selected, val => {
+    watch(selected, (val) => {
       switch (val) {
         case '0':
           root.$store.dispatch('enableRelativeTime');
@@ -29,8 +29,8 @@ export default {
 
     return {
       relativeTime,
-      selected
+      selected,
     };
-  }
+  },
 };
 </script>

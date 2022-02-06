@@ -1,8 +1,8 @@
 <template>
-  <footer class="font-sans shadow-md bg-nord6 dark:bg-nord1 py-5 px-6">
+  <footer class="bg-nord6 py-5 px-6 font-sans shadow-md dark:bg-nord1">
     <div class="container">
       <div
-        class="socials text-nord0 dark:text-nord6 py-12 grid grid-cols-4 gap-4 text-center"
+        class="socials grid grid-cols-4 gap-4 py-12 text-center text-nord0 dark:text-nord6"
       >
         <div class="discord">
           <a
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div
-        class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs border-t border-nord5 dark:border-nord3 text-center"
+        class="mt-4 border-t border-nord5 pt-4 text-center text-xs text-nord0 dark:border-nord3 dark:text-nord6"
       >
         Site created by the SpeedSouls team. Please visit our
         <a :href="VITE_APP_GITHUB">Github</a> to report any issues. This work is
@@ -77,13 +77,11 @@
       </div>
       <div
         v-if="VITE_APP_GITHUB_SHA"
-        class="pt-4 mt-4 text-nord0 dark:text-nord6 text-xs dark:border-nord3 text-center"
+        class="mt-4 pt-4 text-center text-xs text-nord0 dark:border-nord3 dark:text-nord6"
       >
         Site deployed by commit
         <a
-          :href="
-            `${VITE_APP_GITHUB_SERVER_URL}/${VITE_APP_GITHUB_REPOSITORY}/commit/${VITE_APP_GITHUB_SHA}`
-          "
+          :href="`${VITE_APP_GITHUB_SERVER_URL}/${VITE_APP_GITHUB_REPOSITORY}/commit/${VITE_APP_GITHUB_SHA}`"
           >{{ VITE_APP_GITHUB_SHA }}</a
         >.
       </div>
@@ -99,7 +97,7 @@ const {
   VITE_APP_GITHUB,
   VITE_APP_GITHUB_SHA,
   VITE_APP_GITHUB_REPOSITORY,
-  VITE_APP_GITHUB_SERVER_URL
+  VITE_APP_GITHUB_SERVER_URL,
 } = import.meta.env;
 
 export default {
@@ -110,7 +108,7 @@ export default {
     VITE_APP_GITHUB,
     VITE_APP_GITHUB_SHA,
     VITE_APP_GITHUB_REPOSITORY,
-    VITE_APP_GITHUB_SERVER_URL
-  })
+    VITE_APP_GITHUB_SERVER_URL,
+  }),
 };
 </script>

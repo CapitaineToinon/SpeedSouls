@@ -4,11 +4,11 @@
     target="_blank"
     rel="noopener"
     aria-label="Discord"
-    class="bg-discord shadow-md rounded py-4 px-4 flex flex-col flex-wrap items-center justify-between"
+    class="flex flex-col flex-wrap items-center justify-between rounded bg-discord py-4 px-4 shadow-md"
   >
     <svg
       id="Layer_1"
-      class="text-nord6 fill-current h-12"
+      class="h-12 fill-current text-nord6"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 272.1"
     >
@@ -29,7 +29,7 @@ const { VITE_APP_DISCORD } = import.meta.env;
 
 export default {
   data: () => ({
-    VITE_APP_DISCORD
-  })
+    VITE_APP_DISCORD,
+  }),
 };
 </script>

@@ -2,12 +2,14 @@ import { shareReplay } from 'rxjs/operators';
 
 const CACHE_SIZE = 1;
 const DEFAULT_OPTIONS = {
-  ttl: 0
+  ttl: 0,
 };
 
 // https://blog.thoughtram.io/angular/2018/03/05/advanced-caching-with-rxjs.html
 class ObservableCache {
-  cache = new Map();
+  constructor() {
+    this.cache = new Map();
+  }
 
   get(key, fetcher, options = {}) {
     const { ttl } = { ...options, ...DEFAULT_OPTIONS };
@@ -18,7 +20,7 @@ class ObservableCache {
       this.cache.set(key, {
         ttl,
         date,
-        source
+        source,
       });
     }
 
@@ -28,7 +30,7 @@ class ObservableCache {
       this.cache.set(key, {
         ttl,
         date,
-        source
+        source,
       });
     }
 

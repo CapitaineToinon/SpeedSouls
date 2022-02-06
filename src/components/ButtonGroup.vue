@@ -3,12 +3,12 @@
     <button
       v-for="(option, i) in options"
       :key="i"
-      @click="$emit('change', i)"
       class="btn theme whitespace-nowrap border-nord0 dark:border-nord6"
       :class="{
         'bg-nord0 text-nord6 dark:bg-nord6 dark:text-nord0': active === i,
-        'bg-nord6 text-nord0 dark:bg-nord1 dark:text-nord6': active !== i
+        'bg-nord6 text-nord0 dark:bg-nord1 dark:text-nord6': active !== i,
       }"
+      @click="$emit('change', i)"
     >
       {{ option.label }}
     </button>
@@ -22,13 +22,13 @@ export default {
   props: {
     options: {
       value: [Array, Object],
-      default: () => []
+      default: () => [],
     },
-    active: {}
+    active: {},
   },
   computed: {
-    ...mapState(['theme'])
-  }
+    ...mapState(['theme']),
+  },
 };
 </script>
 

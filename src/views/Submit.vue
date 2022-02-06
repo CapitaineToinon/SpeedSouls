@@ -1,7 +1,7 @@
 <template>
-  <div class="container py-6 px-3 max-w-screen-md">
+  <div class="container max-w-screen-md py-6 px-3">
     <site-notice />
-    <h1 class="text-4xl font-bold leading-none mb-4 text-nord0 dark:text-nord6">
+    <h1 class="mb-4 text-4xl font-bold leading-none text-nord0 dark:text-nord6">
       Submit a Run.
     </h1>
     <alert type="info" class="mb-6">
@@ -20,37 +20,37 @@
       and here on SpeedSouls.
     </alert>
     <error v-if="error" :error="error" />
-    <div v-else-if="!games" class="progress h-2 flex flex-row" />
+    <div v-else-if="!games" class="progress flex h-2 flex-row" />
     <div
       v-else
-      class="my-3 shadow-md text-nord0 dark:text-nord6 bg-nord5 dark:bg-nord1 rounded mb-4"
+      class="my-3 mb-4 rounded bg-nord5 text-nord0 shadow-md dark:bg-nord1 dark:text-nord6"
     >
       <div
-        class="tab w-full overflow-hidden"
-        :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
         v-for="(game, i) in games"
         :key="game.id"
+        class="tab w-full overflow-hidden"
+        :class="{ 'border-t border-nord4 dark:border-nord3': i !== 0 }"
       >
         <input
-          class="absolute opacity-0"
           :id="`tab-${game.id}`"
+          class="absolute opacity-0"
           type="checkbox"
           name="tabs2"
         />
         <label
-          class="block p-5 leading-normal cursor-pointer"
+          class="block cursor-pointer p-5 leading-normal"
           :for="`tab-${game.id}`"
           >{{ game.name }}</label
         >
         <div
           :ref="`section-${game.id}`"
-          class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 dark:bg-nord2 leading-normal"
+          class="tab-content overflow-hidden border-l-2 border-nord10 bg-nord6 leading-normal dark:bg-nord2"
         >
-          <div class="p-5 flex flex-row flex-wrap justify-start shadow-inner">
+          <div class="flex flex-row flex-wrap justify-start p-5 shadow-inner">
             <a
-              class="btn border border-nord10 text-nord0 dark:text-nord6 text-left py-2 px-4 m-px rounded"
               v-for="(category, i) in game.categories"
               :key="i"
+              class="btn m-px rounded border border-nord10 py-2 px-4 text-left text-nord0 dark:text-nord6"
               :href="`${game.weblink}/editrun#${category.uglyHash}`"
               target="_blank"
               rel="noopener"
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col w-full">
+    <div class="flex w-full flex-col">
       <by-speedrun-com class="text-center" />
     </div>
   </div>
@@ -76,13 +76,13 @@ import BySpeedrunCom from '@/components/BySpeedrunCom.vue';
 
 export default {
   metaInfo: {
-    title: 'Submit a run'
+    title: 'Submit a run',
   },
   components: { Alert, BySpeedrunCom, Error },
   setup() {
     const state = reactive({
       games: undefined,
-      error: null
+      error: null,
     });
 
     async function fetchGames() {
@@ -103,9 +103,9 @@ export default {
 
     return {
       VITE_APP_SPEEDRUNCOM,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 };
 </script>
 

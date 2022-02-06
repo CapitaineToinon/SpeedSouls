@@ -1,14 +1,14 @@
 <template>
-  <div id="app" class="min-h-screen flex flex-col">
+  <div id="app" class="flex min-h-screen flex-col">
     <navbar
       class="absolute top-0 left-0 right-0 z-10"
       :class="{ 'dark:bg-gray-800': !isHome, 'bg-white': !isHome }"
       :transparant="isTransparant"
     />
     <main
-      class="flex-grow z-0 bg-nord4 dark:bg-nord0"
+      class="z-0 flex-grow bg-nord4 dark:bg-nord0"
       :class="{
-        'has-fixed-navbar': !isHome
+        'has-fixed-navbar': !isHome,
       }"
     >
       <keep-alive :include="['Home', 'Player', 'Run']">
@@ -33,9 +33,9 @@ export default {
       {
         name: 'description',
         content:
-          'SpeedSouls was established in September 2014 as a community hub for people seeking information about speedrunning the various FROMSoftware Souls games. With the availability of Discord about a year later, we have formed a community for everyone interested. Nowadays, SpeedSouls is one of the largest groups focused on speedrunning a single game series.'
-      }
-    ]
+          'SpeedSouls was established in September 2014 as a community hub for people seeking information about speedrunning the various FROMSoftware Souls games. With the availability of Discord about a year later, we have formed a community for everyone interested. Nowadays, SpeedSouls is one of the largest groups focused on speedrunning a single game series.',
+      },
+    ],
   },
   components: { Navbar, MyFooter },
   setup(props, { root }) {
@@ -49,8 +49,8 @@ export default {
 
     return {
       isHome,
-      isTransparant
+      isTransparant,
     };
-  }
+  },
 };
 </script>

@@ -1,43 +1,43 @@
 <template>
   <error v-if="error" :error="error" />
-  <div v-else-if="pbs === undefined" class="progress h-2 flex flex-row" />
+  <div v-else-if="pbs === undefined" class="progress flex h-2 flex-row" />
   <div v-else>
-    <alert v-if="pbs.length === 0" type="info" class="w-full mb-6"
+    <alert v-if="pbs.length === 0" type="info" class="mb-6 w-full"
       >The are no runs.</alert
     >
     <div
       v-for="(group, i) in pbs"
       :key="i"
-      class="flex flex-col w-full justify-center mb-4"
+      class="mb-4 flex w-full flex-col justify-center"
     >
       <breadcrumbs
         class="pb-3"
         :items="[
           {
             text: 'Leaderboards',
-            to: { name: 'Games' }
+            to: { name: 'Games' },
           },
           {
             text: group.game.name,
             to: {
               name: 'Game',
               params: {
-                game: group.game.abbreviation
-              }
-            }
-          }
+                game: group.game.abbreviation,
+              },
+            },
+          },
         ]"
       />
 
       <div class="responsive-table rounded-none">
-        <table class="text-center rounded-none">
+        <table class="rounded-none text-center">
           <thead>
             <tr>
               <th class="shrink">Rank</th>
               <th class="expand">Category</th>
               <th class="shrink">Time</th>
               <th class="shrink">Date</th>
-              <th class="shrink hidden lg:table-cell"></th>
+              <th class="hidden shrink lg:table-cell"></th>
             </tr>
           </thead>
           <tbody>
@@ -50,9 +50,9 @@
               <td class="expand" data-label="Category">
                 {{ row.category.name }}
                 <span
-                  class="text-nord1 dark:text-nord4"
                   v-for="(value, varId) in row.values"
                   :key="varId"
+                  class="text-nord1 dark:text-nord4"
                 >
                   ({{ getVariableName(row.category.variables, varId, value) }})
                 </span>
@@ -67,7 +67,7 @@
               <td v-else class="shrink" data-label="Date">
                 {{ row.date | date }}
               </td>
-              <td class="shrink hidden lg:table-cell">
+              <td class="hidden shrink lg:table-cell">
                 <font-awesome-icon
                   v-if="row.showicon"
                   :icon="['fas', 'video']"
@@ -83,7 +83,7 @@
         </table>
       </div>
     </div>
-    <div class="flex flex-col w-full">
+    <div class="flex w-full flex-col">
       <by-speedrun-com class="text-center" />
     </div>
   </div>
@@ -102,19 +102,19 @@ import { useUserPersonalBests, useUser } from '@/api/rx-souls';
 export default {
   metaInfo() {
     return {
-      title: this.metaTitle
+      title: this.metaTitle,
     };
   },
   components: { Alert, Error, Breadcrumbs, BySpeedrunCom },
   filters: {
     date,
-    relativeDate
+    relativeDate,
   },
   setup(props, { root }) {
     const state = reactive({
       player: undefined,
       pbs: undefined,
-      error: null
+      error: null,
     });
     const metaTitle = computed(() => state.player?.name || undefined);
     const relativeTime = computed(() => root.$store.getters.relativeTime);
@@ -129,7 +129,7 @@ export default {
       try {
         const [_player, _pbs] = await Promise.all([
           useUser(id).toPromise(),
-          useUserPersonalBests(id).toPromise()
+          useUserPersonalBests(id).toPromise(),
         ]);
 
         Object.freeze(_player);
@@ -143,15 +143,15 @@ export default {
     }
 
     function getVariableName(variables, id, value) {
-      return variables.find(v => v.id === id)?.values.values[value]?.label;
+      return variables.find((v) => v.id === id)?.values.values[value]?.label;
     }
 
     function onRowClick({ id }) {
       root.$router.push({
         name: 'Run',
         params: {
-          id
-        }
+          id,
+        },
       });
     }
 
@@ -162,8 +162,8 @@ export default {
       relativeTime,
       metaTitle,
       getVariableName,
-      onRowClick
+      onRowClick,
     };
-  }
+  },
 };
 </script>

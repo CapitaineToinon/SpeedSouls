@@ -25,7 +25,7 @@ const store = new Vuex.Store({
   state: {
     dark: true,
     theme: 'DARK',
-    relativeTime: true
+    relativeTime: true,
   },
   mutations: {
     setTheme: (state, payload) => {
@@ -48,7 +48,7 @@ const store = new Vuex.Store({
     },
     setRelativeTime: (state, payload) => {
       state.relativeTime = payload;
-    }
+    },
   },
   actions: {
     enableDark({ commit }) {
@@ -65,13 +65,13 @@ const store = new Vuex.Store({
     },
     disableRelativeTime({ commit }) {
       commit('setRelativeTime', false);
-    }
+    },
   },
   getters: {
-    dark: state => state.dark,
-    theme: state => state.theme,
-    relativeTime: state => state.relativeTime
-  }
+    dark: (state) => state.dark,
+    theme: (state) => state.theme,
+    relativeTime: (state) => state.relativeTime,
+  },
 });
 
 // Update the document at the start

@@ -1,6 +1,6 @@
 <template>
   <error v-if="error" :error="error" />
-  <div v-else-if="!leaderboard" class="progress h-2 flex flex-row" />
+  <div v-else-if="!leaderboard" class="progress flex h-2 flex-row" />
   <div v-else>
     <div v-if="!leaderboard.length" class="rejected">
       <alert type="warning">There are no runs.</alert>
@@ -19,23 +19,23 @@
                 <span class="hidden md:block lg:hidden">Time</span>
               </th>
               <th
-                class="shrink table-cell md:hidden lg:table-cell"
                 v-for="(time, i) in leaderboard[0].others_t"
                 :key="`other-time-th-${i}`"
+                class="table-cell shrink md:hidden lg:table-cell"
               >
                 {{ time.name }}
               </th>
               <th
-                class="shrink table-cell md:hidden lg:table-cell"
                 v-for="variable in category.variables.filter(
-                  v => !v['is-subcategory']
+                  (v) => !v['is-subcategory']
                 )"
                 :key="`th-${variable.id}`"
+                class="table-cell shrink md:hidden lg:table-cell"
               >
                 {{ variable.name }}
               </th>
-              <th class="shrink table-cell md:hidden xl:table-cell">Date</th>
-              <th class="shrink hidden xl:table-cell"></th>
+              <th class="table-cell shrink md:hidden xl:table-cell">Date</th>
+              <th class="hidden shrink xl:table-cell"></th>
             </tr>
           </thead>
           <tbody>
@@ -48,9 +48,9 @@
 
               <td class="expand player-names" data-label="Players">
                 <player-name
-                  class="player-name"
                   v-for="(player, i) in row.players"
                   :key="`${row.id}-player-${i}`"
+                  class="player-name"
                   :player="player"
                 />
               </td>
@@ -65,20 +65,20 @@
               </td>
 
               <td
-                class="shrink table-cell md:hidden lg:table-cell"
                 v-for="(time, i) in row.others_t"
                 :key="`${row.id}-other-time-${i}`"
+                class="table-cell shrink md:hidden lg:table-cell"
                 :data-label="time.name"
               >
                 {{ time.time }}
               </td>
 
               <td
-                class="shrink table-cell md:hidden lg:table-cell"
                 v-for="variable in category.variables.filter(
-                  v => !v['is-subcategory']
+                  (v) => !v['is-subcategory']
                 )"
                 :key="variable.id"
+                class="table-cell shrink md:hidden lg:table-cell"
                 :data-label="variable.name"
               >
                 <div v-if="row.values[variable.id]">
@@ -88,20 +88,20 @@
 
               <td
                 v-if="relativeTime"
-                class="shrink table-cell md:hidden xl:table-cell"
+                class="table-cell shrink md:hidden xl:table-cell"
                 data-label="Date"
               >
                 {{ row.date | relativeDate }} ago
               </td>
               <td
                 v-else
-                class="shrink table-cell md:hidden xl:table-cell"
+                class="table-cell shrink md:hidden xl:table-cell"
                 data-label="Date"
               >
                 {{ row.date | date }}
               </td>
 
-              <td class="shrink hidden xl:table-cell">
+              <td class="hidden shrink xl:table-cell">
                 <font-awesome-icon
                   v-if="row.showicon"
                   :icon="['fas', 'video']"
@@ -133,24 +133,24 @@ import { computed, reactive, toRefs, watch } from '@vue/composition-api';
 
 export default {
   components: { Alert, Error, PlayerName, BySpeedrunCom },
+  filters: {
+    date,
+    relativeDate,
+  },
   props: {
     category: {
       type: Object,
-      required: true
+      required: true,
     },
     variables: {
       type: Array,
-      default: () => []
-    }
-  },
-  filters: {
-    date,
-    relativeDate
+      default: () => [],
+    },
   },
   setup(props, { root }) {
     const state = reactive({
       leaderboard: undefined,
-      error: null
+      error: null,
     });
     const relativeTime = computed(() => root.$store.getters.relativeTime);
 
@@ -172,8 +172,8 @@ export default {
       root.$router.push({
         name: 'Run',
         params: {
-          id
-        }
+          id,
+        },
       });
     }
 
@@ -182,15 +182,15 @@ export default {
     }
 
     watch(() => [props.category, props.variables], effect, {
-      immediate: true
+      immediate: true,
     });
 
     return {
       ...toRefs(state),
       relativeTime,
-      onRowClick
+      onRowClick,
     };
-  }
+  },
 };
 </script>
 

@@ -1,24 +1,20 @@
 module.exports = {
-  mode: 'jit',
-   purge: [
-    './src/**/*.vue',
-    './index.html',
-  ],
+  content: ['./src/**/*.vue', './index.html'],
   darkMode: 'class',
   theme: {
     screens: {
       sm: '768px',
       md: '960px',
       lg: '1152px',
-      xl: '1344px'
+      xl: '1344px',
     },
     container: {
       padding: {
-        default: '0.75rem'
-      }
+        default: '0.75rem',
+      },
     },
     fontFamily: {
-      sans: 'Roboto, Helvetica, Arial, sans-serif'
+      sans: 'Roboto, Helvetica, Arial, sans-serif',
     },
     extend: {
       colors: {
@@ -43,7 +39,7 @@ module.exports = {
         nord12: '#D08770',
         nord13: '#EBCB8B',
         nord14: '#A3BE8C',
-        nord15: '#B48EAD'
+        nord15: '#B48EAD',
       },
       spacing: {
         '1/2': '50%',
@@ -71,26 +67,9 @@ module.exports = {
         '8/12': '66.666667%',
         '9/12': '75%',
         '10/12': '83.333333%',
-        '11/12': '91.666667%'
-      }
-    }
+        '11/12': '91.666667%',
+      },
+    },
   },
-  variants: {
-    backgroundColor: [
-      'responsive',
-      'hover',
-      'focus',
-    ],
-    borderColor: [
-      'responsive',
-      'hover',
-      'focus',
-    ],
-    textColor: [
-      'responsive',
-      'hover',
-      'focus',
-    ]
-  },
-  plugins: []
+  plugins: [],
 };

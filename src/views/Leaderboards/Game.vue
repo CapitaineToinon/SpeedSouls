@@ -1,12 +1,12 @@
 <template>
   <error v-if="gameError" :error="gameError" />
-  <div v-else-if="!game" class="progress h-2 flex flex-row"></div>
+  <div v-else-if="!game" class="progress flex h-2 flex-row"></div>
   <div v-else class="flex flex-row">
     <button
       id="sidebar-button"
       ref="sidebarButtonRef"
-      @click="openSidebar = !openSidebar"
       :class="{ open: openSidebar }"
+      @click="openSidebar = !openSidebar"
     >
       <font-awesome-icon
         v-if="!openSidebar"
@@ -15,49 +15,55 @@
       />
       <font-awesome-icon v-else :icon="['fas', 'times']" size="2x" />
     </button>
-    <aside :class="{ open: openSidebar }">
-      <categories
-        ref="aside"
-        class="categories"
-        :categories="game.categories"
-        :active="$route.params.category"
-        @click="onCategoryClick"
-      />
-    </aside>
-    <div
-      class="content flex flex-col flex-grow ml-0 md:ml-5"
-      :class="{ open: openSidebar }"
+    <Alert v-if="!game.categories.length" type="warning" class="w-full">
+      The moderators for this game have not yet created any categories.</Alert
     >
-      <breadcrumbs class="mb-4" :items="breadcrumbs" />
+    <template v-else>
+      <aside :class="{ open: openSidebar }">
+        <categories
+          ref="aside"
+          class="categories"
+          :categories="game.categories"
+          :active="$route.params.category"
+          @click="onCategoryClick"
+        />
+      </aside>
+      <div
+        class="content ml-0 flex flex-grow flex-col md:ml-5"
+        :class="{ open: openSidebar }"
+      >
+        <breadcrumbs class="mb-4" :items="breadcrumbs" />
 
-      <error v-if="categoryError" :error="categoryError" />
-      <div v-else-if="!category" class="progress h-2 flex flex-row"></div>
-      <div v-else>
-        <div
-          class="subcategories flex flex-col justify-center align-middle items-stretch md:items-start"
-        >
-          <ButtonGroup
-            class="mb-4"
-            v-for="variable in category.variables.filter(
-              v => v['is-subcategory']
-            )"
-            :key="variable.id"
-            :options="variable.values.values"
-            @change="v => (variable.values.default = v)"
-            :active="variable.values.default"
+        <error v-if="categoryError" :error="categoryError" />
+        <div v-else-if="!category" class="progress flex h-2 flex-row"></div>
+        <div v-else>
+          <div
+            class="subcategories flex flex-col items-stretch justify-center align-middle md:items-start"
+          >
+            <ButtonGroup
+              v-for="variable in category.variables.filter(
+                (v) => v['is-subcategory']
+              )"
+              :key="variable.id"
+              class="mb-4"
+              :options="variable.values.values"
+              :active="variable.values.default"
+              @change="(v) => (variable.values.default = v)"
+            />
+          </div>
+          <Leaderboard
+            :category="category"
+            :variables="category.variables.filter((v) => v['is-subcategory'])"
           />
         </div>
-        <Leaderboard
-          :category="category"
-          :variables="category.variables.filter(v => v['is-subcategory'])"
-        />
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
 import useBodyLock from '@/mixins/bodyLocker';
+import Alert from '@/components/Alert.vue';
 import Error from '@/components/Error.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Categories from '@/components/Categories.vue';
@@ -70,15 +76,16 @@ import { useEventListener, onClickOutside } from '@vueuse/core';
 export default {
   metaInfo() {
     return {
-      title: this.metaTitle
+      title: this.metaTitle,
     };
   },
   components: {
+    Alert,
     Error,
     ButtonGroup,
     Breadcrumbs,
     Categories,
-    Leaderboard
+    Leaderboard,
   },
   setup(props, { root, refs }) {
     const aside = computed(() => refs.aside);
@@ -92,7 +99,7 @@ export default {
       gameError: null,
       categoryError: null,
       openSidebar: false,
-      metaTitle: undefined
+      metaTitle: undefined,
     });
 
     // prevent the body from scrolling when sidebar is opened
@@ -116,15 +123,15 @@ export default {
       const array = [
         {
           text: 'Leaderboards',
-          to: { name: 'Games' }
-        }
+          to: { name: 'Games' },
+        },
       ];
 
       if (state.game) {
         array.push({
           text: state.game.name,
           to: {},
-          active: true
+          active: true,
         });
       }
 
@@ -132,7 +139,7 @@ export default {
         array.push({
           text: state.category.name,
           to: {},
-          active: true
+          active: true,
         });
       }
 
@@ -148,8 +155,8 @@ export default {
         name: 'Game',
         params: {
           game: gameParam.value,
-          category: category.hash
-        }
+          category: category.hash,
+        },
       });
     }
 
@@ -167,7 +174,7 @@ export default {
     // also reset the category
     watch(
       gameParam,
-      async id => {
+      async (id) => {
         if (!id) return;
 
         state.game = undefined;
@@ -214,15 +221,15 @@ export default {
     // Watch for game change and redirect to the first category if needed/possible
     watch(
       () => state.game,
-      game => {
+      (game) => {
         if (!game) return;
         if (!categoryParam.value && game.categories.length) {
           root.$router.replace({
             name: 'Game',
             params: {
               game: game.abbreviation,
-              category: game.categories[0].hash
-            }
+              category: game.categories[0].hash,
+            },
           });
         }
       }
@@ -232,9 +239,9 @@ export default {
       ...toRefs(state),
       breadcrumbs,
       onCategoryClick,
-      closeAside
+      closeAside,
     };
-  }
+  },
 };
 </script>
 

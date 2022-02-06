@@ -13,6 +13,6 @@ export default function Category(json) {
     uglyHash: hash,
     misc: miscellaneous,
     variables: variables.data,
-    game: formatGame(game.data)
+    game: formatGame(game.data),
   };
 }

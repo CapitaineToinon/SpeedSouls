@@ -18,12 +18,12 @@
 export default {
   props: {
     href: {
-      type: String
+      type: String,
     },
     icon: {
       type: Boolean,
-      default: () => true
-    }
-  }
+      default: () => true,
+    },
+  },
 };
 </script>
