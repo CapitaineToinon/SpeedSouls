@@ -7,6 +7,7 @@
         class="player-name mb-4 max-w-full overflow-hidden text-base text-nord0 dark:text-nord4"
       >
         {{ player.name }}
+        <span v-if="player.pronouns">({{ player.pronouns }})</span>
       </p>
       <img
         class="pp object-fit mx-auto mb-4 w-auto"
@@ -122,7 +123,7 @@ export default {
       return {
         name: 'Player',
         params: {
-          id: this.player.name,
+          id: this.player.namelink,
         },
       };
     },
